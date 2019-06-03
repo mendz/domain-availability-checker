@@ -1,0 +1,21 @@
+.DomainList {
+   width: 80%;
+   display: flex;
+   flex-direction: column;
+   margin: 0 auto;
+   justify-content: center;
+   align-items: center;
+}
+
+.Buttons {
+   margin-top: 15px;
+}
+
+.Buttons button:last-child {
+   margin-left: 15px;
+}
+
+.Textarea {
+   width: 600px;
+   height: 300px;
+}
