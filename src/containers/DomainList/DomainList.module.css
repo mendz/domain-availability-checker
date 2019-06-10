@@ -19,3 +19,7 @@
    width: 600px;
    height: 300px;
 }
+
+.Textarea:read-only {
+   background-color: thistle;
+}
