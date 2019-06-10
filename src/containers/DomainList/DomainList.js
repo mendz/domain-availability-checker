@@ -79,7 +79,7 @@ class DomainList extends Component {
       this.setState({ checking: true });
 
       // update the state with raw information - invalid / loading
-      const decodedDomainListRaw = this.state.domainsList
+      const decodedDomainListRaw = [...new Set(this.state.domainsList)]
          .filter(domain => domain.trim() !== '')
          .map(domain => {
             const isInvalid = this.state.invalidDomains.find(invalidDomain => invalidDomain === domain);
