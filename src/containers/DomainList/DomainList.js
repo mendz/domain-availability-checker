@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import isFQDN from 'validator/lib/isFQDN';
 
 import DomainCheck from '../../components/DomainCheck/DomainCheck';
+import Button from '../../components/UI/Button/Button';
+import Textarea from '../../components/UI/Textarea/Textarea';
 
 import axios from '../../axios/axios-domains';
 import { stripUrl, getDomainFromRequest } from '../../utils/normalizeDomain';
@@ -150,21 +152,18 @@ class DomainList extends Component {
       return (
          <div className={classes.DomainList}>
             <form onSubmit={this.checkDomains}>
-               <textarea
-                  className={classes.Textarea}
-                  onChange={this.domainListHandle}
+               <Textarea
+                  change={this.domainListHandle}
                   value={domains}
                   readOnly={this.state.checking}
-                  placeholder='List of domain names to check'></textarea>
+                  placeholder='List of domain names to check'></Textarea>
                <div className={classes.Buttons}>
-                  <button
-                     className={classes.Button}
-                     onClick={this.clearDomains}
-                     type="reset">Clear</button>
-                  <button
-                     className={classes.Button}
-                     type='submit'
-                     disabled={!this.state.formIsValid || this.state.checking}>Check</button>
+                  <Button
+                     clicked={this.clearDomains}
+                     type="reset">Clear</Button>
+                  <Button
+                     clicked={this.clearDomains}
+                     disabled={!this.state.formIsValid || this.state.checking}>Check</Button>
                </div>
             </form>
             {domainCheck}
