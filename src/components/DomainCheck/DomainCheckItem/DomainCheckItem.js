@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Spinner from '../../UI/Spinner/Spinner';
 
 import classes from './DomainCheckItem.module.css';
 
 const DomainCheckItem = ({ domainName, availability, invalid, networkError }) => {
-   let isAvailable = null;
+   let isAvailable = <Spinner />;
    const availabilityClass = [classes.Availability];
 
    if (availability === false) {

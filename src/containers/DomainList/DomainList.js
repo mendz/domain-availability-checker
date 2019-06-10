@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import isURL from 'validator/lib/isURL';
 
 import DomainCheck from '../../components/DomainCheck/DomainCheck';
-import Spinner from '../../components/UI/Spinner/Spinner';
 
 import axios from '../../axios/axios-domains';
 import { stripUrl, getDomainFromRequest } from '../../utils/normalizeDomain';
@@ -20,7 +19,7 @@ class DomainList extends Component {
       },
       invalidDomains: [],
       formIsValid: false,
-      loading: false
+      checking: false
    }
 
    checkValidity = (value, rules) => {
@@ -75,15 +74,20 @@ class DomainList extends Component {
 
    checkDomains = async e => {
       e.preventDefault();
-      this.setState({ loading: true });
+      this.setState({ checking: true });
 
-      // massage the data
-      const decodedDomainListPromises = this.state.domainsList
+      // update the state with raw information - invalid / loading
+      const decodedDomainListRaw = this.state.domainsList
          .filter(domain => domain.trim() !== '')
          .map(domain => {
             const isInvalid = this.state.invalidDomains.find(invalidDomain => invalidDomain === domain);
             if (!isInvalid) {
-               return axios(`available/${domain}`);
+               return {
+                  name: domain,
+                  availability: null,
+                  networkError: false,
+                  invalid: false
+               }
             } else {
                return {
                   name: domain,
@@ -94,36 +98,36 @@ class DomainList extends Component {
             }
          });
 
-      // wait for all the results
-      const resultDecodedDomainList = await Promise
-         .all(decodedDomainListPromises)
-         .catch(err => console.error(`Error:\n${err}`));;
+      this.setState({ decodedDomainList: decodedDomainListRaw });
 
-      const decodedDomainList = resultDecodedDomainList.map(domainData => {
-         console.log('domainData:', domainData)
-         // check that the request was OK
-         if (domainData.data && domainData.statusText === 'OK') {
-            const { data } = domainData;
-            return {
-               name: data.domain,
-               availability: data.isAvailable,
-               invalid: false,
-               networkError: false,
+      // start checking the domain and update the state per domain
+      decodedDomainListRaw
+         .filter(domain => !domain.invalid)
+         .map(async domain => {
+            const { data, statusText, config } = await axios(`available/${domain.name}`);
+            let resultDomain = {};
+
+            if (data && statusText === 'OK') {
+               resultDomain = {
+                  ...domain,
+                  name: data.domain,
+                  availability: data.isAvailable,
+               }
+            } else if (!statusText === 'OK') {
+               resultDomain = {
+                  ...domain,
+                  name: getDomainFromRequest(config.url),
+                  networkError: true,
+               }
             }
-         } else if (!domainData.statusText === 'OK') {
-            return {
-               name: getDomainFromRequest(domainData.config.url),
-               networkError: true,
-               availability: false,
-               invalid: false,
-            }
-         }
+            const updatedDecodedDomainList = [...this.state.decodedDomainList];
+            const index = updatedDecodedDomainList.findIndex(domainToFind => domainToFind.name === domain.name);
+            updatedDecodedDomainList[index] = resultDomain;
 
-         // invalid domain
-         return domainData;
-      })
+            this.setState({ decodedDomainList: updatedDecodedDomainList });
+         });
 
-      this.setState({ decodedDomainList, loading: false });
+      this.setState({ checking: false });
    }
 
    clearDomains = () => {
@@ -133,17 +137,11 @@ class DomainList extends Component {
       });
    }
 
-   cleanDomains = () => {
-
-   }
-
    render() {
       const domains = this.state.domainsList.map(domain => domain).join('\n');
 
       let domainCheck = null;
-      if (this.state.loading) {
-         domainCheck = <Spinner />;
-      } else if (this.state.decodedDomainList.length > 0) {
+      if (this.state.decodedDomainList.length > 0) {
          domainCheck = <DomainCheck listDomains={this.state.decodedDomainList} />;
       }
       return (
@@ -153,6 +151,7 @@ class DomainList extends Component {
                   className={classes.Textarea}
                   onChange={this.domainListHandle}
                   value={domains}
+                  readOnly={this.state.checking}
                   placeholder='List of domain names to check'></textarea>
                <div className={classes.Buttons}>
                   <button
@@ -160,7 +159,7 @@ class DomainList extends Component {
                      type="reset">Clear</button>
                   <button
                      type='submit'
-                     disabled={!this.state.formIsValid}>Check</button>
+                     disabled={!this.state.formIsValid || this.state.checking}>Check</button>
                </div>
             </form>
             {domainCheck}
