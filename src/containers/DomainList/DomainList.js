@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import isURL from 'validator/lib/isURL';
-import wait from 'waait';
+import isFQDN from 'validator/lib/isFQDN';
 
 import DomainCheck from '../../components/DomainCheck/DomainCheck';
 
@@ -35,7 +34,7 @@ class DomainList extends Component {
 
       if (rules.isUrl) {
          const invalidDomains = value
-            .filter(domain => !isURL(domain));
+            .filter(domain => !isFQDN(domain));
          // .map(domain => domain);
 
          // if at least one domain is valid we can proceed and check this one,
@@ -59,8 +58,8 @@ class DomainList extends Component {
       }
 
       const domains = e.target.value
-         .split('\n')
-         .map(domain => domain.startsWith('http') ? stripUrl(domain) : domain);
+      .split('\n')
+      .map(domain => stripUrl(domain));
 
       const updatedObj = {
          domainsList: domains,
@@ -76,8 +75,6 @@ class DomainList extends Component {
    checkDomains = async e => {
       e.preventDefault();
       this.setState({ checking: true });
-
-      // await wait(500);
 
       // update the state with raw information - invalid / loading
       const decodedDomainListRaw = this.state.domainsList
@@ -130,6 +127,7 @@ class DomainList extends Component {
             this.setState({ decodedDomainList: updatedDecodedDomainList });
          });
 
+      // wait for all the checking to finish in order to reopen the textarea
       await Promise.all(finishCheckingPromises);
       this.setState({ checking: false });
    }
