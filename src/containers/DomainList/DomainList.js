@@ -156,13 +156,13 @@ class DomainList extends Component {
                   change={this.domainListHandle}
                   value={domains}
                   readOnly={this.state.checking}
-                  placeholder='List of domain names to check'></Textarea>
+                  placeholder='List of domain names to check' />
                <div className={classes.Buttons}>
                   <Button
                      clicked={this.clearDomains}
                      type="reset">Clear</Button>
                   <Button
-                     clicked={this.clearDomains}
+                     type="submit"
                      disabled={!this.state.formIsValid || this.state.checking}>Check</Button>
                </div>
             </form>
