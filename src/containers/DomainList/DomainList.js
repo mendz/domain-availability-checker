@@ -53,13 +53,13 @@ class DomainList extends Component {
 
    domainListHandle = (e) => {
       if (e.target.value === '') {
-         this.clearDomains();
+         this.setState({ domainsList: [] });
          return;
       }
 
       const domains = e.target.value
-      .split('\n')
-      .map(domain => stripUrl(domain));
+         .split('\n')
+         .map(domain => stripUrl(domain));
 
       const updatedObj = {
          domainsList: domains,
