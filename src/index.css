@@ -1,6 +1,9 @@
 html {
    box-sizing: border-box;
    font-size: 18px;
+
+   --red: #860b0b;
+   --green: #0f690f;
 }
 
 *,
@@ -17,7 +20,7 @@ body {
    -webkit-font-smoothing: antialiased;
    -moz-osx-font-smoothing: grayscale;
    background: #5e67d2;
-   background: linear-gradient(90deg, #5e67d2 0%, #318fcf 42%, rgba(3, 218, 227, 1) 100%);
+   background: radial-gradient(circle, #5e67d2 20%, #318fcf 85%, rgba(3, 218, 227, 1) 100%);
 }
 
 body * {

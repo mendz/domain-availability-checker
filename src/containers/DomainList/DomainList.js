@@ -9,6 +9,7 @@ import axios from '../../axios/axios-domains';
 import { stripUrl, getDomainFromRequest } from '../../utils/normalizeDomain';
 
 import classes from './DomainList.module.css';
+import Header from '../../components/UI/Header/Header';
 
 class DomainList extends Component {
    state = {
@@ -132,6 +133,7 @@ class DomainList extends Component {
       // wait for all the checking to finish in order to reopen the textarea
       await Promise.all(finishCheckingPromises);
       this.setState({ checking: false });
+      this.saveToHistory();
    }
 
    clearDomains = () => {
@@ -142,6 +144,30 @@ class DomainList extends Component {
       });
    }
 
+   saveToHistory = () => {
+      const oldHistoryString = localStorage.getItem('history');
+      let currentHistory = '';
+
+      // if there already history it filter from it the domains that are in the current check
+      // and concat the old history
+      if (oldHistoryString) {
+         const oldHistory = JSON.parse(oldHistoryString);
+         const filteredOld = oldHistory
+            .filter(currentHistory =>
+               !this.state.decodedDomainList.find(domain => domain.name === currentHistory.name));
+         const combineHistory = this.state.decodedDomainList.concat(filteredOld);
+         currentHistory = JSON.stringify(combineHistory);
+      } else {
+         currentHistory = JSON.stringify(this.state.decodedDomainList);
+      }
+
+      localStorage.setItem('history', currentHistory);
+   }
+
+   goToHistory = () => {
+      this.props.history.push('/history');
+   }
+
    render() {
       const domains = this.state.domainsList.map(domain => domain).join('\n');
 
@@ -150,24 +176,32 @@ class DomainList extends Component {
          domainCheck = <DomainCheck listDomains={this.state.decodedDomainList} />;
       }
       return (
-         <div className={classes.DomainList}>
-            <form onSubmit={this.checkDomains}>
-               <Textarea
-                  change={this.domainListHandle}
-                  value={domains}
-                  readOnly={this.state.checking}
-                  placeholder='List of domain names to check' />
-               <div className={classes.Buttons}>
-                  <Button
-                     clicked={this.clearDomains}
-                     type="reset">Clear</Button>
-                  <Button
-                     type="submit"
-                     disabled={!this.state.formIsValid || this.state.checking}>Check</Button>
-               </div>
-            </form>
-            {domainCheck}
-         </div>
+         <>
+            <div className={classes.HistoryButton}>
+               <Button clicked={this.goToHistory}>History</Button>
+            </div>
+            <div className={classes.DomainList}>
+               <Header />
+               <form onSubmit={this.checkDomains}>
+                  <Textarea
+                     change={this.domainListHandle}
+                     value={domains}
+                     readOnly={this.state.checking}
+                     placeholder='List of domain names to check' />
+                  <div className={classes.Buttons}>
+                     <Button
+                        bigger
+                        clicked={this.clearDomains}
+                        type="reset">Clear</Button>
+                     <Button
+                        bigger
+                        type="submit"
+                        disabled={!this.state.formIsValid || this.state.checking}>Check</Button>
+                  </div>
+               </form>
+               {domainCheck}
+            </div>
+         </>
       );
    }
 }

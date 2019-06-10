@@ -1,8 +1,8 @@
 .DomainCheck {
+   width: 100%;
    display: flex;
    flex-flow: column;
    /* box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.5); */
    margin-top: 2rem;
-   width: 80%;
    padding: 1rem;
 }

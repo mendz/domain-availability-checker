@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import Spinner from '../../UI/Spinner/Spinner';
+import SymbolsCheck from '../../UI/SymbolsCheck/SymbolsCheck';
 
 import classes from './DomainCheckItem.module.css';
 
@@ -9,9 +11,9 @@ const DomainCheckItem = ({ domainName, availability, invalid, networkError }) =>
    const availabilityClass = [classes.Availability];
 
    if (availability === false) {
-      isAvailable = '❌';
+      isAvailable = <SymbolsCheck type="fail"/>;
    } else if (availability === true) {
-      isAvailable = '✔';
+      isAvailable = <SymbolsCheck type="success"/>;
       availabilityClass.push(classes.Green);
    }
 

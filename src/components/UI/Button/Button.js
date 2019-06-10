@@ -2,11 +2,11 @@ import React from 'react'
 
 import classes from './Button.module.css';
 
-const Button = ({ clicked, smaller, ...props }) => {
+const Button = ({ clicked, bigger, ...props }) => {
    const classArr = [classes.Button];
 
-   if (smaller) {
-      classArr.push(classes.Smaller);
+   if (bigger) {
+      classArr.push(classes.Bigger);
    }
 
    return (

@@ -7,6 +7,11 @@
    align-items: center;
 }
 
+.HistoryButton {
+   margin: .5rem 0 0 .5rem;
+   text-align: left;
+}
+
 .Buttons {
    margin-top: 15px;
 }
