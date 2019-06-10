@@ -2,11 +2,19 @@ import React from 'react'
 
 import classes from './Button.module.css';
 
-const Button = ({ clicked, ...props }) => (
-   <button
-      className={classes.Button}
-      onClick={clicked}
-      {...props}>{props.children}</button>
-)
+const Button = ({ clicked, smaller, ...props }) => {
+   const classArr = [classes.Button];
+
+   if (smaller) {
+      classArr.push(classes.Smaller);
+   }
+
+   return (
+      <button
+         className={classArr.join(' ')}
+         onClick={clicked}
+         {...props}>{props.children}</button>
+   );
+}
 
 export default Button
