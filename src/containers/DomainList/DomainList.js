@@ -157,9 +157,11 @@ class DomainList extends Component {
                   placeholder='List of domain names to check'></textarea>
                <div className={classes.Buttons}>
                   <button
+                     className={classes.Button}
                      onClick={this.clearDomains}
                      type="reset">Clear</button>
                   <button
+                     className={classes.Button}
                      type='submit'
                      disabled={!this.state.formIsValid || this.state.checking}>Check</button>
                </div>

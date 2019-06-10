@@ -1,0 +1,12 @@
+.App {
+   text-align: center;
+}
+
+.Title {
+   font-family: 'Cantarell', sans-serif;
+   font-size: 2rem;
+}
+
+.App p {
+   font-size: 1.2rem;
+}
