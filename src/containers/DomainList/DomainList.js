@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import isURL from 'validator/lib/isURL';
+import wait from 'waait';
 
 import DomainCheck from '../../components/DomainCheck/DomainCheck';
 
@@ -76,6 +77,8 @@ class DomainList extends Component {
       e.preventDefault();
       this.setState({ checking: true });
 
+      // await wait(500);
+
       // update the state with raw information - invalid / loading
       const decodedDomainListRaw = this.state.domainsList
          .filter(domain => domain.trim() !== '')
@@ -101,7 +104,7 @@ class DomainList extends Component {
       this.setState({ decodedDomainList: decodedDomainListRaw });
 
       // start checking the domain and update the state per domain
-      decodedDomainListRaw
+      const finishCheckingPromises = decodedDomainListRaw
          .filter(domain => !domain.invalid)
          .map(async domain => {
             const { data, statusText, config } = await axios(`available/${domain.name}`);
@@ -127,6 +130,7 @@ class DomainList extends Component {
             this.setState({ decodedDomainList: updatedDecodedDomainList });
          });
 
+      await Promise.all(finishCheckingPromises);
       this.setState({ checking: false });
    }
 
