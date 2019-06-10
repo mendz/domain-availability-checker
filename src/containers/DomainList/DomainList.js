@@ -135,7 +135,8 @@ class DomainList extends Component {
    clearDomains = () => {
       this.setState({
          domainsList: [],
-         decodedDomainList: []
+         decodedDomainList: [],
+         formIsValid: false,
       });
    }
 
