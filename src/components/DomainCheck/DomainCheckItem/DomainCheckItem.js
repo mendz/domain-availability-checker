@@ -1,28 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Spinner from '../../UI/Spinner/Spinner';
-
 import classes from './DomainCheckItem.module.css';
 
-const DomainCheckItem = props => {
-   let isAvailable = <Spinner />
+const DomainCheckItem = ({ domainName, availability, invalid, networkError }) => {
+   let isAvailable = null;
    const availabilityClass = [classes.Availability];
 
-   if (props.availability === false) {
+   if (availability === false) {
       isAvailable = '❌';
-   } else if (props.availability === true) {
+   } else if (availability === true) {
       isAvailable = '✔';
       availabilityClass.push(classes.Green);
    }
 
-   let name = props.domainName
-   let classDomainName = [classes.Name]
-   if (props.invalid) {
-      name += '- NOT VALID DOMAIN!';
+   let name = domainName;
+   let classDomainName = [classes.Name];
+   if (invalid || networkError) {
       classDomainName.push(classes.Invalid);
-   }
+      let errorMessage = '';
+      if (invalid) {
+         errorMessage = 'NOT VALID DOMAIN!';
+      } else {
+         errorMessage = 'NETWORK ERROR!';
+      }
 
+      name += `- ${errorMessage}`;
+   }
    return (
       <div className={classes.DomainCheckItem}>
          <div className={classDomainName.join(' ')}>{name}</div>
@@ -34,7 +38,8 @@ const DomainCheckItem = props => {
 DomainCheckItem.propTypes = {
    domainName: PropTypes.string,
    availability: PropTypes.bool,
-   invalid: PropTypes.bool
+   invalid: PropTypes.bool,
+   networkError: PropTypes.bool
 }
 
 export default DomainCheckItem;

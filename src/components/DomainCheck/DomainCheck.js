@@ -6,23 +6,16 @@ import DomainCheckItem from './DomainCheckItem/DomainCheckItem';
 
 import classes from './DomainCheck.module.css';
 
-const DomainCheck = props => {
-   const list = props.listDomains
-      .filter(domain => domain.name.trim() !== '')
-      .map(domain => {
-         let invalid = false;
-         if (props.invalidDomains.find(invalidDomain => invalidDomain === domain.name)) {
-            invalid = true;
-         }
-
-         return (
-            <DomainCheckItem
-               key={uuidv4()}
-               domainName={domain.name}
-               availability={domain.availability}
-               invalid={invalid} />
-         )
-      });
+const DomainCheck = ({ listDomains }) => {
+   const list = listDomains
+      .map(domain => (
+         <DomainCheckItem
+            key={uuidv4()}
+            domainName={domain.name}
+            availability={domain.availability}
+            invalid={domain.invalid}
+            networkError={domain.networkError} />
+      ));
 
    return (
       <div className={classes.DomainCheck}>
@@ -34,9 +27,10 @@ const DomainCheck = props => {
 DomainCheck.propType = {
    listDomains: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
-      availability: PropTypes.bool
-   })),
-   invalidDomains: PropTypes.arrayOf(PropTypes.string)
+      availability: PropTypes.bool,
+      networkError: PropTypes.bool,
+      invalid: PropTypes.bool,
+   }))
 }
 
 
