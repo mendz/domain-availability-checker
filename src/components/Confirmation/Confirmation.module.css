@@ -1,0 +1,15 @@
+.Confirmation {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-evenly;
+   height: 100%;
+}
+
+.Buttons {
+   display: flex;
+   justify-content: center;
+}
+
+.Buttons>*:first-child {
+   margin-right: 1rem;
+}

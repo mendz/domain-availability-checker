@@ -11,7 +11,7 @@
    border: none;
    padding-left: 2px;
    box-shadow: 2px 1px 4px 1px #68ffeb;
-   background-color: #ffffffe8;
+   background-color: var(--white);
 }
 
 .Textarea:read-only {

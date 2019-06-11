@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import DomainCheck from '../../components/DomainCheck/DomainCheck';
 import Button from '../../components/UI/Button/Button';
 import SymbolsCheck from '../../components/UI/SymbolsCheck/SymbolsCheck';
+import Modal from '../../components/UI/Modal/Modal';
+import Confirmation from '../../components/Confirmation/Confirmation';
 
 import classes from './HistoryDomain.module.css';
 
@@ -10,7 +12,8 @@ class HistoryDomains extends Component {
    state = {
       historyDomains: [],
       filteredDomains: [],
-      inputSearchData: null
+      inputSearchData: null,
+      showModal: false,
    }
 
    componentDidMount() {
@@ -69,16 +72,21 @@ class HistoryDomains extends Component {
    }
 
    resetStateHistory = () => {
+      localStorage.removeItem('history');
       this.setState({
          historyDomains: [],
          filteredDomains: [],
          inputSearchData: null,
-      })
+         showModal: false,
+      });
    }
 
    clearHistory = () => {
-      localStorage.removeItem('history');
-      this.resetStateHistory();
+      this.setState({ showModal: true });
+   }
+
+   closeModal = () => {
+      this.setState({ showModal: false });
    }
 
    render() {
@@ -113,6 +121,9 @@ class HistoryDomains extends Component {
                <Button
                   disabled={this.state.historyDomains.length === 0}
                   clicked={this.clearHistory}>Clear History</Button>
+               <Modal show={this.state.showModal} closed={this.closeModal}>
+                  <Confirmation clickedOK={this.resetStateHistory} clickedCancel={this.closeModal} />
+               </Modal>
             </div>
             <div className={classes.List}>
                {domainList}
