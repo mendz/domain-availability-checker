@@ -33,7 +33,8 @@ const Modal = ({ show, closed, children }) => {
 }
 
 Modal.propTypes = {
-   show: PropTypes.bool
+   show: PropTypes.bool,
+   closed: PropTypes.func
 }
 
 export default Modal;

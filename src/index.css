@@ -4,7 +4,7 @@ html {
 
    --red: #860b0b;
    --green: #0f690f;
-   --white: #ffffffe8;
+   --white: #f1f1f1ef;
 }
 
 *,
@@ -20,8 +20,8 @@ body {
       sans-serif;
    -webkit-font-smoothing: antialiased;
    -moz-osx-font-smoothing: grayscale;
-   background: #5e67d2;
-   background: radial-gradient(circle, #5e67d2 20%, #318fcf 85%, rgba(3, 218, 227, 1) 100%);
+   background: #a19b9b;
+   background: radial-gradient(circle, #a19b9bd7 15%, #af9898d7 75%, #ad8888d7 100%);
 }
 
 body * {

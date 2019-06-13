@@ -7,7 +7,7 @@
    color: #ffff00;
    border-radius: 10px;
    cursor: pointer;
-   transition: all .3s ease-in-out;
+   transition: all .1s ease-in-out;
 }
 
 .Bigger {
@@ -16,7 +16,7 @@
 }
 
 .Button:active {
-   transform: translateY(1px);
+   transform: translate(2px, 3px);
    box-shadow: inset 0 3px 2px 3px rgba(1, 1, 1, 0.5);
 }
 

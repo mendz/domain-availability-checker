@@ -8,19 +8,23 @@ import classes from './DomainCheckItem.module.css';
 
 const DomainCheckItem = ({ domainName, availability, invalid, networkError }) => {
    let isAvailable = <Spinner />;
-   const availabilityClass = [classes.Availability];
+   const containerClass = [classes.DomainCheckItem];
 
-   if (availability === false) {
-      isAvailable = <SymbolsCheck type="fail"/>;
+   // set the symbol information
+   if (invalid || networkError) {
+      isAvailable = <SymbolsCheck type="error" />;
+      containerClass.push(classes.Invalid);
+   } else if (availability === false) {
+      isAvailable = <SymbolsCheck type="fail" />;
+      containerClass.push(classes.Invalid);
    } else if (availability === true) {
-      isAvailable = <SymbolsCheck type="success"/>;
-      availabilityClass.push(classes.Green);
+      isAvailable = <SymbolsCheck type="success" />;
+      containerClass.push(classes.Success);
    }
 
+   // set the domain name information
    let name = domainName;
-   let classDomainName = [classes.Name];
    if (invalid || networkError) {
-      classDomainName.push(classes.Invalid);
       let errorMessage = '';
       if (invalid) {
          errorMessage = 'NOT VALID DOMAIN!';
@@ -28,12 +32,13 @@ const DomainCheckItem = ({ domainName, availability, invalid, networkError }) =>
          errorMessage = 'NETWORK ERROR!';
       }
 
-      name += `- ${errorMessage}`;
+      name += ` - ${errorMessage}`;
    }
+
    return (
-      <div className={classes.DomainCheckItem}>
-         <div className={classDomainName.join(' ')}>{name}</div>
-         <div className={availabilityClass.join(' ')}>{isAvailable}</div>
+      <div className={containerClass.join(' ')}>
+         <div className={classes.Name}>{name}</div>
+         <div className={classes.Availability}>{isAvailable}</div>
       </div>
    );
 };

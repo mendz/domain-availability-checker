@@ -13,6 +13,9 @@ const SymbolsCheck = ({ type }) => {
       case 'fail':
          symbol = <span className={classes.Fail}>✖</span>;
          break;
+      case 'error':
+         symbol = <span className={classes.Fail}>ERROR</span>;
+         break;
       default:
          break;
    }

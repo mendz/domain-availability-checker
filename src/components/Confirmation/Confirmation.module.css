@@ -3,6 +3,7 @@
    flex-direction: column;
    justify-content: space-evenly;
    height: 100%;
+   padding: 1rem 0;
 }
 
 .Buttons {
