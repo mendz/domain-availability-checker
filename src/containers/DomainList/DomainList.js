@@ -4,12 +4,13 @@ import isFQDN from 'validator/lib/isFQDN';
 import DomainCheck from '../../components/DomainCheck/DomainCheck';
 import Button from '../../components/UI/Button/Button';
 import Textarea from '../../components/UI/Textarea/Textarea';
+import Header from '../../components/UI/Header/Header';
+import WithErrorHandler from '../../hoc/WithErrorHandler/WithErrorHandler';
 
 import axios from '../../axios/axios-domains';
 import { stripUrl, getDomainFromRequest } from '../../utils/normalizeDomain';
 
 import classes from './DomainList.module.css';
-import Header from '../../components/UI/Header/Header';
 
 class DomainList extends Component {
    state = {
@@ -22,9 +23,8 @@ class DomainList extends Component {
       },
       invalidDomains: [],
       formIsValid: false,
-      checking: false
+      checking: false,
    }
-
    checkValidity = (value, rules) => {
       let isValid = true;
 
@@ -107,8 +107,21 @@ class DomainList extends Component {
       const finishCheckingPromises = decodedDomainListRaw
          .filter(domain => !domain.invalid)
          .map(async domain => {
-            const { data, statusText, config } = await axios(`available/${domain.name}`);
+            const response = await this.checkAvailable(domain.name);
             let resultDomain = {};
+
+            // no response due to error, no need to continue check this domain
+            if (!response) {
+               resultDomain = {
+                  ...domain,
+                  name: domain.name,
+                  networkError: true,
+               };
+               this.updateDomainInDecodedDomainList(domain.name, resultDomain);
+               return null;
+            }
+
+            const { data, statusText, config } = response;
 
             if (data && statusText === 'OK') {
                resultDomain = {
@@ -123,17 +136,28 @@ class DomainList extends Component {
                   networkError: true,
                }
             }
-            const updatedDecodedDomainList = [...this.state.decodedDomainList];
-            const index = updatedDecodedDomainList.findIndex(domainToFind => domainToFind.name === domain.name);
-            updatedDecodedDomainList[index] = resultDomain;
 
-            this.setState({ decodedDomainList: updatedDecodedDomainList });
+            this.updateDomainInDecodedDomainList(domain.name, resultDomain);
          });
 
       // wait for all the checking to finish in order to reopen the textarea
       await Promise.all(finishCheckingPromises);
       this.setState({ checking: false });
       this.saveToHistory();
+   }
+
+   checkAvailable = async (domainName) => {
+      const response = await axios(`available/${domainName}`)
+         .catch(err => console.error(`ERROR!!!\n${err}`));
+      return response;
+   }
+
+   updateDomainInDecodedDomainList = (domainName, resultDomain) => {
+      const updatedDecodedDomainList = [...this.state.decodedDomainList];
+      const index = updatedDecodedDomainList.findIndex(domainToFind => domainToFind.name === domainName);
+      updatedDecodedDomainList[index] = resultDomain;
+
+      this.setState({ decodedDomainList: updatedDecodedDomainList });
    }
 
    clearDomains = () => {
@@ -206,4 +230,4 @@ class DomainList extends Component {
    }
 }
 
-export default DomainList;
+export default WithErrorHandler(DomainList, axios);
