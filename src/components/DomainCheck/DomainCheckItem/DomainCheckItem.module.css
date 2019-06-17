@@ -9,9 +9,26 @@
    word-break: break-word;
 }
 
+@media all and (max-width: 550px) {
+   .DomainCheckItem {
+      flex-direction: column;
+      font-size: .8rem;
+      flex: 1;
+   }
+
+   .Availability {
+      order: 1;
+   }
+
+   .Name {
+      order: 2;
+   }
+}
+
 .Name {
    font-weight: bold;
    align-self: center;
+   margin: 0 5px;
 }
 
 .Invalid {
