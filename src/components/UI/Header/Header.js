@@ -11,7 +11,7 @@ const Header = () => (
          The domains need to be separate by a new line.
       </p>
       <p>
-         <small><strong>DISCLAIMER:</strong> Currently the site is using a DNS check, therefore sometimes the result could be a false positive.</small>
+         <small><strong>DISCLAIMER:</strong> Currently the site is using a DNS check, therefore sometimes the result could be false positive.</small>
       </p>
    </div>
 );
