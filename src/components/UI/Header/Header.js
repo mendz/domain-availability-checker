@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 import classes from './Header.module.css';
 
@@ -10,7 +10,10 @@ const Header = () => (
          <br />
          The domains need to be separate by a new line.
       </p>
+      <p>
+         <small><strong>DISCLAIMER:</strong> Currently the site is using a DNS check, therefore sometimes the result could be a false positive.</small>
+      </p>
    </div>
 );
 
-export default Header
+export default Header;

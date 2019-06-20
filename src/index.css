@@ -1,46 +1,55 @@
 html {
-   box-sizing: border-box;
-   font-size: 14px;
+  box-sizing: border-box;
+  font-size: 14px;
 
-   --red: #860b0b;
-   --green: #0f690f;
-   --white: #f1f1f1ef;
+  --red: #860b0b;
+  --green: #0f690f;
+  --white: #f1f1f1ef;
 }
 
 @media all and (max-width: 400px) {
-   html {
-      font-size: 12px;
-   }
+  html {
+    font-size: 12px;
+  }
 }
 
 @media all and (max-width: 350px) {
-   html {
-      font-size: 10px;
-   }
+  html {
+    font-size: 10px;
+  }
 }
 
 *,
 *:before,
 *:after {
-   box-sizing: inherit;
+  box-sizing: inherit;
 }
 
 body {
-   margin: 0;
-   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-      "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-      sans-serif;
-   -webkit-font-smoothing: antialiased;
-   -moz-osx-font-smoothing: grayscale;
-   background: #a19b9b;
-   background: radial-gradient(circle, #a19b9bd7 15%, #af9898d7 75%, #ad8888d7 100%);
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #a19b9b;
+  background: radial-gradient(
+    circle,
+    #a19b9bd7 15%,
+    #af9898d7 75%,
+    #ad8888d7 100%
+  );
 }
 
 body * {
-   font-family: 'Cantarell', sans-serif;
+  font-family: "Cantarell", sans-serif;
 }
 
 code {
-   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-      monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+small {
+  font-size: 0.9rem;
 }
