@@ -40,7 +40,9 @@ const DomainCheckItem = ({ domainName, availability, invalid, networkError }) =>
       <div className={classes.Container}>
          <ButtonCopy copyText={domainName}/>
          <div className={containerClass.join(' ')}>
-            <span className={classes.Name}>{name}</span>
+            <span className={classes.Name}>
+               <a href={`http://${domainName}`} target="_blank" rel="noopener noreferrer">{name}</a>
+            </span>
             <span className={classes.Availability}>{isAvailable}</span>
          </div>
       </div>
