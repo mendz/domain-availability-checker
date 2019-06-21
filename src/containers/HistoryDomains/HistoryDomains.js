@@ -5,7 +5,7 @@ import Button from '../../components/UI/Button/Button';
 import SymbolsCheck from '../../components/UI/SymbolsCheck/SymbolsCheck';
 import Modal from '../../components/UI/Modal/Modal';
 import Confirmation from '../../components/Confirmation/Confirmation';
-import ButtonCopy from '../../components/ButtonCopy/ButtonCopy';
+import ButtonCopy from '../../components/UniqueButtons/ButtonCopy/ButtonCopy';
 
 import classes from './HistoryDomain.module.css';
 

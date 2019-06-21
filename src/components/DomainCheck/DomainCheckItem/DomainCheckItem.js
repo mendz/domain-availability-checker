@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Spinner from '../../UI/Spinner/Spinner';
-import ButtonCopy from '../../ButtonCopy/ButtonCopy';
+import ButtonCopy from '../../UniqueButtons/ButtonCopy/ButtonCopy';
 import SymbolsCheck from '../../UI/SymbolsCheck/SymbolsCheck';
 
 import classes from './DomainCheckItem.module.css';

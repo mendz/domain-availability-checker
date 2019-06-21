@@ -6,11 +6,14 @@ import Button from '../../components/UI/Button/Button';
 import Textarea from '../../components/UI/Textarea/Textarea';
 import Header from '../../components/UI/Header/Header';
 import WithErrorHandler from '../../hoc/WithErrorHandler/WithErrorHandler';
+import ButtonInfo from '../../components/UniqueButtons/ButtonInfo/ButtonInfo';
+import Info from '../../components/Info/Info';
 
 import axios from '../../axios/axios-domains';
 import { stripUrl, getDomainFromRequest } from '../../utils/normalizeDomain';
 
 import classes from './DomainList.module.css';
+import Modal from '../../components/UI/Modal/Modal';
 
 class DomainList extends Component {
    state = {
@@ -24,6 +27,7 @@ class DomainList extends Component {
       invalidDomains: [],
       formIsValid: false,
       checking: false,
+      showInfo: false
    }
    checkValidity = (value, rules) => {
       let isValid = true;
@@ -192,6 +196,14 @@ class DomainList extends Component {
       this.props.history.push('/history');
    }
 
+   showInfoModal = () => {
+      this.setState({showInfo: true});
+   }
+
+   closeInfoModal = () => {
+      this.setState({showInfo: false});
+   }
+
    render() {
       const domains = this.state.domainsList.map(domain => domain).join('\n');
 
@@ -203,6 +215,10 @@ class DomainList extends Component {
          <>
             <div className={classes.HistoryButton}>
                <Button clicked={this.goToHistory}>History</Button>
+               <ButtonInfo clicked={this.showInfoModal}/>
+               <Modal show={this.state.showInfo} closed={this.closeInfoModal}>
+                  <Info />
+               </Modal>
             </div>
             <div className={classes.DomainList}>
                <Header />

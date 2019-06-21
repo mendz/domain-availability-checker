@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Button from '../UI/Button/Button';
-import copySvg from '../../assets/icons/copy.svg';
+import Button from '../../UI/Button/Button';
+import copySvg from '../../../assets/icons/copy.svg';
 
 import classes from './ButtonCopy.module.css';
 
