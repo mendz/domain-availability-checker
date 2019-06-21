@@ -10,8 +10,6 @@ const ErrorMessage = ({ error }) => {
          <>
             <p>
                Unfortunately, all of the free uses had been used. <span role="img" aria-label="sad-face">😢</span>
-               <br />
-               Please try again later.
             </p>
          </>
       );
@@ -21,6 +19,8 @@ const ErrorMessage = ({ error }) => {
       <div className={classes.ErrorMessage}>
          <p>{error}</p>
          {billingMsg}
+         <br />
+         <p>Please try again later.</p>
       </div>
    )
 }
