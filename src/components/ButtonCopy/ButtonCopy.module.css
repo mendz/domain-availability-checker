@@ -1,0 +1,8 @@
+.ButtonCopy {
+  margin-right: 0.5rem;
+}
+
+.ButtonCopy img {
+  min-width: 2rem;
+  max-height: 1rem;
+}

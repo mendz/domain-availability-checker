@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Spinner from '../../UI/Spinner/Spinner';
+import ButtonCopy from '../../ButtonCopy/ButtonCopy';
 import SymbolsCheck from '../../UI/SymbolsCheck/SymbolsCheck';
 
 import classes from './DomainCheckItem.module.css';
@@ -36,9 +37,12 @@ const DomainCheckItem = ({ domainName, availability, invalid, networkError }) =>
    }
 
    return (
-      <div className={containerClass.join(' ')}>
-         <div className={classes.Name}>{name}</div>
-         <div className={classes.Availability}>{isAvailable}</div>
+      <div className={classes.Container}>
+         <ButtonCopy copyText={domainName}/>
+         <div className={containerClass.join(' ')}>
+            <span className={classes.Name}>{name}</span>
+            <span className={classes.Availability}>{isAvailable}</span>
+         </div>
       </div>
    );
 };
