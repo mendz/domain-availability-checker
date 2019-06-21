@@ -5,6 +5,7 @@ import Button from '../../components/UI/Button/Button';
 import SymbolsCheck from '../../components/UI/SymbolsCheck/SymbolsCheck';
 import Modal from '../../components/UI/Modal/Modal';
 import Confirmation from '../../components/Confirmation/Confirmation';
+import ButtonCopy from '../../components/ButtonCopy/ButtonCopy';
 
 import classes from './HistoryDomain.module.css';
 
@@ -124,6 +125,9 @@ class HistoryDomains extends Component {
                <Modal show={this.state.showModal} closed={this.closeModal}>
                   <Confirmation clickedOK={this.resetStateHistory} clickedCancel={this.closeModal} />
                </Modal>
+               <ButtonCopy
+                  copyText={this.state.filteredDomains.map(domain => domain.name).join('\n')}
+               >Copy Domains</ButtonCopy>
             </div>
             <div className={classes.List}>
                {domainList}

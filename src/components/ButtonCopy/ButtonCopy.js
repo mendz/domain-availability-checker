@@ -25,7 +25,7 @@ const ButtonCopy = ({ children, copyText }) => {
    }
    return (
       <Button className={classes.ButtonCopy} clicked={() => copy(copyText)}>
-         <img src={copySvg} alt="Copy link" />
+         <img src={copySvg} alt="Copy" />
          {text}
       </Button>
    )
