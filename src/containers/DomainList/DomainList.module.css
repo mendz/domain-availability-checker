@@ -16,12 +16,10 @@
 }
 
 .HistoryButton {
-  margin: 0.5rem 0 0 0.5rem;
   text-align: left;
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
-  width: 12%;
+  padding: 0.5rem 1rem;
 }
 
 .Buttons {
