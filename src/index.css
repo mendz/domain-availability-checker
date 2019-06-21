@@ -1,10 +1,14 @@
-html {
-  box-sizing: border-box;
-  font-size: 14px;
-
+:root {
+  --yellow: #ffff00;
+  --dark-yellow: #c7c700;
   --red: #860b0b;
   --green: #0f690f;
   --white: #f1f1f1ef;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 14px;
 }
 
 @media all and (max-width: 400px) {
