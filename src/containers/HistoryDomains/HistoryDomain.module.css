@@ -1,28 +1,27 @@
 .BackButton {
-   margin: .5rem 0 0 .5rem;
-   text-align: left;
+  margin: 0.5rem 0 2rem 0.5rem;
+  text-align: left;
 }
 
 .Filters {
-   display: flex;
-   /* flex: 1; */
-   flex-wrap: wrap;
-   justify-content: center;
-   align-items: baseline;
+  display: flex;
+  /* flex: 1; */
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
 }
 
-.Filters>* {
-   margin-top: 2rem;
-   margin-right: 1rem;
+.Filters > * {
+  margin-right: 1rem;
 }
 
 .Filters input {
-   align-self: stretch;
-   font-size: .8rem;
-   width: 25%;
+  align-self: stretch;
+  font-size: 0.8rem;
+  width: 25%;
 }
 
 .List {
-   width: 80%;
-   margin: 0 auto;
+  width: 80%;
+  margin: 0 auto;
 }
