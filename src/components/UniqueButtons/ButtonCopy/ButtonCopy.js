@@ -6,7 +6,7 @@ import copySvg from '../../../assets/icons/copy.svg';
 
 import classes from './ButtonCopy.module.css';
 
-const ButtonCopy = ({ children, copyText }) => {
+const ButtonCopy = ({ children, copyText, disabled }) => {
    let text = null;
    if (children) {
       text = <span className={classes.Text}>{children}</span>;
@@ -24,7 +24,11 @@ const ButtonCopy = ({ children, copyText }) => {
       }
    }
    return (
-      <Button className={classes.ButtonCopy} clicked={() => copy(copyText)}>
+      <Button
+         disabled={disabled}
+         className={classes.ButtonCopy}
+         clicked={() => copy(copyText)}
+         >
          <img src={copySvg} alt="Copy" />
          {text}
       </Button>

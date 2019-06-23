@@ -126,6 +126,7 @@ class HistoryDomains extends Component {
                   <Confirmation clickedOK={this.resetStateHistory} clickedCancel={this.closeModal} />
                </Modal>
                <ButtonCopy
+                  disabled={this.state.historyDomains.length === 0}
                   copyText={this.state.filteredDomains.map(domain => domain.name).join('\n')}
                >Copy Domains</ButtonCopy>
             </div>
