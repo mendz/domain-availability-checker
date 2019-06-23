@@ -9,7 +9,7 @@ import classes from './ButtonInfo.module.css';
 const ButtonInfo = ({ clicked }) => {
    return (
       <Button className={classes.ButtonInfo} clicked={clicked}>
-         <img src={infoSvg} alt="Copy" />
+         <img src={infoSvg} alt="Info" />
       </Button>
    )
 }
