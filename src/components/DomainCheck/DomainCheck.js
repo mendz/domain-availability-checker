@@ -26,11 +26,11 @@ const DomainCheck = ({ listDomains }) => {
 
 DomainCheck.propType = {
    listDomains: PropTypes.arrayOf(PropTypes.shape({
-      name: PropTypes.string,
-      availability: PropTypes.bool,
-      networkError: PropTypes.bool,
-      invalid: PropTypes.bool,
-   }))
+      name: PropTypes.string.isRequired,
+      availability: PropTypes.bool.isRequired,
+      networkError: PropTypes.bool.isRequired,
+      invalid: PropTypes.bool.isRequired,
+   })).isRequired,
 }
 
 

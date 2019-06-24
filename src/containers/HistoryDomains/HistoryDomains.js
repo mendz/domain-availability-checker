@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types';
 
 import DomainCheck from '../../components/DomainCheck/DomainCheck';
 import Button from '../../components/UI/Button/Button';
@@ -10,6 +11,10 @@ import ButtonCopy from '../../components/UniqueButtons/ButtonCopy/ButtonCopy';
 import classes from './HistoryDomain.module.css';
 
 class HistoryDomains extends Component {
+   static propTypes = {
+      history: PropTypes.object,
+   }
+
    state = {
       historyDomains: [],
       filteredDomains: [],

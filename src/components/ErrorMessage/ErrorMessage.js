@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import classes from './ErrorMessage.module.css';
 
@@ -25,4 +26,8 @@ const ErrorMessage = ({ error }) => {
    )
 }
 
-export default ErrorMessage
+ErrorMessage.propTypes = {
+   error: PropTypes.string.isRequired
+}
+
+export default ErrorMessage;

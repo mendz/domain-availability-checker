@@ -10,7 +10,7 @@ const Backdrop = ({ closed }) => {
 }
 
 Backdrop.propTypes = {
-   closed: PropTypes.func
+   closed: PropTypes.func.isRequired
 }
 
 export default Backdrop

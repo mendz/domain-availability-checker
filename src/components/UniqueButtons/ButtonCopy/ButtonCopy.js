@@ -36,7 +36,7 @@ const ButtonCopy = ({ children, copyText, disabled }) => {
 }
 
 ButtonCopy.propTypes = {
-   copyText: PropTypes.string
+   copyText: PropTypes.string.isRequired
 }
 
 export default ButtonCopy

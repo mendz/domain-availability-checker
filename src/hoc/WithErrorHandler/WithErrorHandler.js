@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import Modal from '../../components/UI/Modal/Modal';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
@@ -44,6 +45,11 @@ const WithErrorHandler = (WrappedComponent, axios) => {
          )
       }
    }
-}
+};
+
+WithErrorHandler.propTypes = {
+   WrappedComponent: PropTypes.object,
+   axios: PropTypes.object,
+};
 
 export default WithErrorHandler

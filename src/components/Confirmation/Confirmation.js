@@ -18,8 +18,8 @@ const Confirmation = ({ clickedOK, clickedCancel }) => {
 }
 
 Confirmation.propTypes = {
-   clickedOK: PropTypes.func,
-   clickedCancel: PropTypes.func,
+   clickedOK: PropTypes.func.isRequired,
+   clickedCancel: PropTypes.func.isRequired,
 }
 
 export default Confirmation;
