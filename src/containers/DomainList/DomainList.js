@@ -173,10 +173,10 @@ class DomainList extends Component {
    }
 
    saveToHistory = () => {
-      const oldHistoryString = localStorage.getItem('history');
+      const oldHistoryString = localStorage.getItem('historyDomains');
       let currentHistory = '';
 
-      // if there already history it filter from it the domains that are in the current check
+      // if there already history it will filter from it the domains that are in the current check
       // and concat the old history
       if (oldHistoryString) {
          const oldHistory = JSON.parse(oldHistoryString);
@@ -189,7 +189,7 @@ class DomainList extends Component {
          currentHistory = JSON.stringify(this.state.decodedDomainList);
       }
 
-      localStorage.setItem('history', currentHistory);
+      localStorage.setItem('historyDomains', currentHistory);
    }
 
    goToHistory = () => {
@@ -197,11 +197,11 @@ class DomainList extends Component {
    }
 
    showInfoModal = () => {
-      this.setState({showInfo: true});
+      this.setState({ showInfo: true });
    }
 
    closeInfoModal = () => {
-      this.setState({showInfo: false});
+      this.setState({ showInfo: false });
    }
 
    render() {
@@ -214,8 +214,12 @@ class DomainList extends Component {
       return (
          <>
             <div className={classes.HistoryButton}>
-               <Button clicked={this.goToHistory}>History</Button>
-               <ButtonInfo clicked={this.showInfoModal}/>
+               <Button
+                  clicked={this.goToHistory}
+                  name="go-to-history"
+                  disabled={this.state.checking}
+               >History</Button>
+               <ButtonInfo clicked={this.showInfoModal} />
                <Modal show={this.state.showInfo} closed={this.closeInfoModal}>
                   <Info />
                </Modal>
@@ -247,3 +251,8 @@ class DomainList extends Component {
 }
 
 export default WithErrorHandler(DomainList, axios);
+
+// for testing without the HOC
+export {
+   DomainList
+}

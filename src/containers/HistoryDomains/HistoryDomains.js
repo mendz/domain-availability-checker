@@ -27,7 +27,7 @@ class HistoryDomains extends Component {
    }
 
    loadHistory = () => {
-      const historyString = localStorage.getItem('history');
+      const historyString = localStorage.getItem('historyDomains');
 
       if (historyString) {
          const history = JSON.parse(historyString);
@@ -78,7 +78,7 @@ class HistoryDomains extends Component {
    }
 
    resetStateHistory = () => {
-      localStorage.removeItem('history');
+      localStorage.removeItem('historyDomains');
       this.setState({
          historyDomains: [],
          filteredDomains: [],
@@ -115,16 +115,17 @@ class HistoryDomains extends Component {
                   onChange={this.searchDomainsHandler}
                   placeholder="Search Domains..." />
                <label>Sort by: </label>
-               <Button clicked={() => this.sortBy('all')}>
+               <Button clicked={() => this.sortBy('all')} name="show-all">
                   All
                </Button>
-               <Button clicked={() => this.sortBy('success')}>
+               <Button clicked={() => this.sortBy('success')} name="show-success">
                   <SymbolsCheck type="success" />
                </Button>
-               <Button clicked={() => this.sortBy('fail')}>
+               <Button clicked={() => this.sortBy('fail')} name="show-fail">
                   <SymbolsCheck type="fail" />
                </Button>
                <Button
+                  name="clear-history"
                   disabled={this.state.historyDomains.length === 0}
                   clicked={this.clearHistory}>Clear History</Button>
                <Modal show={this.state.showModal} closed={this.closeModal}>
