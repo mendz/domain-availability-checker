@@ -1,14 +1,14 @@
-import { stripUrl, getDomainFromRequest } from './normalizeDomain';
+import { stripDomainFromURL, getDomainFromRequest } from './normalizeDomain';
 import { DEV_API, PROD_API } from '../axios/axios-domains';
 
 describe('normalize domain functions', () => {
    it('should return domain without dots or http', () => {
       const mockLongUrl = 'https://jestjs.io/docs/en/tutorial-react';
-      const domainOfLongUrl = stripUrl(mockLongUrl);
+      const domainOfLongUrl = stripDomainFromURL(mockLongUrl);
       expect(domainOfLongUrl).toBe('jestjs.io');
 
       const mockShortUrl = 'https://github.com/';
-      const domainOfShortUrl = stripUrl(mockShortUrl);
+      const domainOfShortUrl = stripDomainFromURL(mockShortUrl);
       expect(domainOfShortUrl).toBe('github.com');
    });
 

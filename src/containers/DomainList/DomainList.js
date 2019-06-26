@@ -10,7 +10,7 @@ import ButtonInfo from '../../components/UniqueButtons/ButtonInfo/ButtonInfo';
 import Info from '../../components/Info/Info';
 
 import axios from '../../axios/axios-domains';
-import { stripUrl, getDomainFromRequest } from '../../utils/normalizeDomain';
+import { stripDomainFromURL, getDomainFromRequest } from '../../utils/normalizeDomain';
 
 import classes from './DomainList.module.css';
 import Modal from '../../components/UI/Modal/Modal';
@@ -66,7 +66,9 @@ class DomainList extends Component {
 
       const domains = e.target.value
          .split('\n')
-         .map(domain => stripUrl(domain));
+         .map(domain => {
+            return /^http.*/.test(domain) ? stripDomainFromURL(domain) : domain;
+         });
 
       const updatedObj = {
          domainsList: domains,
