@@ -20,6 +20,7 @@ class HistoryDomains extends Component {
       filteredDomains: [],
       inputSearchData: null,
       showModal: false,
+      sorted: false,
    }
 
    componentDidMount() {
@@ -41,8 +42,14 @@ class HistoryDomains extends Component {
 
 
    filterDomains = value => {
+      // 1. if the value is "empty" use the inputSearchData from state, happens in the sortBt function
       const searchValue = value || this.state.inputSearchData;
-      return this.state.historyDomains.filter(domain => domain.name.includes(searchValue));
+      // 2. check if domains are sorted and search have value, if so use the filtered domains, if not it means that it filtered from the sort button and we need to filter it from all the domains
+      let domains = this.state.historyDomains;
+      if (this.state.sorted && value) {
+         domains = this.state.filteredDomains;
+      }
+      return domains.filter(domain => domain.name.includes(searchValue));
    }
 
    searchDomainsHandler = event => {
@@ -57,6 +64,7 @@ class HistoryDomains extends Component {
    }
 
    sortBy = type => {
+      // get the correct domains filtered/all of them.
       const allDomains = this.state.inputSearchData ? [...this.filterDomains()] : [...this.state.historyDomains];
 
       switch (type) {
@@ -64,10 +72,10 @@ class HistoryDomains extends Component {
             this.setState({ filteredDomains: allDomains });
             break;
          case 'success':
-            this.setState({ filteredDomains: allDomains.filter(domain => domain.availability) });
+            this.setState({ filteredDomains: allDomains.filter(domain => domain.availability), sorted: true });
             break;
          case 'fail':
-            this.setState({ filteredDomains: allDomains.filter(domain => !domain.availability) });
+            this.setState({ filteredDomains: allDomains.filter(domain => !domain.availability), sorted: true });
             break;
 
          default:
@@ -84,6 +92,7 @@ class HistoryDomains extends Component {
          filteredDomains: [],
          inputSearchData: null,
          showModal: false,
+         sorted: false,
       });
    }
 

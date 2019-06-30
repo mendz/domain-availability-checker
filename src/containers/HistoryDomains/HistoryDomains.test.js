@@ -13,7 +13,9 @@ const mockDomains = [
    { name: "github.com", availability: false, networkError: false, invalid: false },
    { name: "stackoverflow.com", availability: false, networkError: false, invalid: false },
    { name: "www.w3schools.com", availability: false, networkError: false, invalid: false },
-   { name: "mendy22323.com", availability: true, networkError: false, invalid: false }
+   { name: "mendy22323.com", availability: true, networkError: false, invalid: false },
+   { name: "mendy2323232323.co.il", availability: true, networkError: false, invalid: false },
+   { name: "mendy", availability: false, networkError: false, invalid: true }
 ];
 
 describe('<HistoryDomains /> with local history', () => {
@@ -39,7 +41,8 @@ describe('<HistoryDomains /> with local history', () => {
       wrapper.find(Button).findWhere(comp => comp.prop('name') === 'show-success').props().clicked();
       expect(wrapper.state().historyDomains).toEqual(mockDomains);
       expect(wrapper.state().filteredDomains).toEqual([
-         { name: "mendy22323.com", availability: true, networkError: false, invalid: false }
+         { name: "mendy22323.com", availability: true, networkError: false, invalid: false },
+         { name: "mendy2323232323.co.il", availability: true, networkError: false, invalid: false },
       ]);
    });
 
@@ -50,7 +53,8 @@ describe('<HistoryDomains /> with local history', () => {
       expect(wrapper.state().filteredDomains).toEqual([
          { name: "github.com", availability: false, networkError: false, invalid: false },
          { name: "stackoverflow.com", availability: false, networkError: false, invalid: false },
-         { name: "www.w3schools.com", availability: false, networkError: false, invalid: false }
+         { name: "www.w3schools.com", availability: false, networkError: false, invalid: false },
+         { name: "mendy", availability: false, networkError: false, invalid: true },
       ]);
    });
 
@@ -104,6 +108,29 @@ describe('<HistoryDomains /> with local history', () => {
       expect(wrapper.state().filteredDomains).toEqual([
          { name: "stackoverflow.com", availability: false, networkError: false, invalid: false },
          { name: "www.w3schools.com", availability: false, networkError: false, invalid: false },
+      ]);
+   });
+
+   it('should filter the domains using the search input with the sorted buttons', () => {
+      // 1. set input search value
+      wrapper.find('input').simulate('change', { target: { value: 'me' } });
+      // 2. filter the domains by the fail domains
+      wrapper.find(Button).findWhere(comp => comp.prop('name') === 'show-fail').props().clicked();
+      // 3. the filterer domains should be only one
+      expect(wrapper.state().filteredDomains).toEqual([
+         { name: "mendy", availability: false, networkError: false, invalid: true }
+      ]);
+      // 4. changing the search input will filter from the sorted domains
+      wrapper.find('input').simulate('change', { target: { value: 'me' } });
+      // the filterer domains should be the same
+      expect(wrapper.state().filteredDomains).toEqual([
+         { name: "mendy", availability: false, networkError: false, invalid: true }
+      ]);
+      // 5. changing the sort button will filter the domains by the search value if exists
+      wrapper.find(Button).findWhere(comp => comp.prop('name') === 'show-success').props().clicked();
+      expect(wrapper.state().filteredDomains).toEqual([
+         { name: "mendy22323.com", availability: true, networkError: false, invalid: false },
+         { name: "mendy2323232323.co.il", availability: true, networkError: false, invalid: false },
       ]);
    });
 });
