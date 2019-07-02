@@ -5,10 +5,17 @@
 
 .Filters {
   display: flex;
-  /* flex: 1; */
   flex-wrap: wrap;
   justify-content: center;
+  align-content: center;
   align-items: baseline;
+  min-height: 80px;
+}
+
+@media all and (max-width: 600px) {
+  .Filters {
+    align-content: space-between;
+  }
 }
 
 .Filters > * {

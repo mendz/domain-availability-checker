@@ -112,7 +112,7 @@ class HistoryDomains extends Component {
       }
 
       return (
-         <div className={classes.History}>
+         <>
             <div className={classes.BackButton}>
                <Button clicked={this.goBack}>Back Home</Button>
             </div>
@@ -148,7 +148,7 @@ class HistoryDomains extends Component {
             <div className={classes.List}>
                {domainList}
             </div>
-         </div>
+         </>
       )
    }
 }
