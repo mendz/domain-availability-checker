@@ -12,6 +12,7 @@
 @media all and (max-width: 550px) {
   .DomainCheckItem {
     flex-direction: column;
+    justify-content: space-evenly;
     font-size: 0.8rem;
     flex: 1;
   }
