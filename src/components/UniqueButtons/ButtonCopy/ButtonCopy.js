@@ -18,7 +18,7 @@ const ButtonCopy = ({ children, copyText, disabled }) => {
             .writeText(textToCopy)
             .then(() => {
                // copy the string to the clipboard!
-               console.log(`Copy: "${textToCopy}", to the clipboard!`);
+               // console.log(`Copy: "${textToCopy}", to the clipboard!`);
             })
             .catch(() => console.error(`Failed to copy - '${textToCopy}' to the clipboard!`));
       }
