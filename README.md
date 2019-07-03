@@ -1,4 +1,4 @@
-# Domain Availability
+# Domain availability checker
 
 Checks domain names if they are available or not.
 
