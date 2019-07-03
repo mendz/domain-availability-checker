@@ -1,10 +1,9 @@
-# Domain Availability Checker
+# Domain Availability
 
-## ToDo:
+Checks domain names if they are available or not.
 
-- Add tests
-  - DomainList - see how to test the async submit, and if there is a need to check it.
-  - Read about snapshots and implement them.
-- Change to hooks
-- Add Animations to the items.
-- Update this file with more information.
+Currently, it uses a DNS check to find if the domain has IPs or not, therefore sometimes the result could be false positive.
+
+The DNS check on the server.
+
+In the _history_ page, it will show all the checking that saved in the _LocalStorage_.
