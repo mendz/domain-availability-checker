@@ -1,10 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { DomainList } from './DomainList';
-import Button from '../../components/UI/Button/Button';
-import Textarea from '../../components/UI/Textarea/Textarea';
-import DomainCheck from '../../components/DomainCheck/DomainCheck';
+import { DomainList } from '../containers/DomainList/DomainList';
+import Button from '../components/UI/Button/Button';
+import Textarea from '../components/UI/Textarea/Textarea';
+import DomainCheck from '../components/DomainCheck/DomainCheck';
 
 const mockValidStringOfDomains = `test\nwww.w3schools\nhttps://github.com`;
 const mockInValidStringOfDomains = `test\nwww.w3schools`;

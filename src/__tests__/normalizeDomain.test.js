@@ -1,4 +1,4 @@
-import { stripDomainFromURL, getDomainFromRequest } from './normalizeDomain';
+import { stripDomainFromURL, getDomainFromRequest } from '../utils/normalizeDomain';
 import { DEV_API, PROD_API } from '../axios/axios-domains';
 
 describe('normalize domain functions', () => {

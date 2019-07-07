@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import DomainCheck from './DomainCheck';
-import DomainCheckItem from './DomainCheckItem/DomainCheckItem';
+import DomainCheck from '../components/DomainCheck/DomainCheck';
+import DomainCheckItem from '../components/DomainCheck/DomainCheckItem/DomainCheckItem';
 
 const mockDecodeDomainListArr = [
    { name: "test", availability: false, networkError: false, invalid: true },
