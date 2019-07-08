@@ -13,7 +13,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
                show={error ? true : false}
                closed={clearError}>
                {
-                  error ?  <ErrorMessage
+                  error ? <ErrorMessage
                      error={error.message}
                      response={error.response ? error.response.data : null}
                      code={error.response ? error.response.status : null} />
