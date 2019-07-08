@@ -5,7 +5,7 @@ import DomainCheck from '../../components/DomainCheck/DomainCheck';
 import Button from '../../components/UI/Button/Button';
 import Textarea from '../../components/UI/Textarea/Textarea';
 import Header from '../../components/UI/Header/Header';
-import WithErrorHandler from '../../hoc/WithErrorHandler/WithErrorHandler';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import ButtonInfo from '../../components/UniqueButtons/ButtonInfo/ButtonInfo';
 import Info from '../../components/Info/Info';
 
@@ -254,7 +254,7 @@ class DomainList extends Component {
    }
 }
 
-export default WithErrorHandler(DomainList, axios);
+export default withErrorHandler(DomainList, axios);
 
 // for testing without the HOC
 export {
