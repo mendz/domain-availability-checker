@@ -14,6 +14,7 @@ import { stripDomainFromURL, getDomainFromRequest } from '../../utils/normalizeD
 
 import classes from './DomainList.module.css';
 import Modal from '../../components/UI/Modal/Modal';
+import { throwError } from '../../utils/setupErrorsTrack';
 
 class DomainList extends Component {
    state = {
@@ -124,6 +125,7 @@ class DomainList extends Component {
                   networkError: true,
                };
                this.updateDomainInDecodedDomainList(domain.name, resultDomain);
+               throwError('No response data', resultDomain);
                return null;
             }
 

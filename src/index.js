@@ -1,8 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import setupErrorsTrack from './utils/setupErrorsTrack';
+
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+
+setupErrorsTrack();
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
