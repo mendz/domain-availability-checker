@@ -55,6 +55,49 @@ exports[`<DomainCheck /> matches the snapshot 1`] = `
               />
             </button>
           </Button>
+          <Modal
+            closed={[Function]}
+            show={false}
+          >
+            <CSSTransition
+              classNames={
+                Object {
+                  "enterActive": "ModalOpen",
+                  "exitActive": "ModalClose",
+                }
+              }
+              in={false}
+              mountOnEnter={true}
+              timeout={
+                Object {
+                  "enter": 400,
+                  "exit": 1000,
+                }
+              }
+              unmountOnExit={true}
+            >
+              <Transition
+                appear={false}
+                enter={true}
+                exit={true}
+                in={false}
+                mountOnEnter={true}
+                onEnter={[Function]}
+                onEntered={[Function]}
+                onEntering={[Function]}
+                onExit={[Function]}
+                onExited={[Function]}
+                onExiting={[Function]}
+                timeout={
+                  Object {
+                    "enter": 400,
+                    "exit": 1000,
+                  }
+                }
+                unmountOnExit={true}
+              />
+            </CSSTransition>
+          </Modal>
         </ButtonCopy>
         <div
           className="DomainCheckItem Invalid"
@@ -113,6 +156,49 @@ exports[`<DomainCheck /> matches the snapshot 1`] = `
               />
             </button>
           </Button>
+          <Modal
+            closed={[Function]}
+            show={false}
+          >
+            <CSSTransition
+              classNames={
+                Object {
+                  "enterActive": "ModalOpen",
+                  "exitActive": "ModalClose",
+                }
+              }
+              in={false}
+              mountOnEnter={true}
+              timeout={
+                Object {
+                  "enter": 400,
+                  "exit": 1000,
+                }
+              }
+              unmountOnExit={true}
+            >
+              <Transition
+                appear={false}
+                enter={true}
+                exit={true}
+                in={false}
+                mountOnEnter={true}
+                onEnter={[Function]}
+                onEntered={[Function]}
+                onEntering={[Function]}
+                onExit={[Function]}
+                onExited={[Function]}
+                onExiting={[Function]}
+                timeout={
+                  Object {
+                    "enter": 400,
+                    "exit": 1000,
+                  }
+                }
+                unmountOnExit={true}
+              />
+            </CSSTransition>
+          </Modal>
         </ButtonCopy>
         <div
           className="DomainCheckItem Invalid"
@@ -171,6 +257,49 @@ exports[`<DomainCheck /> matches the snapshot 1`] = `
               />
             </button>
           </Button>
+          <Modal
+            closed={[Function]}
+            show={false}
+          >
+            <CSSTransition
+              classNames={
+                Object {
+                  "enterActive": "ModalOpen",
+                  "exitActive": "ModalClose",
+                }
+              }
+              in={false}
+              mountOnEnter={true}
+              timeout={
+                Object {
+                  "enter": 400,
+                  "exit": 1000,
+                }
+              }
+              unmountOnExit={true}
+            >
+              <Transition
+                appear={false}
+                enter={true}
+                exit={true}
+                in={false}
+                mountOnEnter={true}
+                onEnter={[Function]}
+                onEntered={[Function]}
+                onEntering={[Function]}
+                onExit={[Function]}
+                onExited={[Function]}
+                onExiting={[Function]}
+                timeout={
+                  Object {
+                    "enter": 400,
+                    "exit": 1000,
+                  }
+                }
+                unmountOnExit={true}
+              />
+            </CSSTransition>
+          </Modal>
         </ButtonCopy>
         <div
           className="DomainCheckItem Invalid"
