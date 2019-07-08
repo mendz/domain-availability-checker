@@ -1,0 +1,207 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DomainCheck /> matches the snapshot 1`] = `
+<DomainCheck
+  listDomains={
+    Array [
+      Object {
+        "availability": false,
+        "invalid": true,
+        "name": "test",
+        "networkError": false,
+      },
+      Object {
+        "availability": false,
+        "invalid": true,
+        "name": "www.w3schools",
+        "networkError": false,
+      },
+      Object {
+        "availability": false,
+        "invalid": false,
+        "name": "github.com",
+        "networkError": false,
+      },
+    ]
+  }
+>
+  <div
+    className="DomainCheck"
+  >
+    <DomainCheckItem
+      availability={false}
+      domainName="test"
+      invalid={true}
+      key="test-0"
+      networkError={false}
+    >
+      <div
+        className="Container"
+      >
+        <ButtonCopy
+          copyText="test"
+        >
+          <Button
+            className="ButtonCopy"
+            clicked={[Function]}
+          >
+            <button
+              className="Button ButtonCopy"
+              onClick={[Function]}
+            >
+              <img
+                alt="Copy"
+                src="copy.svg"
+              />
+            </button>
+          </Button>
+        </ButtonCopy>
+        <div
+          className="DomainCheckItem Invalid"
+        >
+          <span
+            className="Name"
+          >
+            <a
+              href="http://test"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              test - NOT VALID DOMAIN!
+            </a>
+          </span>
+          <span
+            className="Availability"
+          >
+            <SymbolsCheck
+              type="error"
+            >
+              <span
+                className="Fail"
+              >
+                ERROR
+              </span>
+            </SymbolsCheck>
+          </span>
+        </div>
+      </div>
+    </DomainCheckItem>
+    <DomainCheckItem
+      availability={false}
+      domainName="www.w3schools"
+      invalid={true}
+      key="www.w3schools-1"
+      networkError={false}
+    >
+      <div
+        className="Container"
+      >
+        <ButtonCopy
+          copyText="www.w3schools"
+        >
+          <Button
+            className="ButtonCopy"
+            clicked={[Function]}
+          >
+            <button
+              className="Button ButtonCopy"
+              onClick={[Function]}
+            >
+              <img
+                alt="Copy"
+                src="copy.svg"
+              />
+            </button>
+          </Button>
+        </ButtonCopy>
+        <div
+          className="DomainCheckItem Invalid"
+        >
+          <span
+            className="Name"
+          >
+            <a
+              href="http://www.w3schools"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              www.w3schools - NOT VALID DOMAIN!
+            </a>
+          </span>
+          <span
+            className="Availability"
+          >
+            <SymbolsCheck
+              type="error"
+            >
+              <span
+                className="Fail"
+              >
+                ERROR
+              </span>
+            </SymbolsCheck>
+          </span>
+        </div>
+      </div>
+    </DomainCheckItem>
+    <DomainCheckItem
+      availability={false}
+      domainName="github.com"
+      invalid={false}
+      key="github.com-2"
+      networkError={false}
+    >
+      <div
+        className="Container"
+      >
+        <ButtonCopy
+          copyText="github.com"
+        >
+          <Button
+            className="ButtonCopy"
+            clicked={[Function]}
+          >
+            <button
+              className="Button ButtonCopy"
+              onClick={[Function]}
+            >
+              <img
+                alt="Copy"
+                src="copy.svg"
+              />
+            </button>
+          </Button>
+        </ButtonCopy>
+        <div
+          className="DomainCheckItem Invalid"
+        >
+          <span
+            className="Name"
+          >
+            <a
+              href="http://github.com"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              github.com
+            </a>
+          </span>
+          <span
+            className="Availability"
+          >
+            <SymbolsCheck
+              type="fail"
+            >
+              <span
+                className="Fail"
+              >
+                ✖
+              </span>
+            </SymbolsCheck>
+          </span>
+        </div>
+      </div>
+    </DomainCheckItem>
+  </div>
+</DomainCheck>
+`;

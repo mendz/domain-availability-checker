@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<App/> matches the snapshot 1`] = `
+<div
+  className="App"
+>
+  <BrowserRouter>
+    <Switch>
+      <Route
+        component={[Function]}
+        path="/history"
+      />
+      <Route
+        component={[Function]}
+        exact={true}
+        path="/"
+      />
+      <Redirect
+        to="/"
+      />
+    </Switch>
+  </BrowserRouter>
+</div>
+`;

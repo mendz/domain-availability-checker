@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import uuidv4 from 'uuid/v4';
 
 import DomainCheckItem from './DomainCheckItem/DomainCheckItem';
 
@@ -8,9 +7,9 @@ import classes from './DomainCheck.module.css';
 
 const DomainCheck = ({ listDomains }) => {
    const list = listDomains
-      .map(domain => (
+      .map((domain, index) => (
          <DomainCheckItem
-            key={uuidv4()}
+            key={`${domain.name}-${index}`}
             domainName={domain.name}
             availability={domain.availability}
             invalid={domain.invalid}

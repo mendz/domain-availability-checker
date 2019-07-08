@@ -1,4 +1,5 @@
 import React from 'react';
+import toJSON from 'enzyme-to-json';
 import { mount } from 'enzyme';
 
 import DomainCheck from '../components/DomainCheck/DomainCheck';
@@ -15,6 +16,10 @@ describe('<DomainCheck />', () => {
 
    beforeEach(() => {
       wrapper = mount(<DomainCheck listDomains={mockDecodeDomainListArr} />);
+   });
+
+   it('matches the snapshot', () => {
+      expect(toJSON(wrapper)).toMatchSnapshot();
    });
 
    it('should have the exact number of items as state.listDomains length', () => {
