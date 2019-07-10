@@ -1,5 +1,7 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+// import toJSON from 'enzyme-to-json';
+// import { act } from 'react-dom/test-utils';
+import { shallow, mount } from 'enzyme';
 
 import HistoryDomains from '../containers/HistoryDomains/HistoryDomains';
 import DomainCheck from '../components/DomainCheck/DomainCheck';
@@ -23,14 +25,16 @@ describe('<HistoryDomains /> with local history', () => {
 
    // before each test run this code
    beforeEach(() => {
-      localStorage.setItem('historyDomains', JSON.stringify(mockDomains));
-      wrapper = shallow(<HistoryDomains />);
+         localStorage.setItem('historyDomains', JSON.stringify(mockDomains));
+         wrapper = mount(<HistoryDomains />);
    });
 
    it('should render the domains list if there are domains in the local history', () => {
+      // expect(toJSON(wrapper)).toMatchSnapshot();
       expect(wrapper.find(DomainCheck)).toHaveLength(1);
    });
 
+   // TODO: Find a way to test it while using hooks
    it('state.historyDomains and state.filteredDomains need to be the same at start', () => {
       expect(wrapper.state().historyDomains).toEqual(mockDomains);
       expect(wrapper.state().filteredDomains).toEqual(mockDomains);

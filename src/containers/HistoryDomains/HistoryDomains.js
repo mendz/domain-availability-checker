@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types';
 
 import DomainCheck from '../../components/DomainCheck/DomainCheck';
@@ -10,147 +10,144 @@ import ButtonCopy from '../../components/UniqueButtons/ButtonCopy/ButtonCopy';
 
 import classes from './HistoryDomain.module.css';
 
-class HistoryDomains extends Component {
-   static propTypes = {
-      history: PropTypes.object,
-   }
+const HistoryDomains = ({ history }) => {
+   const [historyDomains, setHistoryDomains] = useState([]);
+   const [filteredDomains, setFilteredDomains] = useState([]);
+   const [inputSearchData, setInputSearchData] = useState(null);
+   const [showModal, setShowModal] = useState(false);
+   const [sorted, setSorted] = useState(false);
 
-   state = {
-      historyDomains: [],
-      filteredDomains: [],
-      inputSearchData: null,
-      showModal: false,
-      sorted: false,
-   }
+   useEffect(() => {
+      loadHistory();
+   }, []);
 
-   componentDidMount() {
-      this.loadHistory();
-   }
-
-   loadHistory = () => {
+   const loadHistory = () => {
       const historyString = localStorage.getItem('historyDomains');
 
       if (historyString) {
          const history = JSON.parse(historyString);
-         this.setState({ historyDomains: history, filteredDomains: history });
+         setHistoryDomains(history);
+         setFilteredDomains(history);
       }
    }
 
-   goBack = () => {
-      this.props.history.push('/');
+   const goBack = () => {
+      history.push('/');
    }
 
-
-   filterDomains = value => {
+   const filterDomains = value => {
       // 1. if the value is "empty" use the inputSearchData from state, happens in the sortBt function
-      const searchValue = value || this.state.inputSearchData;
+      const searchValue = value || inputSearchData;
       // 2. check if domains are sorted and search have value, if so use the filtered domains, if not it means that it filtered from the sort button and we need to filter it from all the domains
-      let domains = this.state.historyDomains;
-      if (this.state.sorted && value) {
-         domains = this.state.filteredDomains;
+      let domains = [...historyDomains];
+      if (sorted && value) {
+         domains = [...filteredDomains];
       }
       return domains.filter(domain => domain.name.includes(searchValue));
    }
 
-   searchDomainsHandler = event => {
+   const searchDomainsHandler = event => {
       const { value } = event.target;
 
       if (value.trim() === '') {
-         this.setState({ filteredDomains: this.state.historyDomains, inputSearchData: null });
+         setFilteredDomains(historyDomains);
+         setInputSearchData(null);
       } else {
-         const updatedDomains = this.filterDomains(value);
-         this.setState({ filteredDomains: updatedDomains, inputSearchData: value });
+         const updatedDomains = filterDomains(value);
+         setFilteredDomains(updatedDomains);
+         setInputSearchData(value);
       }
    }
 
-   sortBy = type => {
+   // TODO: Maybe change filteredDomains from useState to useReducer
+   const sortBy = type => {
       // get the correct domains filtered/all of them.
-      const allDomains = this.state.inputSearchData ? [...this.filterDomains()] : [...this.state.historyDomains];
+      const allDomains = inputSearchData ? [...filterDomains()] : [...historyDomains];
 
       switch (type) {
          case 'all':
-            this.setState({ filteredDomains: allDomains });
+            setFilteredDomains(allDomains);
             break;
          case 'success':
-            this.setState({ filteredDomains: allDomains.filter(domain => domain.availability), sorted: true });
+            setFilteredDomains(allDomains.filter(domain => domain.availability));
+            setSorted(true);
             break;
          case 'fail':
-            this.setState({ filteredDomains: allDomains.filter(domain => !domain.availability), sorted: true });
+            setFilteredDomains(allDomains.filter(domain => !domain.availability));
+            setSorted(true);
             break;
-
          default:
-            this.setState({ filteredDomains: allDomains });
+            setFilteredDomains(allDomains);
             break;
       }
-
    }
 
-   resetStateHistory = () => {
+   const resetStateHistory = () => {
       localStorage.removeItem('historyDomains');
-      this.setState({
-         historyDomains: [],
-         filteredDomains: [],
-         inputSearchData: null,
-         showModal: false,
-         sorted: false,
-      });
+      setHistoryDomains([]);
+      setFilteredDomains([]);
+      setInputSearchData(null);
+      setShowModal(false);
+      setSorted(false);
    }
 
-   clearHistory = () => {
-      this.setState({ showModal: true });
+   const clearHistory = () => {
+      setShowModal(true);
    }
 
-   closeModal = () => {
-      this.setState({ showModal: false });
+   const closeModal = () => {
+      setShowModal(false);
    }
 
-   render() {
-      let domainList = <p>No history saved...</p>;
+   let domainList = <p>No history saved...</p>;
 
-      if (this.state.historyDomains.length > 0) {
-         domainList = <DomainCheck listDomains={this.state.filteredDomains} />
-      }
+   if (historyDomains.length > 0) {
+      domainList = <DomainCheck listDomains={filteredDomains} />
+   }
 
-      return (
-         <>
-            <div className={classes.BackButton}>
-               <Button clicked={this.goBack}>Back Home</Button>
-            </div>
-            <div className={classes.Filters}>
-               <input
-                  type="search"
-                  name="domains-filter"
-                  id="domains-filter"
-                  onChange={this.searchDomainsHandler}
-                  placeholder="Search Domains..." />
-               <label>Sort by: </label>
-               <Button clicked={() => this.sortBy('all')} name="show-all">
-                  All
+   return (
+      <>
+         <div className={classes.BackButton}>
+            <Button clicked={goBack}>Back Home</Button>
+         </div>
+         <div className={classes.Filters}>
+            <input
+               type="search"
+               name="domains-filter"
+               id="domains-filter"
+               onChange={searchDomainsHandler}
+               placeholder="Search Domains..." />
+            <label>Sort by: </label>
+            <Button clicked={() => sortBy('all')} name="show-all">
+               All
                </Button>
-               <Button clicked={() => this.sortBy('success')} name="show-success">
-                  <SymbolsCheck type="success" />
-               </Button>
-               <Button clicked={() => this.sortBy('fail')} name="show-fail">
-                  <SymbolsCheck type="fail" />
-               </Button>
-               <Button
-                  name="clear-history"
-                  disabled={this.state.historyDomains.length === 0}
-                  clicked={this.clearHistory}>Clear History</Button>
-               <Modal show={this.state.showModal} closed={this.closeModal}>
-                  <Confirmation clickedOK={this.resetStateHistory} clickedCancel={this.closeModal} />
-               </Modal>
-               <ButtonCopy
-                  disabled={this.state.historyDomains.length === 0}
-                  copyText={this.state.filteredDomains.map(domain => domain.name).join('\n')}
-               >Copy Domains</ButtonCopy>
-            </div>
-            <div className={classes.List}>
-               {domainList}
-            </div>
-         </>
-      )
-   }
+            <Button clicked={() => sortBy('success')} name="show-success">
+               <SymbolsCheck type="success" />
+            </Button>
+            <Button clicked={() => sortBy('fail')} name="show-fail">
+               <SymbolsCheck type="fail" />
+            </Button>
+            <Button
+               name="clear-history"
+               disabled={historyDomains.length === 0}
+               clicked={clearHistory}>Clear History</Button>
+            <Modal show={showModal} closed={closeModal}>
+               <Confirmation clickedOK={resetStateHistory} clickedCancel={closeModal} />
+            </Modal>
+            <ButtonCopy
+               disabled={historyDomains.length === 0}
+               copyText={filteredDomains.map(domain => domain.name).join('\n')}
+            >Copy Domains</ButtonCopy>
+         </div>
+         <div className={classes.List}>
+            {domainList}
+         </div>
+      </>
+   )
+}
+
+HistoryDomains.propTypes = {
+   history: PropTypes.object
 }
 
 export default HistoryDomains
