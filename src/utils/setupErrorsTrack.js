@@ -2,7 +2,8 @@ import * as Sentry from '@sentry/browser';
 import { version } from '../../package.json';
 
 function initSentry() {
-   if (process.env.NODE_ENV === 'production') {
+   if (process.env.NODE_ENV !== 'production') {
+      console.log('process.env.NODE_ENV:', process.env.NODE_ENV)
       Sentry.init({
          dsn: "https://6b862531cc6b4c46bad00b3e86a9752f@sentry.io/1498890",
          release: version
@@ -21,7 +22,13 @@ function throwError(event, data) {
    });
 }
 
+function reportFeedback() {
+   alert('test');
+   Sentry.showReportDialog();
+}
+
 export default initSentry;
 export {
-   throwError
+   throwError,
+   reportFeedback
 }
