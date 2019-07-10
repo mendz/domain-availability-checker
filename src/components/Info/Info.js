@@ -4,6 +4,7 @@ import SymbolsCheck from '../UI/SymbolsCheck/SymbolsCheck';
 import classes from './Info.module.css';
 
 import { reportFeedback } from '../../utils/setupErrorsTrack';
+<<<<<<< HEAD
 import Button from '../UI/Button/Button';
 import Modal from '../UI/Modal/Modal';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
@@ -11,6 +12,10 @@ import githubMark from '../../assets/icons/github-mark-32px.png';
 
 import useToggle from '../../hooks/useToggle';
 
+=======
+import githubMark from '../../assets/icons/github-mark-32px.png';
+
+>>>>>>> add github link and button to report - WIP  - button not work
 const Info = () => {
    const [on, toggle] = useToggle();
    const [error, setError] = useState('');
