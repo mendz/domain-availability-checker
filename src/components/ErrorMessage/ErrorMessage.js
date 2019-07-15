@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 
 import classes from './ErrorMessage.module.css';
 
-const ErrorMessage = ({ error }) => {
-   // check if the error is Billing when all the free uses for the month are finished
-   let billingMsg = null;
-   if (/^billing$/i.test(error.trim())) {
-      billingMsg = (
+const ErrorMessage = ({ error, response, code }) => {
+   // check if the error is about all the free uses for the month are finished
+   let responseMessage = <p>Please try again later.</p>;
+   if (code === 429) {
+      responseMessage = (
          <>
             <p>
-               Unfortunately, all of the free uses had been used. <span role="img" aria-label="sad-face">😢</span>
+               {response}
             </p>
          </>
       );
@@ -19,15 +19,15 @@ const ErrorMessage = ({ error }) => {
    return (
       <div className={classes.ErrorMessage}>
          <p>{error}</p>
-         {billingMsg}
-         <br />
-         <p>Please try again later.</p>
+         {responseMessage}
       </div>
    )
 }
 
 ErrorMessage.propTypes = {
-   error: PropTypes.string.isRequired
+   error: PropTypes.string.isRequired,
+   response: PropTypes.string,
+   code: PropTypes.number
 }
 
 export default ErrorMessage;
