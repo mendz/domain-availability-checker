@@ -111,9 +111,10 @@ class DomainList extends Component {
       this.setState({ decodedDomainList: decodedDomainListRaw });
 
       // start checking the domain and update the state per domain
-      const finishCheckingPromises = decodedDomainListRaw
-         .filter(domain => !domain.invalid)
-         .map(async domain => {
+      const finishCheckingFiltered = decodedDomainListRaw
+         .filter(domain => !domain.invalid);
+
+         for (const domain of finishCheckingFiltered) {
             const response = await this.checkAvailable(domain.name);
             let resultDomain = {};
 
@@ -126,7 +127,7 @@ class DomainList extends Component {
                };
                this.updateDomainInDecodedDomainList(domain.name, resultDomain);
                throwError('No response data', resultDomain);
-               return null;
+               continue;
             }
 
             const { data, statusText, config } = response;
@@ -146,10 +147,9 @@ class DomainList extends Component {
             }
 
             this.updateDomainInDecodedDomainList(domain.name, resultDomain);
-         });
+         }
 
       // wait for all the checking to finish in order to reopen the textarea
-      await Promise.all(finishCheckingPromises);
       this.setState({ checking: false });
       this.saveToHistory();
    }
