@@ -155,7 +155,13 @@ class DomainList extends Component {
    }
 
    checkAvailable = async (domainName) => {
-      const response = await axios(`available/${domainName}`)
+      // check if debug is on
+      let debug = '';
+      if (process.env.REACT_APP_DEBUG) {
+         debug='?debug';
+      }
+
+      const response = await axios(`available/${domainName}${debug}`)
          .catch(err => console.error(`ERROR!!!\n${err}`));
       return response;
    }
