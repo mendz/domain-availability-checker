@@ -20,10 +20,6 @@ const Info = () => {
             <SymbolsCheck type="error" /> - Something went wrong.
          </p>
          <hr />
-         <h2>DISCLAIMER</h2>
-         <p>
-            <small>Currently, the site is using a DNS check to find if the domain has IPs or not, therefore sometimes the result could be false positive.</small>
-         </p>
          <footer className={classes.Footer}>
             <a
                href="https://github.com/mendz/domain-availability-checker"
