@@ -8,11 +8,9 @@ const ErrorMessage = ({ error, response, code }) => {
    let responseMessage = <p>Please try again later.</p>;
    if (code === 429) {
       responseMessage = (
-         <>
-            <p>
-               {response}
-            </p>
-         </>
+         <p>
+            {response}
+         </p>
       );
    }
 
