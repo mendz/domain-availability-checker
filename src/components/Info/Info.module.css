@@ -9,10 +9,6 @@
   align-items: center;
 }
 
-.Footer button {
-  margin-left: 1rem;
-  cursor: pointer;
-  background: transparent;
-  border: 5px solid rgba(0, 0, 0, 0.25);
-  border-radius: 5px;
+.GithubMark {
+  margin-right: 5px;
 }
