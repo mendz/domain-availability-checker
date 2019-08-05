@@ -33,8 +33,6 @@ const Info = () => {
          <p>
             <SymbolsCheck type="fail" /> - The domain is unavailable.
          </p>
-         <hr />
-         <h2>DISCLAIMER</h2>
          <p>
             <SymbolsCheck type="error" /> - Something went wrong.
          </p>
