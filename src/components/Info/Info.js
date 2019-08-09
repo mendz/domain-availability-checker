@@ -15,11 +15,11 @@ const Info = () => {
    const [on, toggle] = useToggle();
    const [error, setError] = useState('');
 
-   const report = () => {
-      try {
-         reportFeedback();
-      } catch (error) {
-         setError(error.message);
+   const report = async () => {
+      const report = await reportFeedback();
+      // if the report is a string and not a boolean (*true*) something wrong happened
+      if (typeof report === 'string') {
+         setError(report);
          toggle();
       }
    }
