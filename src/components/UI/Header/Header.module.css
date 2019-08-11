@@ -1,10 +1,12 @@
 .Title {
-  font-family: "Cantarell", sans-serif;
+  font-family: 'Cantarell', sans-serif;
   font-size: 2.3rem;
+  margin-bottom: 0;
 }
 
 .Header p {
   font-size: 1.3rem;
+  margin-top: 0;
 }
 
 @media all and (max-width: 500px) {
