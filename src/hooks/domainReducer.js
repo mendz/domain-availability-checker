@@ -1,4 +1,4 @@
-export const FILTER_SET = 'FILTER_SET';
+export const DOMAIN_SET = 'DOMAIN_SET';
 export const FILTER_SHOW_ALL = 'FILTER_SHOW_ALL';
 export const FILTER_SHOW_SUCCESS = 'FILTER_SHOW_SUCCESS';
 export const FILTER_SHOW_FAIL = 'FILTER_SHOW_FAIL';
@@ -8,9 +8,9 @@ const filterByValue = (domains, value) => {
    return domains.filter(domain => domain.name.includes(value));
 }
 
-const useDomainReducer = (state, action) => {
+const domainReducer = (state, action) => {
    switch (action.type) {
-      case FILTER_SET:
+      case DOMAIN_SET:
          return {
             ...state,
             historyDomains: [...action.domains],
@@ -30,10 +30,13 @@ const useDomainReducer = (state, action) => {
       case FILTER_SHOW_FAIL:
          return state.filter(domain => !domain.availability);
       case FILTER_SEARCH:
-         return state.filter(domain => domain.name.includes(action.searchValue));
+         return {
+            ...state,
+            filteredDomains: state.filteredDomains.filter(domain => domain.name.includes(action.searchValue))
+         }
       default:
          return state;
    }
 };
 
-export default useDomainReducer;
+export default domainReducer;
