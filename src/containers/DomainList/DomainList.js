@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import isFQDN from 'validator/lib/isFQDN';
+import { connect } from 'react-redux';
+
+import * as actionCreators from '../../store/actions/domainList';
 
 import DomainCheck from '../../components/DomainCheck/DomainCheck';
 import Button from '../../components/UI/Button/Button';
@@ -10,19 +13,14 @@ import ButtonInfo from '../../components/UniqueButtons/ButtonInfo/ButtonInfo';
 import Info from '../../components/Info/Info';
 
 import axios from '../../axios/axios-domains';
-import {
-  stripDomainFromURL,
-  getDomainFromRequest,
-} from '../../utils/normalizeDomain';
+import { stripDomainFromURL } from '../../utils/normalizeDomain';
 
 import classes from './DomainList.module.css';
 import Modal from '../../components/UI/Modal/Modal';
-import { throwError } from '../../utils/setupErrorsTrack';
 
 class DomainList extends Component {
   state = {
     domainsList: [],
-    decodedDomainList: [],
     validation: {
       required: true,
       isUrl: true,
@@ -30,9 +28,9 @@ class DomainList extends Component {
     },
     invalidDomains: [],
     formIsValid: false,
-    checking: false,
     showInfo: false,
   };
+
   checkValidity = (value, rules) => {
     let isValid = true;
 
@@ -86,131 +84,19 @@ class DomainList extends Component {
 
   checkDomains = async e => {
     e.preventDefault();
-    this.setState({ checking: true });
 
-    // update the state with raw information - invalid / loading
-    const decodedDomainListRaw = [...new Set(this.state.domainsList)]
-      .filter(domain => domain.trim() !== '')
-      .map(domain => {
-        const isInvalid = this.state.invalidDomains.find(
-          invalidDomain => invalidDomain === domain
-        );
-        if (!isInvalid) {
-          return {
-            name: domain,
-            availability: null,
-            networkError: false,
-            invalid: false,
-          };
-        } else {
-          return {
-            name: domain,
-            availability: false,
-            networkError: false,
-            invalid: true,
-          };
-        }
-      });
-
-    this.setState({ decodedDomainList: decodedDomainListRaw });
-
-    // start checking the domain and update the state per domain
-    const finishCheckingFiltered = decodedDomainListRaw.filter(
-      domain => !domain.invalid
+    this.props.onSetDecodedDomains(
+      this.state.domainsList,
+      this.state.invalidDomains
     );
-
-    for (const domain of finishCheckingFiltered) {
-      const response = await this.checkAvailable(domain.name);
-      let resultDomain = {};
-
-      // no response due to error, no need to continue check this domain
-      if (!response) {
-        resultDomain = {
-          ...domain,
-          name: domain.name,
-          networkError: true,
-        };
-        this.updateDomainInDecodedDomainList(domain.name, resultDomain);
-        throwError('No response data', resultDomain);
-        continue;
-      }
-
-      const { data, statusText, config } = response;
-
-      if (data && statusText === 'OK') {
-        resultDomain = {
-          ...domain,
-          name: data.domain,
-          availability: data.isAvailable,
-        };
-      } else if (!statusText === 'OK') {
-        resultDomain = {
-          ...domain,
-          name: getDomainFromRequest(config.url),
-          networkError: true,
-        };
-      }
-
-      this.updateDomainInDecodedDomainList(domain.name, resultDomain);
-    }
-
-    // wait for all the checking to finish in order to reopen the textarea
-    this.setState({ checking: false });
-    this.saveToHistory();
-  };
-
-  checkAvailable = async domainName => {
-    // check if debug is on
-    let debug = '';
-    if (process.env.REACT_APP_DEBUG) {
-      debug = '?debug';
-    }
-
-    const response = await axios(`available/${domainName}${debug}`).catch(err =>
-      console.error(`ERROR!!!\n${err}`)
-    );
-    return response;
-  };
-
-  updateDomainInDecodedDomainList = (domainName, resultDomain) => {
-    const updatedDecodedDomainList = [...this.state.decodedDomainList];
-    const index = updatedDecodedDomainList.findIndex(
-      domainToFind => domainToFind.name === domainName
-    );
-    updatedDecodedDomainList[index] = resultDomain;
-
-    this.setState({ decodedDomainList: updatedDecodedDomainList });
   };
 
   clearDomains = () => {
     this.setState({
       domainsList: [],
-      decodedDomainList: [],
       formIsValid: false,
     });
-  };
-
-  saveToHistory = () => {
-    const oldHistoryString = localStorage.getItem('historyDomains');
-    let currentHistory = '';
-
-    // if there already history it will filter from it the domains that are in the current check
-    // and concat the old history
-    if (oldHistoryString) {
-      const oldHistory = JSON.parse(oldHistoryString);
-      const filteredOld = oldHistory.filter(
-        currentHistory =>
-          !this.state.decodedDomainList.find(
-            domain => domain.name === currentHistory.name
-          )
-      );
-      const combineHistory = this.state.decodedDomainList.concat(filteredOld);
-      currentHistory = JSON.stringify(combineHistory);
-    } else {
-      currentHistory = JSON.stringify(this.state.decodedDomainList);
-    }
-
-    localStorage.setItem('historyDomains', currentHistory);
+    this.props.onClearDecodedDomains();
   };
 
   goToHistory = () => {
@@ -229,8 +115,8 @@ class DomainList extends Component {
     const domains = this.state.domainsList.map(domain => domain).join('\n');
 
     let domainCheck = null;
-    if (this.state.decodedDomainList.length > 0) {
-      domainCheck = <DomainCheck listDomains={this.state.decodedDomainList} />;
+    if (this.props.decodedDomainList.length > 0) {
+      domainCheck = <DomainCheck listDomains={this.props.decodedDomainList} />;
     }
     return (
       <>
@@ -238,7 +124,7 @@ class DomainList extends Component {
           <Button
             clicked={this.goToHistory}
             name="go-to-history"
-            disabled={this.state.checking}
+            disabled={this.props.checking}
           >
             History
           </Button>
@@ -253,7 +139,7 @@ class DomainList extends Component {
             <Textarea
               change={this.domainListHandle}
               value={domains}
-              readOnly={this.state.checking}
+              readOnly={this.props.checking}
               placeholder="List of domain names to check"
             />
             <div className={classes.Buttons}>
@@ -263,7 +149,7 @@ class DomainList extends Component {
               <Button
                 bigger
                 type="submit"
-                disabled={!this.state.formIsValid || this.state.checking}
+                disabled={!this.state.formIsValid || this.props.checking}
               >
                 Check
               </Button>
@@ -276,7 +162,21 @@ class DomainList extends Component {
   }
 }
 
-export default withErrorHandler(DomainList, axios);
+const mapStateToProps = state => ({
+  decodedDomainList: state.decodedDomainList,
+  checking: state.checking,
+});
+
+const mapDispatchToProps = dispatch => ({
+  onSetDecodedDomains: (decodedDomains, invalidDomains) =>
+    dispatch(actionCreators.setDecodedDomains(decodedDomains, invalidDomains)),
+  onClearDecodedDomains: () => dispatch(actionCreators.clearDecodedDomains()),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withErrorHandler(DomainList, axios));
 
 // for testing without the HOC
 export { DomainList };
