@@ -3,7 +3,6 @@ export const updateObject = (oldObject, updateProperties) => ({
   ...updateProperties,
 });
 
-// FIXME: Move is back to the domain list action in order to log the error in the store
 export const checkAvailable = async (domainName, axios) => {
   // check if debug is on
   let debug = '';
