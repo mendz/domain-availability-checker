@@ -11,7 +11,15 @@ exports[`<App/> matches the snapshot 1`] = `
         path="/history"
       />
       <Route
-        component={[Function]}
+        component={
+          Object {
+            "$$typeof": Symbol(react.memo),
+            "WrappedComponent": [Function],
+            "compare": null,
+            "displayName": "Connect(_temp)",
+            "type": [Function],
+          }
+        }
         exact={true}
         path="/"
       />
