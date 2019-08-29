@@ -4,8 +4,10 @@ import { updateObject, saveToHistory } from './utility';
 const initialState = {
   decodedDomainList: [],
   checking: false,
+  networkError: false,
 };
 
+// decoded domains
 const setDecodedDomainsStart = (state, action) =>
   updateObject(state, { checking: true });
 
@@ -13,13 +15,11 @@ const updateDecodedDomainsAll = (state, action) =>
   updateObject(state, { decodedDomainList: action.decodedDomains });
 
 const setDecodedDomainsSuccess = (state, action) =>
-  updateObject(state, { checking: false });
+  updateObject(state, { checking: false, networkError: false });
 
+// TODO: check if not use to remove this
 const setDecodedDomainsFail = (state, action) =>
   updateObject(state, { checking: false });
-
-const clearDecodedDomains = (state, action) =>
-  updateObject(state, { decodedDomainList: [] });
 
 const updateDecodedDomainsItem = (state, action) => {
   const updatedDecodedDomainList = [...state.decodedDomainList];
@@ -30,6 +30,20 @@ const updateDecodedDomainsItem = (state, action) => {
   return updateObject(state, { decodedDomainList: updatedDecodedDomainList });
 };
 
+const clearDecodedDomains = (state, action) =>
+  updateObject(state, { decodedDomainList: [] });
+
+// check connection
+const checkConnectionStart = (state, action) =>
+  updateObject(state, { checking: true });
+
+const checkConnectionFail = (state, action) =>
+  updateObject(state, { checking: false, networkError: true });
+
+const checkConnectionSuccess = (state, action) =>
+  updateObject(state, { checking: false, networkError: false });
+
+// history domains
 const saveDomainsToHistory = (state, action) => {
   saveToHistory(state.decodedDomainList);
   return state;
@@ -57,6 +71,15 @@ const domainListReducer = (state = initialState, action) => {
 
     case actionTypes.SAVE_DOMAINS_TO_HISTORY:
       return saveDomainsToHistory(state, action);
+
+    case actionTypes.CHECK_CONNECTION_START:
+      return checkConnectionStart(state, action);
+
+    case actionTypes.CHECK_CONNECTION_FAIL:
+      return checkConnectionFail(state, action);
+
+    case actionTypes.CHECK_CONNECTION_SUCCESS:
+      return checkConnectionSuccess(state, action);
 
     default:
       return state;
