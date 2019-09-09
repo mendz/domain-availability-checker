@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import isFQDN from 'validator/lib/isFQDN';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import * as actionCreators from '../../store/actions/domainList';
+import {
+  setDecodedDomains,
+  clearDecodedDomains,
+} from '../../store/actions/domainList';
 
 import DomainCheck from '../../components/DomainCheck/DomainCheck';
 import Button from '../../components/UI/Button/Button';
@@ -85,7 +89,7 @@ class DomainList extends Component {
   checkDomains = async e => {
     e.preventDefault();
 
-    this.props.onSetDecodedDomains(
+    this.props.setDecodedDomains(
       this.state.domainsList,
       this.state.invalidDomains
     );
@@ -96,7 +100,7 @@ class DomainList extends Component {
       domainsList: [],
       formIsValid: false,
     });
-    this.props.onClearDecodedDomains();
+    this.props.clearDecodedDomains();
   };
 
   goToHistory = () => {
@@ -167,11 +171,8 @@ const mapStateToProps = state => ({
   checking: state.checking,
 });
 
-const mapDispatchToProps = dispatch => ({
-  onSetDecodedDomains: (decodedDomains, invalidDomains) =>
-    dispatch(actionCreators.setDecodedDomains(decodedDomains, invalidDomains)),
-  onClearDecodedDomains: () => dispatch(actionCreators.clearDecodedDomains()),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ setDecodedDomains, clearDecodedDomains }, dispatch);
 
 export default connect(
   mapStateToProps,
