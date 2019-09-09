@@ -98,4 +98,23 @@ describe('domain list reducer', () => {
       networkError: false,
     });
   });
+
+  it('should clear the decoded domains array', () => {
+    expect(
+      reducer(
+        {
+          decodedDomainList: mockDecodeDomainListArr,
+          checking: false,
+          networkError: false,
+        },
+        {
+          type: actionTypes.CLEAR_DECODED_DOMAINS,
+        }
+      )
+    ).toEqual({
+      decodedDomainList: [],
+      checking: false,
+      networkError: false,
+    });
+  });
 });
