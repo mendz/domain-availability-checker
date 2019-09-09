@@ -3,43 +3,40 @@ import { isProduction } from './checks';
 import { version } from '../../package.json';
 
 function initSentry() {
-   if (isProduction()) {
-      Sentry.init({
-         dsn: "https://6b862531cc6b4c46bad00b3e86a9752f@sentry.io/1498890",
-         release: version
-      });
-   }
+  if (isProduction()) {
+    Sentry.init({
+      dsn: 'https://6b862531cc6b4c46bad00b3e86a9752f@sentry.io/1498890',
+      release: version,
+    });
+  }
 }
 
 function throwError(event, data) {
-   Sentry.withScope(scope => {
-      scope.setExtras({
-         type: event,
-         ...data
-      });
-      scope.setLevel('warning');
-      Sentry.captureException(new Error(event));
-   });
+  Sentry.withScope(scope => {
+    scope.setExtras({
+      type: event,
+      ...data,
+    });
+    scope.setLevel('warning');
+    Sentry.captureException(new Error(event));
+  });
 }
 
 // FIXME: find a better way to implement this
 async function reportFeedback() {
-   if (isProduction()) {
-      const eventId = await Sentry.captureException('User Feedback', () => { });
-      Sentry.showReportDialog({ eventId });
-      // if there is no internet connection the report will be undefined
-      if (!eventId) {
-         return 'There is no internet connection';
-      }
-      return true;
-   } else {
-      // for development
-      return 'Report an issue';
-   }
+  if (isProduction()) {
+    const eventId = await Sentry.captureException('User Feedback', () => {});
+    Sentry.showReportDialog({ eventId });
+    // if there is no internet connection the report will be undefined
+    if (!eventId) {
+      return 'There is no internet connection';
+    }
+    return true;
+  } else {
+    // for development
+    return 'Report an issue';
+  }
 }
 
 export default initSentry;
-export {
-   throwError,
-   reportFeedback
-}
+export { throwError, reportFeedback };
