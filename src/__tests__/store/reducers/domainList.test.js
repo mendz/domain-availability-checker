@@ -1,5 +1,5 @@
-import reducer from '../../store/domainListReducer.js';
-import * as actionTypes from '../../store/actions/actionTypes';
+import reducer from '../../../store/domainListReducer.js';
+import * as actionTypes from '../../../store/actions/actionTypes';
 
 const mockDecodeDomainListArr = [
   { name: 'test', availability: false, networkError: false, invalid: true },
