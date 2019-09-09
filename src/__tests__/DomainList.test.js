@@ -31,7 +31,7 @@ describe('<DomainList />', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<DomainList />);
+    wrapper = shallow(<DomainList decodedDomainList={[]} />);
   });
 
   it('should the Check button is disable at start', () => {
@@ -66,9 +66,7 @@ describe('<DomainList />', () => {
   });
 
   it('should the Check and history button to be disable when checking the domains', () => {
-    wrapper.setState({
-      domainList: ['github.com'],
-      decodedDomainList: ['github.com'],
+    wrapper.setProps({
       checking: true,
     });
     const checkIsDisabled = wrapper
@@ -99,7 +97,7 @@ describe('<DomainList />', () => {
     ).toBe(true);
   });
 
-  it('should alow to check when one domain is valid', () => {
+  it('should alow to check when at least one domain is valid', () => {
     wrapper
       .find(Textarea)
       .props()
@@ -110,6 +108,9 @@ describe('<DomainList />', () => {
     ]);
     expect(wrapper.state().invalidDomains).toEqual(mockResultInvalid);
     expect(wrapper.state().formIsValid).toBe(true);
+
+    // set the checking to false
+    wrapper.setProps({ checking: false });
     expect(
       wrapper
         .find(Button)
@@ -118,16 +119,8 @@ describe('<DomainList />', () => {
     ).toBe(false);
   });
 
-  it('should show the DomainsCheck list when state.decodedDomainList is more then one', () => {
-    wrapper.setState({ decodedDomainList: mockDecodeDomainListArr });
+  it('should show the DomainsCheck list when props.decodedDomainList is more then one', () => {
+    wrapper.setProps({ decodedDomainList: mockDecodeDomainListArr });
     expect(wrapper.find(DomainCheck)).toHaveLength(1);
   });
-
-  // TODO: Get back to this test
-  // it('should decoded the good domains', async () => {
-  //    wrapper.find(Textarea).props().change({ target: { value: mockValidStringOfDomains } });
-  //    const fakeEvent = { preventDefault: () => true };
-  //    wrapper.find('form').simulate('submit', fakeEvent);
-  //    expect(wrapper.state().decodedDomainList).toEqual(mockDecodeDomainListArr);
-  // });
 });
