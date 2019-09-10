@@ -96,6 +96,7 @@ class HistoryDomains extends Component {
     // TODO: break this to separate components
     // TODO: show which sort type is selected
     // TODO: disable the other sort types (not ALL) if there are no history domains
+    // TODO: change sort success to sort available
     return (
       <>
         <div className={classes.BackButton}>
@@ -175,3 +176,5 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(HistoryDomains);
+
+export { HistoryDomains };

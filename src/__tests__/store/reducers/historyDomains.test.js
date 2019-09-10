@@ -183,8 +183,12 @@ describe('history domains reducer', () => {
   });
 
   it('should filter the history domains to show all domains', () => {
+    const mockWithHistoryDomainsWithFilter = {
+      ...mockWithHistoryDomainsWithoutFilter,
+      sorted: true,
+    };
     expect(
-      reducer(mockWithHistoryDomainsWithoutFilter, {
+      reducer(mockWithHistoryDomainsWithFilter, {
         type: actionTypes.HISTORY_DOMAINS_SORT_FILTER_ALL,
         allDomains: mockHistoryDomainListArr,
       })

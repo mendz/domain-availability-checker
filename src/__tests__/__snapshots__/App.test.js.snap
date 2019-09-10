@@ -7,7 +7,15 @@ exports[`<App/> matches the snapshot 1`] = `
   <BrowserRouter>
     <Switch>
       <Route
-        component={[Function]}
+        component={
+          Object {
+            "$$typeof": Symbol(react.memo),
+            "WrappedComponent": [Function],
+            "compare": null,
+            "displayName": "Connect(HistoryDomains)",
+            "type": [Function],
+          }
+        }
         path="/history"
       />
       <Route
