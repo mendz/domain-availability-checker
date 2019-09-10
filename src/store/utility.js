@@ -36,3 +36,18 @@ export const saveToHistory = decodedDomainList => {
 
   localStorage.setItem('historyDomains', currentHistory);
 };
+
+// TODO: add test
+export const loadHistory = () => {
+  const historyString = localStorage.getItem('historyDomains');
+
+  if (historyString) {
+    const history = JSON.parse(historyString);
+    return history;
+  }
+  return [];
+};
+
+export const removeHistory = () => {
+  localStorage.removeItem('historyDomains');
+};

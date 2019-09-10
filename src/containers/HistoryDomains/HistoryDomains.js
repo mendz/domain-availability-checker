@@ -1,5 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import {
+  loadHistory,
+  removeHistory,
+  sortBy,
+  setFilteredHistoryDomains,
+  resetFilter,
+} from '../../store/actions/historyDomains';
 
 import DomainCheck from '../../components/DomainCheck/DomainCheck';
 import Button from '../../components/UI/Button/Button';
@@ -16,37 +26,27 @@ class HistoryDomains extends Component {
   };
 
   state = {
-    historyDomains: [],
-    filteredDomains: [],
-    inputSearchData: null,
     showModal: false,
-    sorted: false,
   };
 
   componentDidMount() {
-    this.loadHistory();
-  }
-
-  loadHistory = () => {
-    const historyString = localStorage.getItem('historyDomains');
-
-    if (historyString) {
-      const history = JSON.parse(historyString);
-      this.setState({ historyDomains: history, filteredDomains: history });
+    if (this.props.historyDomains.length === 0) {
+      this.props.loadHistory();
     }
-  };
+  }
 
   goBack = () => {
     this.props.history.push('/');
   };
 
+  // TODO: check if maybe it best to move this to the reducer
   filterDomains = value => {
     // 1. if the value is "empty" use the inputSearchData from state, happens in the sortBt function
-    const searchValue = value || this.state.inputSearchData;
+    const searchValue = value || this.props.inputSearchData;
     // 2. check if domains are sorted and search have value, if so use the filtered domains, if not it means that it filtered from the sort button and we need to filter it from all the domains
-    let domains = this.state.historyDomains;
-    if (this.state.sorted && value) {
-      domains = this.state.filteredDomains;
+    let domains = this.props.historyDomains;
+    if (this.props.sorted && value) {
+      domains = this.props.filteredDomains;
     }
     return domains.filter(domain => domain.name.includes(searchValue));
   };
@@ -55,56 +55,26 @@ class HistoryDomains extends Component {
     const { value } = event.target;
 
     if (value.trim() === '') {
-      this.setState({
-        filteredDomains: this.state.historyDomains,
-        inputSearchData: null,
-      });
+      this.props.setFilteredHistoryDomains(this.props.historyDomains, null);
     } else {
       const updatedDomains = this.filterDomains(value);
-      this.setState({
-        filteredDomains: updatedDomains,
-        inputSearchData: value,
-      });
+      this.props.setFilteredHistoryDomains(updatedDomains, value);
     }
   };
 
   sortBy = type => {
     // get the correct domains filtered/all of them.
-    const allDomains = this.state.inputSearchData
+    const allDomains = this.props.inputSearchData
       ? [...this.filterDomains()]
-      : [...this.state.historyDomains];
+      : [...this.props.historyDomains];
 
-    switch (type) {
-      case 'all':
-        this.setState({ filteredDomains: allDomains });
-        break;
-      case 'success':
-        this.setState({
-          filteredDomains: allDomains.filter(domain => domain.availability),
-          sorted: true,
-        });
-        break;
-      case 'fail':
-        this.setState({
-          filteredDomains: allDomains.filter(domain => !domain.availability),
-          sorted: true,
-        });
-        break;
-
-      default:
-        this.setState({ filteredDomains: allDomains });
-        break;
-    }
+    this.props.sortBy(type, allDomains);
   };
 
   resetStateHistory = () => {
-    localStorage.removeItem('historyDomains');
+    this.props.removeHistory();
     this.setState({
-      historyDomains: [],
-      filteredDomains: [],
-      inputSearchData: null,
       showModal: false,
-      sorted: false,
     });
   };
 
@@ -119,22 +89,29 @@ class HistoryDomains extends Component {
   render() {
     let domainList = <p>No history saved...</p>;
 
-    if (this.state.historyDomains.length > 0) {
-      domainList = <DomainCheck listDomains={this.state.filteredDomains} />;
+    if (this.props.historyDomains.length > 0) {
+      domainList = <DomainCheck listDomains={this.props.filteredDomains} />;
     }
 
+    // TODO: break this to separate components
+    // TODO: show which sort type is selected
+    // TODO: disable the other sort types (not ALL) if there are no history domains
     return (
       <>
         <div className={classes.BackButton}>
           <Button clicked={this.goBack}>Back Home</Button>
         </div>
         <div className={classes.Filters}>
+          <Button name="reset-filter" onClick={this.props.resetFilter}>
+            Rest Filter
+          </Button>
           <input
             type="search"
             name="domains-filter"
             id="domains-filter"
             onChange={this.searchDomainsHandler}
             placeholder="Search Domains..."
+            value={this.props.inputSearchData}
           />
           <label>Sort by: </label>
           <Button clicked={() => this.sortBy('all')} name="show-all">
@@ -148,7 +125,7 @@ class HistoryDomains extends Component {
           </Button>
           <Button
             name="clear-history"
-            disabled={this.state.historyDomains.length === 0}
+            disabled={this.props.historyDomains.length === 0}
             clicked={this.clearHistory}
           >
             Clear History
@@ -157,11 +134,12 @@ class HistoryDomains extends Component {
             <Confirmation
               clickedOK={this.resetStateHistory}
               clickedCancel={this.closeModal}
+              additionalText="Please note that this action can't be undone! It will DELETE the all history."
             />
           </Modal>
           <ButtonCopy
-            disabled={this.state.historyDomains.length === 0}
-            copyText={this.state.filteredDomains
+            disabled={this.props.historyDomains.length === 0}
+            copyText={this.props.filteredDomains
               .map(domain => domain.name)
               .join('\n')}
           >
@@ -174,4 +152,26 @@ class HistoryDomains extends Component {
   }
 }
 
-export default HistoryDomains;
+const mapStateToProps = state => ({
+  historyDomains: state.historyDomains.historyDomains,
+  filteredDomains: state.historyDomains.filteredDomains,
+  sorted: state.historyDomains.sorted,
+  inputSearchData: state.historyDomains.inputSearchData,
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      loadHistory,
+      sortBy,
+      setFilteredHistoryDomains,
+      removeHistory,
+      resetFilter,
+    },
+    dispatch
+  );
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HistoryDomains);

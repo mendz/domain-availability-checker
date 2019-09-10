@@ -8,6 +8,8 @@ import {
   clearDecodedDomains,
 } from '../../store/actions/domainList';
 
+import { saveToHistory } from '../../store/actions/historyDomains';
+
 import DomainCheck from '../../components/DomainCheck/DomainCheck';
 import Button from '../../components/UI/Button/Button';
 import Textarea from '../../components/UI/Textarea/Textarea';
@@ -89,10 +91,11 @@ class DomainList extends Component {
   checkDomains = async e => {
     e.preventDefault();
 
-    this.props.setDecodedDomains(
+    await this.props.setDecodedDomains(
       this.state.domainsList,
       this.state.invalidDomains
     );
+    this.props.saveToHistory(this.props.decodedDomainList);
   };
 
   clearDomains = () => {
@@ -167,12 +170,15 @@ class DomainList extends Component {
 }
 
 const mapStateToProps = state => ({
-  decodedDomainList: state.decodedDomainList,
-  checking: state.checking,
+  decodedDomainList: state.domainList.decodedDomainList,
+  checking: state.domainList.checking,
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ setDecodedDomains, clearDecodedDomains }, dispatch);
+  bindActionCreators(
+    { setDecodedDomains, clearDecodedDomains, saveToHistory },
+    dispatch
+  );
 
 export default connect(
   mapStateToProps,

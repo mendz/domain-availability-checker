@@ -1,4 +1,4 @@
-import reducer from '../../../store/domainListReducer.js';
+import reducer from '../../../store/reducers/domainList.js';
 import * as actionTypes from '../../../store/actions/actionTypes';
 
 const mockDecodeDomainListArr = [

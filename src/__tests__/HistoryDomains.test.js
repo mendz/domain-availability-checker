@@ -42,6 +42,7 @@ const mockDomains = [
   { name: 'mendy', availability: false, networkError: false, invalid: true },
 ];
 
+// TODO: fix the test to work after adding the redux store
 describe('<HistoryDomains /> with local history', () => {
   let wrapper;
 

@@ -5,21 +5,23 @@ import Button from '../UI/Button/Button';
 
 import classes from './Confirmation.module.css';
 
-const Confirmation = ({ clickedOK, clickedCancel }) => {
-   return (
-      <div className={classes.Confirmation}>
-         <p>Are you sure?</p>
-         <div className={classes.Buttons}>
-            <Button clicked={clickedOK}>OK</Button>
-            <Button clicked={clickedCancel}>Cancel</Button>
-         </div>
-      </div>
-   )
-}
+const Confirmation = ({ clickedOK, clickedCancel, additionalText }) => (
+  <div className={classes.Confirmation}>
+    <p>Are you sure?</p>
+    {additionalText && (
+      <p className={classes.AdditionalText}>{additionalText}</p>
+    )}
+    <div className={classes.Buttons}>
+      <Button clicked={clickedOK}>OK</Button>
+      <Button clicked={clickedCancel}>Cancel</Button>
+    </div>
+  </div>
+);
 
 Confirmation.propTypes = {
-   clickedOK: PropTypes.func.isRequired,
-   clickedCancel: PropTypes.func.isRequired,
-}
+  clickedOK: PropTypes.func.isRequired,
+  clickedCancel: PropTypes.func.isRequired,
+  additionalText: PropTypes.string,
+};
 
 export default Confirmation;
