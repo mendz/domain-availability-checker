@@ -1,7 +1,7 @@
-.Success {
-   color: var(--green);
+.Available {
+  color: var(--green);
 }
 
-.Fail {
-   color: var(--red);
+.Unavailable {
+  color: var(--red);
 }

@@ -7,11 +7,11 @@ const SymbolsCheck = ({ type }) => {
   let symbol = null;
 
   switch (type) {
-    case 'success':
-      symbol = <span className={classes.Success}>✔</span>;
+    case 'available':
+      symbol = <span className={classes.Available}>✔</span>;
       break;
-    case 'fail':
-      symbol = <span className={classes.Fail}>✖</span>;
+    case 'unavailable':
+      symbol = <span className={classes.Unavailable}>✖</span>;
       break;
     case 'error':
       symbol = <span className={classes.Fail}>ERROR</span>;

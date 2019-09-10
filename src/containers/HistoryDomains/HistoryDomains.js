@@ -7,7 +7,7 @@ import {
   loadHistory,
   removeHistory,
   sortBy,
-  setFilteredHistoryDomains,
+  changeFilteredBySearchValue,
   resetFilter,
 } from '../../store/actions/historyDomains';
 
@@ -39,36 +39,9 @@ class HistoryDomains extends Component {
     this.props.history.push('/');
   };
 
-  // TODO: check if maybe it best to move this to the reducer
-  filterDomains = value => {
-    // 1. if the value is "empty" use the inputSearchData from state, happens in the sortBt function
-    const searchValue = value || this.props.inputSearchData;
-    // 2. check if domains are sorted and search have value, if so use the filtered domains, if not it means that it filtered from the sort button and we need to filter it from all the domains
-    let domains = this.props.historyDomains;
-    if (this.props.sorted && value) {
-      domains = this.props.filteredDomains;
-    }
-    return domains.filter(domain => domain.name.includes(searchValue));
-  };
-
   searchDomainsHandler = event => {
     const { value } = event.target;
-
-    if (value.trim() === '') {
-      this.props.setFilteredHistoryDomains(this.props.historyDomains, null);
-    } else {
-      const updatedDomains = this.filterDomains(value);
-      this.props.setFilteredHistoryDomains(updatedDomains, value);
-    }
-  };
-
-  sortBy = type => {
-    // get the correct domains filtered/all of them.
-    const allDomains = this.props.inputSearchData
-      ? [...this.filterDomains()]
-      : [...this.props.historyDomains];
-
-    this.props.sortBy(type, allDomains);
+    this.props.changeFilteredBySearchValue(value);
   };
 
   resetStateHistory = () => {
@@ -96,7 +69,6 @@ class HistoryDomains extends Component {
     // TODO: break this to separate components
     // TODO: show which sort type is selected
     // TODO: disable the other sort types (not ALL) if there are no history domains
-    // TODO: change sort success to sort available
     return (
       <>
         <div className={classes.BackButton}>
@@ -115,14 +87,20 @@ class HistoryDomains extends Component {
             value={this.props.inputSearchData}
           />
           <label>Sort by: </label>
-          <Button clicked={() => this.sortBy('all')} name="show-all">
+          <Button clicked={() => this.props.sortBy('all')} name="show-all">
             All
           </Button>
-          <Button clicked={() => this.sortBy('success')} name="show-success">
-            <SymbolsCheck type="success" />
+          <Button
+            clicked={() => this.props.sortBy('available')}
+            name="show-available"
+          >
+            <SymbolsCheck type="available" />
           </Button>
-          <Button clicked={() => this.sortBy('fail')} name="show-fail">
-            <SymbolsCheck type="fail" />
+          <Button
+            clicked={() => this.props.sortBy('unavailable')}
+            name="show-unavailable"
+          >
+            <SymbolsCheck type="unavailable" />
           </Button>
           <Button
             name="clear-history"
@@ -165,7 +143,7 @@ const mapDispatchToProps = dispatch =>
     {
       loadHistory,
       sortBy,
-      setFilteredHistoryDomains,
+      changeFilteredBySearchValue,
       removeHistory,
       resetFilter,
     },
