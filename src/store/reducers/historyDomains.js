@@ -45,7 +45,7 @@ const onRemoveHistory = (state, action) => {
 
 const onResetFilter = (state, action) =>
   updateObject(state, {
-    filteredDomains: [],
+    filteredDomains: state.historyDomains,
     sorted: false,
     inputSearchData: '',
   });
