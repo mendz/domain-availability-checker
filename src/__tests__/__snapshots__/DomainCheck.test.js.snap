@@ -320,13 +320,7 @@ exports[`<DomainCheck /> matches the snapshot 1`] = `
           >
             <SymbolsCheck
               type="fail"
-            >
-              <span
-                className="Fail"
-              >
-                ✖
-              </span>
-            </SymbolsCheck>
+            />
           </span>
         </div>
       </div>
