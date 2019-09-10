@@ -1,4 +1,4 @@
-import { saveToHistory } from '../../store/utility';
+import { saveToHistory, loadHistory, removeHistory } from '../../store/utility';
 
 const mockDecodeDomainListArr = [
   { name: 'test', availability: false, networkError: false, invalid: true },
@@ -23,13 +23,13 @@ const mockDecodeDomainListArr = [
 ];
 
 describe('utility: saveToHistory', () => {
-  it('should save to history', () => {
+  it('should save to local history', () => {
     saveToHistory(mockDecodeDomainListArr);
     const domainsFromHistory = localStorage.getItem('historyDomains');
     expect(JSON.parse(domainsFromHistory)).toEqual(mockDecodeDomainListArr);
   });
 
-  it('should save and add to current history', () => {
+  it('should save and add to current local history', () => {
     const smallMockDecodeDomainListArr = [
       {
         name: 'test2',
@@ -48,5 +48,24 @@ describe('utility: saveToHistory', () => {
       ...mockDecodeDomainListArr,
       ...smallMockDecodeDomainListArr,
     ]);
+  });
+
+  it('should load from local history', () => {
+    localStorage.setItem(
+      'historyDomains',
+      JSON.stringify(mockDecodeDomainListArr)
+    );
+    const historyDomains = loadHistory();
+    expect(historyDomains).toEqual(mockDecodeDomainListArr);
+  });
+
+  it('should remove the local history', () => {
+    localStorage.setItem(
+      'historyDomains',
+      JSON.stringify(mockDecodeDomainListArr)
+    );
+    removeHistory();
+    const historyDomains = localStorage.getItem('historyDomains');
+    expect(historyDomains).toBeNull();
   });
 });

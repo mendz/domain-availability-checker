@@ -7,7 +7,6 @@ import {
 } from '../utility';
 
 // TODO: add/replace(sorted) the type of selected sort option
-// TODO: add tests to the reducers
 const initialState = {
   historyDomains: [],
   filteredDomains: [],
@@ -53,7 +52,7 @@ const onResetFilter = (state, action) =>
 
 const onSortByAll = (state, action) => {
   const { allDomains } = action;
-  return updateObject(state, { filteredDomains: allDomains });
+  return updateObject(state, { filteredDomains: allDomains, sorted: false });
 };
 
 const onSortBySuccess = (state, action) => {

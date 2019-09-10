@@ -37,7 +37,6 @@ export const saveToHistory = decodedDomainList => {
   localStorage.setItem('historyDomains', currentHistory);
 };
 
-// TODO: add test
 export const loadHistory = () => {
   const historyString = localStorage.getItem('historyDomains');
 
