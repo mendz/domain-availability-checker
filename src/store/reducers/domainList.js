@@ -1,5 +1,5 @@
-import * as actionTypes from './actions/actionTypes';
-import { updateObject, saveToHistory } from './utility';
+import * as actionTypes from '../actions/actionTypes';
+import { updateObject } from '../utility';
 
 const initialState = {
   decodedDomainList: [],
@@ -43,12 +43,6 @@ const checkConnectionFail = (state, action) =>
 const checkConnectionSuccess = (state, action) =>
   updateObject(state, { checking: false, networkError: false });
 
-// history domains
-const saveDomainsToHistory = (state, action) => {
-  saveToHistory(state.decodedDomainList);
-  return state;
-};
-
 const domainListReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SET_DECODED_DOMAINS_START:
@@ -68,9 +62,6 @@ const domainListReducer = (state = initialState, action) => {
 
     case actionTypes.CLEAR_DECODED_DOMAINS:
       return clearDecodedDomains(state, action);
-
-    case actionTypes.SAVE_DOMAINS_TO_HISTORY:
-      return saveDomainsToHistory(state, action);
 
     case actionTypes.CHECK_CONNECTION_START:
       return checkConnectionStart(state, action);

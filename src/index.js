@@ -5,7 +5,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 
-import domainListReducer from './store/domainListReducer';
+import rootReducer from './store/reducers/rootReducer';
 
 import setupErrorsTrack from './utils/setupErrorsTrack';
 
@@ -18,7 +18,7 @@ setupErrorsTrack();
 const middleware = [thunk];
 
 const store = createStore(
-  domainListReducer,
+  rootReducer,
   composeWithDevTools(applyMiddleware(...middleware))
 );
 

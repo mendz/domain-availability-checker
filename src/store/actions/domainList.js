@@ -39,10 +39,6 @@ const updatedDecodedDomainItem = (domainName, resultDomain) => ({
   resultDomain,
 });
 
-const saveToHistory = () => ({
-  type: actionTypes.SAVE_DOMAINS_TO_HISTORY,
-});
-
 export const setDecodedDomains = (
   domainsList,
   invalidDomains
@@ -128,6 +124,5 @@ export const setDecodedDomains = (
 
     // wait for all the checking to finish in order to reopen the textarea
     dispatch(setDecodedDomainsSuccess());
-    dispatch(saveToHistory());
   }
 };
