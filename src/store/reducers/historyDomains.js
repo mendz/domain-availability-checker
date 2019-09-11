@@ -10,7 +10,7 @@ const initialState = {
   historyDomains: [],
   filteredDomains: [],
   inputSearchData: '',
-  sorted: 'all', // TODO: change to filterBy for all occurrences
+  filterType: 'all',
 };
 
 const onSaveHistory = (state, action) => {
@@ -27,7 +27,7 @@ const onLoadHistory = (state, action) => {
   return updateObject(state, {
     historyDomains: history,
     filteredDomains: history,
-    sorted: 'all',
+    filterType: 'all',
     inputSearchData: '',
   });
 };
@@ -37,7 +37,7 @@ const onRemoveHistory = (state, action) => {
   return updateObject(state, {
     historyDomains: [],
     filteredDomains: [],
-    sorted: 'all',
+    filterType: 'all',
     inputSearchData: '',
   });
 };
@@ -45,13 +45,16 @@ const onRemoveHistory = (state, action) => {
 const onResetFilter = (state, action) =>
   updateObject(state, {
     filteredDomains: state.historyDomains,
-    sorted: 'all',
+    filterType: 'all',
     inputSearchData: '',
   });
 
 const onSortByAll = (state, action) => {
   const { allDomains } = action;
-  return updateObject(state, { filteredDomains: allDomains, sorted: 'all' });
+  return updateObject(state, {
+    filteredDomains: allDomains,
+    filterType: 'all',
+  });
 };
 
 const onSortBySuccess = (state, action) => {
@@ -59,7 +62,7 @@ const onSortBySuccess = (state, action) => {
   const filtered = allDomains.filter(domain => domain.availability);
   return updateObject(state, {
     filteredDomains: filtered,
-    sorted: 'available',
+    filterType: 'available',
   });
 };
 
@@ -68,7 +71,7 @@ const onSortByFail = (state, action) => {
   const filtered = allDomains.filter(domain => !domain.availability);
   return updateObject(state, {
     filteredDomains: filtered,
-    sorted: 'unavailable',
+    filterType: 'unavailable',
   });
 };
 

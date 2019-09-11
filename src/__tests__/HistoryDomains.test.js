@@ -43,7 +43,7 @@ const mockDomains = [
 ];
 
 const mockLoadHistory = jest.fn(() => {});
-const mockSortBy = jest.fn(() => {});
+const mockFilterBy = jest.fn(() => {});
 const mockRemoveHistory = jest.fn(() => {});
 
 describe('<HistoryDomains /> with local history', () => {
@@ -57,7 +57,7 @@ describe('<HistoryDomains /> with local history', () => {
         historyDomains={mockDomains}
         filteredDomains={mockDomains}
         loadHistory={mockLoadHistory}
-        sortBy={mockSortBy}
+        filterBy={mockFilterBy}
         removeHistory={mockRemoveHistory}
       />
     );
@@ -205,7 +205,7 @@ describe('<HistoryDomains /> with no local history', () => {
         historyDomains={[]}
         filteredDomains={[]}
         loadHistory={mockLoadHistory}
-        sortBy={mockSortBy}
+        filterBy={mockFilterBy}
         removeHistory={mockRemoveHistory}
       />
     );

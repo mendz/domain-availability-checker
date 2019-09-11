@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import {
   loadHistory,
   removeHistory,
-  sortBy,
+  filterBy,
   changeFilteredBySearchValue,
   resetFilter,
 } from '../../store/actions/historyDomains';
@@ -86,18 +86,18 @@ class HistoryDomains extends Component {
             placeholder="Search Domains..."
             value={this.props.inputSearchData}
           />
-          <label>Sort by: </label>
-          <Button clicked={() => this.props.sortBy('all')} name="show-all">
+          <label>Filter by: </label>
+          <Button clicked={() => this.props.filterBy('all')} name="show-all">
             All
           </Button>
           <Button
-            clicked={() => this.props.sortBy('available')}
+            clicked={() => this.props.filterBy('available')}
             name="show-available"
           >
             <SymbolsCheck type="available" />
           </Button>
           <Button
-            clicked={() => this.props.sortBy('unavailable')}
+            clicked={() => this.props.filterBy('unavailable')}
             name="show-unavailable"
           >
             <SymbolsCheck type="unavailable" />
@@ -134,7 +134,7 @@ class HistoryDomains extends Component {
 const mapStateToProps = state => ({
   historyDomains: state.historyDomains.historyDomains,
   filteredDomains: state.historyDomains.filteredDomains,
-  sorted: state.historyDomains.sorted,
+  filterType: state.historyDomains.filterType,
   inputSearchData: state.historyDomains.inputSearchData,
 });
 
@@ -142,7 +142,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       loadHistory,
-      sortBy,
+      filterBy,
       changeFilteredBySearchValue,
       removeHistory,
       resetFilter,

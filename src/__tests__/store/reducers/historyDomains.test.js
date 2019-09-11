@@ -40,14 +40,14 @@ const mockWithHistoryDomains = {
     },
   ],
   inputSearchData: 'm',
-  sorted: 'all',
+  filterType: 'all',
 };
 
 const mockWithHistoryDomainsWithoutFilter = {
   historyDomains: mockHistoryDomainListArr,
   filteredDomains: mockHistoryDomainListArr,
   inputSearchData: '',
-  sorted: 'all',
+  filterType: 'all',
 };
 
 describe('history domains reducer', () => {
@@ -56,7 +56,7 @@ describe('history domains reducer', () => {
       historyDomains: [],
       filteredDomains: [],
       inputSearchData: '',
-      sorted: 'all',
+      filterType: 'all',
     });
   });
 
@@ -70,7 +70,7 @@ describe('history domains reducer', () => {
       historyDomains: mockHistoryDomainListArr,
       filteredDomains: mockHistoryDomainListArr,
       inputSearchData: '',
-      sorted: 'all',
+      filterType: 'all',
     });
 
     const loadedHistoryDomains = localStorage.getItem('historyDomains');
@@ -91,7 +91,7 @@ describe('history domains reducer', () => {
       historyDomains: mockHistoryDomainListArr,
       filteredDomains: mockHistoryDomainListArr,
       inputSearchData: '',
-      sorted: 'all',
+      filterType: 'all',
     });
   });
 
@@ -108,7 +108,7 @@ describe('history domains reducer', () => {
     ).toEqual({
       historyDomains: [],
       filteredDomains: [],
-      sorted: 'all',
+      filterType: 'all',
       inputSearchData: '',
     });
 
@@ -124,7 +124,7 @@ describe('history domains reducer', () => {
     ).toEqual({
       historyDomains: mockHistoryDomainListArr,
       filteredDomains: mockHistoryDomainListArr,
-      sorted: 'all',
+      filterType: 'all',
       inputSearchData: '',
     });
   });
@@ -146,7 +146,7 @@ describe('history domains reducer', () => {
         },
       ],
       inputSearchData: '',
-      sorted: 'available',
+      filterType: 'available',
     });
   });
   it('should filter the history domains to only unavailable domains and failed checks', () => {
@@ -178,14 +178,14 @@ describe('history domains reducer', () => {
         },
       ],
       inputSearchData: '',
-      sorted: 'unavailable',
+      filterType: 'unavailable',
     });
   });
 
   it('should filter the history domains to show all domains', () => {
     const mockWithHistoryDomainsWithFilter = {
       ...mockWithHistoryDomainsWithoutFilter,
-      sorted: 'unavailable',
+      filterType: 'unavailable',
     };
     expect(
       reducer(mockWithHistoryDomainsWithFilter, {
@@ -196,7 +196,7 @@ describe('history domains reducer', () => {
       historyDomains: mockHistoryDomainListArr,
       filteredDomains: mockHistoryDomainListArr,
       inputSearchData: '',
-      sorted: 'all',
+      filterType: 'all',
     });
   });
 

@@ -4,14 +4,14 @@ const filterDomains = (
   valueToSearch,
   historyDomains,
   filteredDomains,
-  sorted,
+  filterType,
   inputSearchData = ''
 ) => {
   // 1. if the value is "empty" use the inputSearchData from state, happens in the sortBt function
   const searchValue = valueToSearch || inputSearchData;
-  // 2. check if domains are sorted and search have value, if so use the filtered domains, if not it means that it filtered from the sort button and we need to filter it from all the domains
+  // 2. check if domains are filterType and search have value, if so use the filtered domains, if not it means that it filtered from the sort button and we need to filter it from all the domains
   let domains = historyDomains;
-  if (sorted !== 'all' && valueToSearch) {
+  if (filterType !== 'all' && valueToSearch) {
     domains = filteredDomains;
   }
   return domains.filter(domain => domain.name.includes(searchValue));
@@ -34,27 +34,27 @@ export const resetFilter = () => ({
   type: actionTypes.HISTORY_DOMAINS_RESET_FILTER,
 });
 
-const sortByAll = allDomains => ({
+const filterByAll = allDomains => ({
   type: actionTypes.HISTORY_DOMAINS_SORT_FILTER_ALL,
   allDomains,
 });
 
-const sortByAvailable = allDomains => ({
+const filterByAvailable = allDomains => ({
   type: actionTypes.HISTORY_DOMAINS_SORT_FILTER_AVAILABLE,
   allDomains,
 });
 
-const sortByUnavailable = allDomains => ({
+const filterByUnavailable = allDomains => ({
   type: actionTypes.HISTORY_DOMAINS_SORT_FILTER_UNAVAILABLE,
   allDomains,
 });
 
-export const sortBy = type => (dispatch, getState) => {
+export const filterBy = type => (dispatch, getState) => {
   const {
     historyDomains,
     inputSearchData,
     filteredDomains,
-    sorted,
+    filterType,
   } = getState().historyDomains;
   // get the correct domains filtered/all of them.
   const allDomains =
@@ -64,7 +64,7 @@ export const sortBy = type => (dispatch, getState) => {
             null,
             historyDomains,
             filteredDomains,
-            sorted,
+            filterType,
             inputSearchData
           ),
         ]
@@ -72,19 +72,19 @@ export const sortBy = type => (dispatch, getState) => {
 
   switch (type) {
     case 'all':
-      dispatch(sortByAll(allDomains));
+      dispatch(filterByAll(allDomains));
       break;
 
     case 'available':
-      dispatch(sortByAvailable(allDomains));
+      dispatch(filterByAvailable(allDomains));
       break;
 
     case 'unavailable':
-      dispatch(sortByUnavailable(allDomains));
+      dispatch(filterByUnavailable(allDomains));
       break;
 
     default:
-      dispatch(sortByAll(allDomains));
+      dispatch(filterByAll(allDomains));
       break;
   }
 };
@@ -106,24 +106,28 @@ export const changeFilteredBySearchValue = valueToSearch => (
   dispatch,
   getState
 ) => {
-  const { historyDomains, filteredDomains, sorted } = getState().historyDomains;
+  const {
+    historyDomains,
+    filteredDomains,
+    filterType,
+  } = getState().historyDomains;
 
-  // no search value - clear the search, however have sorted - filter by sort
-  if (valueToSearch.trim() === '' && sorted !== 'all') {
+  // no search value - clear the search and the filterType is no ALL
+  if (valueToSearch.trim() === '' && filterType !== 'all') {
     dispatch(clearFilteredSearchValue());
-    dispatch(sortBy(sorted));
+    dispatch(filterBy(filterType));
 
-    // no search value and don't have sorted - reset the filter
-  } else if (valueToSearch.trim() === '' && sorted === 'all') {
+    // no search value and don't have filterType - reset the filter
+  } else if (valueToSearch.trim() === '' && filterType === 'all') {
     dispatch(resetFilter());
 
-    // we have search value with sorted
+    // we have search value with filterType
   } else {
     const updatedDomains = filterDomains(
       valueToSearch,
       historyDomains,
       filteredDomains,
-      sorted
+      filterType
     );
     dispatch(
       changeFilteredBySearchValueWithSort(updatedDomains, valueToSearch)
