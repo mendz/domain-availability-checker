@@ -45,6 +45,8 @@ const mockDomains = [
 const mockLoadHistory = jest.fn(() => {});
 const mockFilterBy = jest.fn(() => {});
 const mockRemoveHistory = jest.fn(() => {});
+const mockChangeFilteredBySearchValue = jest.fn(() => {});
+const resetFilter = jest.fn(() => {});
 
 describe('<HistoryDomains /> with local history', () => {
   let wrapper;
@@ -59,6 +61,8 @@ describe('<HistoryDomains /> with local history', () => {
         loadHistory={mockLoadHistory}
         filterBy={mockFilterBy}
         removeHistory={mockRemoveHistory}
+        changeFilteredBySearchValue={mockChangeFilteredBySearchValue}
+        resetFilter={resetFilter}
       />
     );
   });
@@ -67,9 +71,55 @@ describe('<HistoryDomains /> with local history', () => {
     expect(wrapper.find(DomainCheck)).toHaveLength(1);
   });
 
-  // TODO: change the test to check if the correct button is selected, because the sorting is already tests in the reducer
-  // button ✔ (show-success) will change filteredDomains to be one item
-  // button ✖ (show-fail) will change filteredDomains to be three item
+  it('click filter by available - ✔ will call the function this.props.filterBy with the argument: "available"', () => {
+    wrapper
+      .find(Button)
+      .findWhere(comp => comp.prop('name') === 'show-available')
+      .props()
+      .clicked();
+    expect(wrapper.instance().props.filterBy).toHaveBeenCalledWith('available');
+  });
+
+  it('click filter by unavailable - ✖ will call the function this.props.filterBy with the argument: "unavailable"', () => {
+    wrapper
+      .find(Button)
+      .findWhere(comp => comp.prop('name') === 'show-unavailable')
+      .props()
+      .clicked();
+    expect(wrapper.instance().props.filterBy).toHaveBeenCalledWith(
+      'unavailable'
+    );
+  });
+
+  it('click filter by all will call the function this.props.filterBy with the argument: "all"', () => {
+    wrapper
+      .find(Button)
+      .findWhere(comp => comp.prop('name') === 'show-all')
+      .props()
+      .clicked();
+    expect(wrapper.instance().props.filterBy).toHaveBeenCalledWith('all');
+  });
+
+  it('change the search input will call the function this.props.changeFilteredBySearchValue with the correct argument', () => {
+    wrapper.find('input').simulate('change', { target: { value: 's' } });
+    expect(
+      wrapper.instance().props.changeFilteredBySearchValue
+    ).toHaveBeenCalledWith('s');
+
+    wrapper.find('input').simulate('change', { target: { value: '' } });
+    expect(
+      wrapper.instance().props.changeFilteredBySearchValue
+    ).toHaveBeenCalledWith('');
+  });
+
+  it('click the reset button will call the function this.props.resetFilter', () => {
+    wrapper
+      .find(Button)
+      .findWhere(comp => comp.prop('name') === 'reset-filter')
+      .props()
+      .clicked();
+    expect(wrapper.instance().props.resetFilter).toBeCalled();
+  });
 
   it('clicked clear-history button will show modal then clickedOk will call this.props.removeHistory', () => {
     expect(wrapper.state().showModal).toBe(false);
@@ -121,78 +171,6 @@ describe('<HistoryDomains /> with local history', () => {
     expect(wrapper.state().showModal).toBe(false);
     expect(wrapper.find(Modal).props().show).toBe(false);
   });
-
-  // TODO: need to fix these tests
-  //   it('input search will change filteredDomains to the domains that the search includes', () => {
-  //     // set input search value
-  //     wrapper.find('input').simulate('change', { target: { value: 's' } });
-  //     expect(wrapper.state().historyDomains).toEqual(mockDomains);
-  //     expect(wrapper.state().filteredDomains).toEqual([
-  //       {
-  //         name: 'stackoverflow.com',
-  //         availability: false,
-  //         networkError: false,
-  //         invalid: false,
-  //       },
-  //       {
-  //         name: 'www.w3schools.com',
-  //         availability: false,
-  //         networkError: false,
-  //         invalid: false,
-  //       },
-  //     ]);
-  //   });
-
-  //   it('should filter the domains using the search input with the sorted buttons', () => {
-  //     // 1. set input search value
-  //     wrapper.find('input').simulate('change', { target: { value: 'me' } });
-  //     // 2. filter the domains by the fail domains
-  //     wrapper
-  //       .find(Button)
-  //       .findWhere(comp => comp.prop('name') === 'show-fail')
-  //       .props()
-  //       .clicked();
-  //     // 3. the filterer domains should be only one
-  //     expect(wrapper.state().filteredDomains).toEqual([
-  //       {
-  //         name: 'mendy',
-  //         availability: false,
-  //         networkError: false,
-  //         invalid: true,
-  //       },
-  //     ]);
-  //     // 4. changing the search input will filter from the sorted domains
-  //     wrapper.find('input').simulate('change', { target: { value: 'me' } });
-  //     // the filterer domains should be the same
-  //     expect(wrapper.state().filteredDomains).toEqual([
-  //       {
-  //         name: 'mendy',
-  //         availability: false,
-  //         networkError: false,
-  //         invalid: true,
-  //       },
-  //     ]);
-  //     // 5. changing the sort button will filter the domains by the search value if exists
-  //     wrapper
-  //       .find(Button)
-  //       .findWhere(comp => comp.prop('name') === 'show-success')
-  //       .props()
-  //       .clicked();
-  //     expect(wrapper.state().filteredDomains).toEqual([
-  //       {
-  //         name: 'mendy22323.com',
-  //         availability: true,
-  //         networkError: false,
-  //         invalid: false,
-  //       },
-  //       {
-  //         name: 'mendy2323232323.co.il',
-  //         availability: true,
-  //         networkError: false,
-  //         invalid: false,
-  //       },
-  //     ]);
-  //   });
 });
 
 describe('<HistoryDomains /> with no local history', () => {

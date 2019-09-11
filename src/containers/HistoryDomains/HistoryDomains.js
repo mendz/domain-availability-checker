@@ -75,7 +75,7 @@ class HistoryDomains extends Component {
           <Button clicked={this.goBack}>Back Home</Button>
         </div>
         <div className={classes.Filters}>
-          <Button name="reset-filter" onClick={this.props.resetFilter}>
+          <Button name="reset-filter" clicked={this.props.resetFilter}>
             Rest Filter
           </Button>
           <input
