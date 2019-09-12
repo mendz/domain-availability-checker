@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 
+// FIXME: NOT WORKING!! only work if there is a search value and we only change the filter type, however if there is a filter type that is no "all" and changing the search value will use the filtered domains and eventually will left with no domains.
 const filterDomains = (
   valueToSearch,
   historyDomains,
@@ -106,12 +107,10 @@ export const changeFilteredBySearchValue = valueToSearch => (
   dispatch,
   getState
 ) => {
-  const {
-    historyDomains,
-    filteredDomains,
-    filterType,
-  } = getState().historyDomains;
-
+  // check if we have the ALL state or we in the testing and we have only the history domains
+  const { historyDomains, filteredDomains, filterType } = getState().domainList
+    ? getState().historyDomains
+    : getState();
   // no search value - clear the search and the filterType is no ALL
   if (valueToSearch.trim() === '' && filterType !== 'all') {
     dispatch(clearFilteredSearchValue());
@@ -129,6 +128,7 @@ export const changeFilteredBySearchValue = valueToSearch => (
       filteredDomains,
       filterType
     );
+    // dispatch(filterBy(filterType));
     dispatch(
       changeFilteredBySearchValueWithSort(updatedDomains, valueToSearch)
     );

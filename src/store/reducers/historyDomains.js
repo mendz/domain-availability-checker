@@ -84,7 +84,10 @@ const onChangeFilteredBySearchValueWithSort = (state, action) => {
 };
 
 const onClearFilteredSearch = (state, action) =>
-  updateObject(state, { inputSearchData: '' });
+  updateObject(state, {
+    filteredDomains: state.historyDomains,
+    inputSearchData: '',
+  });
 
 const historyDomainsReducer = (state = initialState, action) => {
   const { type } = action;
