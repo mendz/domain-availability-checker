@@ -95,6 +95,7 @@ class DomainList extends Component {
       this.state.domainsList,
       this.state.invalidDomains
     );
+    // FIXME: need to add to componentDidMount to check if there is an already local history OR add it to the reducer (?). At the moment it will "think" that the local history is only what the user last enter to the input
     this.props.saveToHistory(this.props.decodedDomainList);
   };
 
