@@ -6,9 +6,10 @@ import { bindActionCreators } from 'redux';
 import {
   loadHistory,
   removeHistory,
-  filterBy,
-  changeFilteredBySearchValue,
   resetFilter,
+  filter,
+  setSearchValue,
+  setFilterType,
 } from '../../store/actions/historyDomains';
 
 import DomainCheck from '../../components/DomainCheck/DomainCheck';
@@ -35,13 +36,17 @@ class HistoryDomains extends Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.searchValue !== this.props.searchValue ||
+      prevProps.filterType !== this.props.filterType
+    ) {
+      this.props.filter();
+    }
+  }
+
   goBack = () => {
     this.props.history.push('/');
-  };
-
-  searchDomainsHandler = event => {
-    const { value } = event.target;
-    this.props.changeFilteredBySearchValue(value);
   };
 
   resetStateHistory = () => {
@@ -59,6 +64,16 @@ class HistoryDomains extends Component {
     this.setState({ showModal: false });
   };
 
+  handleFilter = event => {
+    const { target } = event;
+    this.props.setFilterType(target.dataset.filterType);
+  };
+
+  handleSearchInput = event => {
+    const { target } = event;
+    this.props.setSearchValue(target.value);
+  };
+
   render() {
     let domainList = <p>No history saved...</p>;
 
@@ -67,8 +82,6 @@ class HistoryDomains extends Component {
     }
 
     // TODO: break this to separate components
-    // TODO: show which sort type is selected
-    // TODO: disable the other sort types (not ALL) if there are no history domains
     return (
       <>
         <div className={classes.BackButton}>
@@ -82,23 +95,32 @@ class HistoryDomains extends Component {
             type="search"
             name="domains-filter"
             id="domains-filter"
-            onChange={this.searchDomainsHandler}
+            onChange={this.handleSearchInput}
             placeholder="Search Domains..."
-            value={this.props.inputSearchData}
+            value={this.props.searchValue}
           />
           <label>Filter by: </label>
-          <Button clicked={() => this.props.filterBy('all')} name="show-all">
+          <Button
+            clicked={this.handleFilter}
+            name="show-all"
+            data-filter-type="all"
+            active={this.props.filterType === 'all' ? true : false}
+          >
             All
           </Button>
           <Button
-            clicked={() => this.props.filterBy('available')}
+            clicked={this.handleFilter}
             name="show-available"
+            data-filter-type="available"
+            active={this.props.filterType === 'available' ? true : false}
           >
             <SymbolsCheck type="available" />
           </Button>
           <Button
-            clicked={() => this.props.filterBy('unavailable')}
+            clicked={this.handleFilter}
             name="show-unavailable"
+            data-filter-type="unavailable"
+            active={this.props.filterType === 'unavailable' ? true : false}
           >
             <SymbolsCheck type="unavailable" />
           </Button>
@@ -135,17 +157,18 @@ const mapStateToProps = state => ({
   historyDomains: state.historyDomains.historyDomains,
   filteredDomains: state.historyDomains.filteredDomains,
   filterType: state.historyDomains.filterType,
-  inputSearchData: state.historyDomains.inputSearchData,
+  searchValue: state.historyDomains.searchValue,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       loadHistory,
-      filterBy,
-      changeFilteredBySearchValue,
       removeHistory,
       resetFilter,
+      filter,
+      setSearchValue,
+      setFilterType,
     },
     dispatch
   );
