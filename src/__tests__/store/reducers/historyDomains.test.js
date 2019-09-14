@@ -96,6 +96,7 @@ const mockWithHistoryDomainsWithoutFilter = {
   filterType: 'all',
 };
 
+// FIXME: fix the tests after all the reducers changes
 describe('history domains reducer', () => {
   it('should return the initial value', () => {
     expect(reducer(undefined, {})).toEqual({

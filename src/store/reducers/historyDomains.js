@@ -9,7 +9,7 @@ import {
 const initialState = {
   historyDomains: [],
   filteredDomains: [],
-  inputSearchData: '',
+  searchValue: '',
   filterType: 'all',
 };
 
@@ -28,7 +28,7 @@ const onLoadHistory = (state, action) => {
     historyDomains: history,
     filteredDomains: history,
     filterType: 'all',
-    inputSearchData: '',
+    searchValue: '',
   });
 };
 
@@ -38,7 +38,7 @@ const onRemoveHistory = (state, action) => {
     historyDomains: [],
     filteredDomains: [],
     filterType: 'all',
-    inputSearchData: '',
+    searchValue: '',
   });
 };
 
@@ -46,48 +46,35 @@ const onResetFilter = (state, action) =>
   updateObject(state, {
     filteredDomains: state.historyDomains,
     filterType: 'all',
-    inputSearchData: '',
+    searchValue: '',
   });
 
-const onSortByAll = (state, action) => {
-  const { allDomains } = action;
+const onFilterDomains = (state, action) => {
+  const { historyDomains, searchValue, filterType } = state;
+  let filtered = [...historyDomains];
+  if (filterType === 'available') {
+    filtered = historyDomains.filter(domain => domain.availability);
+  } else if (filterType === 'unavailable') {
+    filtered = historyDomains.filter(domain => !domain.availability);
+  }
+
+  let filteredDomains = filtered;
+  if (searchValue.trim() !== '') {
+    filteredDomains = filtered.filter(domain =>
+      domain.name.includes(searchValue)
+    );
+  }
+
   return updateObject(state, {
-    filteredDomains: allDomains,
-    filterType: 'all',
+    filteredDomains: filteredDomains,
   });
 };
 
-const onSortBySuccess = (state, action) => {
-  const { allDomains } = action;
-  const filtered = allDomains.filter(domain => domain.availability);
-  return updateObject(state, {
-    filteredDomains: filtered,
-    filterType: 'available',
-  });
-};
+const onSetSearchValue = (state, action) =>
+  updateObject(state, { searchValue: action.searchValue });
 
-const onSortByFail = (state, action) => {
-  const { allDomains } = action;
-  const filtered = allDomains.filter(domain => !domain.availability);
-  return updateObject(state, {
-    filteredDomains: filtered,
-    filterType: 'unavailable',
-  });
-};
-
-const onChangeFilteredBySearchValueWithSort = (state, action) => {
-  const { updatedDomains, valueToSearch } = action;
-  return updateObject(state, {
-    filteredDomains: updatedDomains,
-    inputSearchData: valueToSearch,
-  });
-};
-
-const onClearFilteredSearch = (state, action) =>
-  updateObject(state, {
-    filteredDomains: state.historyDomains,
-    inputSearchData: '',
-  });
+const onSetFilterType = (state, action) =>
+  updateObject(state, { filterType: action.filterType });
 
 const historyDomainsReducer = (state = initialState, action) => {
   const { type } = action;
@@ -104,20 +91,14 @@ const historyDomainsReducer = (state = initialState, action) => {
     case actionTypes.HISTORY_DOMAINS_RESET_FILTER:
       return onResetFilter(state, action);
 
-    case actionTypes.HISTORY_DOMAINS_SORT_FILTER_ALL:
-      return onSortByAll(state, action);
+    case actionTypes.FILTER_DOMAINS:
+      return onFilterDomains(state, action);
 
-    case actionTypes.HISTORY_DOMAINS_SORT_FILTER_AVAILABLE:
-      return onSortBySuccess(state, action);
+    case actionTypes.SET_SEARCH_VALUE:
+      return onSetSearchValue(state, action);
 
-    case actionTypes.HISTORY_DOMAINS_SORT_FILTER_UNAVAILABLE:
-      return onSortByFail(state, action);
-
-    case actionTypes.CHANGE_FILTER_BY_SEARCH_VALUE_SORT:
-      return onChangeFilteredBySearchValueWithSort(state, action);
-
-    case actionTypes.HISTORY_DOMAINS_CLEAR_FILTERED_SEARCH:
-      return onClearFilteredSearch(state, action);
+    case actionTypes.SET_FILTER_TYPE:
+      return onSetFilterType(state, action);
 
     default:
       return state;

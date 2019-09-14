@@ -4,11 +4,15 @@ import PropTypes from 'prop-types';
 import classes from './Button.module.css';
 
 // TODO: remove clicked to use props.onClick
-const Button = ({ clicked, bigger, className, ...props }) => {
+const Button = ({ clicked, bigger, active, className, ...props }) => {
   const classArr = [classes.Button, className];
 
   if (bigger) {
     classArr.push(classes.Bigger);
+  }
+
+  if (active) {
+    classArr.push(classes.Active);
   }
 
   return (

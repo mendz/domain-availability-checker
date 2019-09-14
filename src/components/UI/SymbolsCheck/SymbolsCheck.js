@@ -8,10 +8,18 @@ const SymbolsCheck = ({ type }) => {
 
   switch (type) {
     case 'available':
-      symbol = <span className={classes.Available}>✔</span>;
+      symbol = (
+        <span className={classes.Available} data-filter-type="available">
+          ✔
+        </span>
+      );
       break;
     case 'unavailable':
-      symbol = <span className={classes.Unavailable}>✖</span>;
+      symbol = (
+        <span className={classes.Unavailable} data-filter-type="unavailable">
+          ✖
+        </span>
+      );
       break;
     case 'error':
       symbol = <span className={classes.Fail}>ERROR</span>;
