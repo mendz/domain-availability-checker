@@ -7,7 +7,6 @@ import {
   loadHistory,
   removeHistory,
   resetFilter,
-  filter,
   setSearchValue,
   setFilterType,
 } from '../../store/actions/historyDomains';
@@ -28,20 +27,30 @@ class HistoryDomains extends Component {
 
   state = {
     showModal: false,
+    filteredDomains: [],
   };
 
   componentDidMount() {
+    // if there is no history domains try to load them
     if (this.props.historyDomains.length === 0) {
       this.props.loadHistory();
+    } else {
+      // if there is history domains, filter them to there initial value
+      this.setFilteredDomains();
     }
   }
 
   componentDidUpdate(prevProps) {
-    if (
+    // for the time that the history domains loaded when componentDidMount
+    if (!prevProps.historyDomains.length && this.props.historyDomains.length) {
+      this.setFilteredDomains();
+
+      // for when the filter type or the search value changed and re-render the components
+    } else if (
       prevProps.searchValue !== this.props.searchValue ||
       prevProps.filterType !== this.props.filterType
     ) {
-      this.props.filter();
+      this.setFilteredDomains();
     }
   }
 
@@ -53,6 +62,7 @@ class HistoryDomains extends Component {
     this.props.removeHistory();
     this.setState({
       showModal: false,
+      filteredDomains: [],
     });
   };
 
@@ -74,11 +84,35 @@ class HistoryDomains extends Component {
     this.props.setSearchValue(target.value);
   };
 
+  handleResetFilter = () => {
+    this.props.resetFilter();
+    this.setState({ filteredDomains: this.props.historyDomains });
+  };
+
+  setFilteredDomains = () => {
+    const { historyDomains, searchValue, filterType } = this.props;
+    let filtered = [...historyDomains];
+    if (filterType === 'available') {
+      filtered = historyDomains.filter(domain => domain.availability);
+    } else if (filterType === 'unavailable') {
+      filtered = historyDomains.filter(domain => !domain.availability);
+    }
+
+    let filteredDomains = filtered;
+    if (searchValue.trim() !== '') {
+      filteredDomains = filtered.filter(domain =>
+        domain.name.includes(searchValue)
+      );
+    }
+
+    this.setState({ filteredDomains });
+  };
+
   render() {
     let domainList = <p>No history saved...</p>;
 
     if (this.props.historyDomains.length > 0) {
-      domainList = <DomainCheck listDomains={this.props.filteredDomains} />;
+      domainList = <DomainCheck listDomains={this.state.filteredDomains} />;
     }
 
     // TODO: break this to separate components
@@ -88,7 +122,7 @@ class HistoryDomains extends Component {
           <Button clicked={this.goBack}>Back Home</Button>
         </div>
         <div className={classes.Filters}>
-          <Button name="reset-filter" clicked={this.props.resetFilter}>
+          <Button name="reset-filter" clicked={this.handleResetFilter}>
             Rest Filter
           </Button>
           <input
@@ -140,7 +174,7 @@ class HistoryDomains extends Component {
           </Modal>
           <ButtonCopy
             disabled={this.props.historyDomains.length === 0}
-            copyText={this.props.filteredDomains
+            copyText={this.state.filteredDomains
               .map(domain => domain.name)
               .join('\n')}
           >
@@ -166,7 +200,6 @@ const mapDispatchToProps = dispatch =>
       loadHistory,
       removeHistory,
       resetFilter,
-      filter,
       setSearchValue,
       setFilterType,
     },

@@ -1,24 +1,20 @@
 import * as actionTypes from './actionTypes';
 
 export const saveToHistory = historyDomains => ({
-  type: actionTypes.HISTORY_DOMAINS_SAVE_HISTORY,
+  type: actionTypes.SAVE_HISTORY_DOMAINS,
   historyDomains,
 });
 
 export const loadHistory = () => ({
-  type: actionTypes.HISTORY_DOMAINS_LOAD_HISTORY,
+  type: actionTypes.LOAD_HISTORY_DOMAINS,
 });
 
 export const removeHistory = () => ({
-  type: actionTypes.HISTORY_DOMAINS_REMOVE_HISTORY,
+  type: actionTypes.REMOVE_HISTORY_DOMAINS,
 });
 
 export const resetFilter = () => ({
-  type: actionTypes.HISTORY_DOMAINS_RESET_FILTER,
-});
-
-export const filter = () => ({
-  type: actionTypes.FILTER_DOMAINS,
+  type: actionTypes.RESET_FILTER,
 });
 
 export const setSearchValue = searchValue => ({
