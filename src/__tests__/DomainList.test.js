@@ -65,7 +65,7 @@ describe('<DomainList />', () => {
     expect(wrapper.state().domainsList).toEqual([]);
   });
 
-  it('should the Check and history button to be disable when checking the domains', () => {
+  it('should the Check button to be disable when checking the domains', () => {
     wrapper.setProps({
       checking: true,
     });
@@ -73,12 +73,13 @@ describe('<DomainList />', () => {
       .find(Button)
       .findWhere(comp => comp.prop('type') === 'submit')
       .props().disabled;
-    const historyIsDisabled = wrapper
-      .find(Button)
-      .findWhere(comp => comp.prop('name') === 'go-to-history')
-      .props().disabled;
+    // TODO: move to Toolbar.test.js
+    // const historyIsDisabled = wrapper
+    //   .find(Button)
+    //   .findWhere(comp => comp.prop('name') === 'go-to-history')
+    //   .props().disabled;
     expect(checkIsDisabled).toBe(true);
-    expect(historyIsDisabled).toBe(true);
+    // expect(historyIsDisabled).toBe(true);
   });
 
   it('should not alow to check when not one domain is valid', () => {
