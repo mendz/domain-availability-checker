@@ -15,13 +15,6 @@
   }
 }
 
-.HistoryButton {
-  text-align: left;
-  display: flex;
-  justify-content: space-between;
-  padding: 0.5rem 1rem;
-}
-
 .Buttons {
   margin-top: 15px;
 }
