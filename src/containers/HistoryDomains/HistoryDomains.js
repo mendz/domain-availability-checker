@@ -3,17 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import {
-  loadHistory,
-  removeHistory,
-  resetFilter,
-  setSearchValue,
-  setFilterType,
-} from '../../store/actions/historyDomains';
+import { loadHistory, removeHistory } from '../../store/actions/historyDomains';
 
 import DomainCheck from '../../components/DomainCheck/DomainCheck';
+import Filters from './Filters/Filters';
 import Button from '../../components/UI/Button/Button';
-import SymbolsCheck from '../../components/UI/SymbolsCheck/SymbolsCheck';
 import Modal from '../../components/UI/Modal/Modal';
 import Confirmation from '../../components/Confirmation/Confirmation';
 import ButtonCopy from '../../components/UniqueButtons/ButtonCopy/ButtonCopy';
@@ -74,21 +68,6 @@ class HistoryDomains extends Component {
     this.setState({ showModal: false });
   };
 
-  handleFilter = event => {
-    const { target } = event;
-    this.props.setFilterType(target.dataset.filterType);
-  };
-
-  handleSearchInput = event => {
-    const { target } = event;
-    this.props.setSearchValue(target.value);
-  };
-
-  handleResetFilter = () => {
-    this.props.resetFilter();
-    this.setState({ filteredDomains: this.props.historyDomains });
-  };
-
   setFilteredDomains = () => {
     const { historyDomains, searchValue, filterType } = this.props;
     let filtered = [...historyDomains];
@@ -115,49 +94,13 @@ class HistoryDomains extends Component {
       domainList = <DomainCheck listDomains={this.state.filteredDomains} />;
     }
 
-    // TODO: break this to separate components
     return (
       <>
         <div className={classes.BackButton}>
           <Button clicked={this.goBack}>Back Home</Button>
         </div>
-        <div className={classes.Filters}>
-          <Button name="reset-filter" clicked={this.handleResetFilter}>
-            Rest Filter
-          </Button>
-          <input
-            type="search"
-            name="domains-filter"
-            id="domains-filter"
-            onChange={this.handleSearchInput}
-            placeholder="Search Domains..."
-            value={this.props.searchValue}
-          />
-          <label>Filter by: </label>
-          <Button
-            clicked={this.handleFilter}
-            name="show-all"
-            data-filter-type="all"
-            active={this.props.filterType === 'all' ? true : false}
-          >
-            All
-          </Button>
-          <Button
-            clicked={this.handleFilter}
-            name="show-available"
-            data-filter-type="available"
-            active={this.props.filterType === 'available' ? true : false}
-          >
-            <SymbolsCheck type="available" />
-          </Button>
-          <Button
-            clicked={this.handleFilter}
-            name="show-unavailable"
-            data-filter-type="unavailable"
-            active={this.props.filterType === 'unavailable' ? true : false}
-          >
-            <SymbolsCheck type="unavailable" />
-          </Button>
+        <Filters />
+        <div className={classes.Controls}>
           <Button
             name="clear-history"
             disabled={this.props.historyDomains.length === 0}
@@ -189,7 +132,6 @@ class HistoryDomains extends Component {
 
 const mapStateToProps = state => ({
   historyDomains: state.historyDomains.historyDomains,
-  filteredDomains: state.historyDomains.filteredDomains,
   filterType: state.historyDomains.filterType,
   searchValue: state.historyDomains.searchValue,
 });
@@ -199,9 +141,6 @@ const mapDispatchToProps = dispatch =>
     {
       loadHistory,
       removeHistory,
-      resetFilter,
-      setSearchValue,
-      setFilterType,
     },
     dispatch
   );

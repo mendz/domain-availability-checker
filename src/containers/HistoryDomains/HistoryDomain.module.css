@@ -3,29 +3,18 @@
   text-align: left;
 }
 
-.Filters {
+.Controls {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-content: center;
   align-items: baseline;
-  min-height: 80px;
+  min-height: 40px;
+  margin-top: 1.5rem;
 }
 
-@media all and (max-width: 600px) {
-  .Filters {
-    align-content: space-between;
-  }
-}
-
-.Filters > * {
+.Controls > * {
   margin-right: 1rem;
-}
-
-.Filters input {
-  align-self: stretch;
-  font-size: 0.8rem;
-  width: 25%;
 }
 
 .List {
