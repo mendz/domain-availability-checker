@@ -28,10 +28,10 @@ const Info = () => {
     <div className={classes.Info}>
       <h1>Legend</h1>
       <p>
-        <SymbolsCheck type="success" /> - The domain is available.
+        <SymbolsCheck type="available" /> - The domain is available.
       </p>
       <p>
-        <SymbolsCheck type="fail" /> - The domain is unavailable.
+        <SymbolsCheck type="unavailable" /> - The domain is unavailable.
       </p>
       <p>
         <SymbolsCheck type="error" /> - Something went wrong.

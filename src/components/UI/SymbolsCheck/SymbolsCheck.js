@@ -22,7 +22,7 @@ const SymbolsCheck = ({ type }) => {
       );
       break;
     case 'error':
-      symbol = <span className={classes.Fail}>ERROR</span>;
+      symbol = <span className={classes.Unavailable}>ERROR</span>;
       break;
     default:
       break;
