@@ -1,0 +1,24 @@
+.Filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  align-items: baseline;
+  min-height: 40px;
+}
+
+.Filters > *:not(:last-child) {
+  margin-right: 1rem;
+}
+
+.SearchInput {
+  align-self: stretch;
+  font-size: 0.8rem;
+  width: 25%;
+}
+
+@media all and (max-width: 600px) {
+  .Filters {
+    align-content: space-between;
+  }
+}
