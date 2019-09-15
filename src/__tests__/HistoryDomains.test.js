@@ -72,18 +72,6 @@ describe('<HistoryDomains /> with local history', () => {
     expect(wrapper.find(DomainCheck)).toHaveLength(1);
   });
 
-  // TODO: move to Filters.test.js
-  // it('click filter by available - ✔ will call the function this.props.setFilterType with the argument: "available"', () => {
-  //   wrapper
-  //     .find(Button)
-  //     .findWhere(comp => comp.prop('name') === 'show-available')
-  //     .props()
-  //     .clicked();
-  //   expect(wrapper.instance().props.setFilterType).toHaveBeenCalledWith(
-  //     'available'
-  //   );
-  // });
-
   it('should state.filteredDomains to be the same as props.historyDomains at the start without filter', () => {
     expect(wrapper.state().filteredDomains).toEqual(mockDomains);
   });
@@ -105,18 +93,6 @@ describe('<HistoryDomains /> with local history', () => {
       },
     ]);
   });
-
-  // TODO: move to Filters.test.js
-  // it('click filter by unavailable - ✖ will call the function this.props.filterBy with the argument: "unavailable"', () => {
-  //   wrapper
-  //     .find(Button)
-  //     .findWhere(comp => comp.prop('name') === 'show-unavailable')
-  //     .props()
-  //     .clicked();
-  //   expect(wrapper.instance().props.filterBy).toHaveBeenCalledWith(
-  //     'unavailable'
-  //   );
-  // });
 
   it('change in props.filterType to "unavailable" (✖) will set the state.filteredDomains to unavailable domains and failed checks domains', () => {
     wrapper.setProps({ filterType: 'unavailable' });
@@ -148,16 +124,6 @@ describe('<HistoryDomains /> with local history', () => {
     ]);
   });
 
-  // TODO: move to Filters.test.js
-  // it('click filter by all will call the function this.props.filterBy with the argument: "all"', () => {
-  //   wrapper
-  //     .find(Button)
-  //     .findWhere(comp => comp.prop('name') === 'show-all')
-  //     .props()
-  //     .clicked();
-  //   expect(wrapper.instance().props.filterBy).toHaveBeenCalledWith('all');
-  // });
-
   it('change in props.filterType to "all" will set the state.filteredDomains to all the domains', () => {
     wrapper.setProps({ filterType: 'available' });
     expect(wrapper.state().filteredDomains).toEqual([
@@ -177,19 +143,6 @@ describe('<HistoryDomains /> with local history', () => {
     wrapper.setProps({ filterType: 'all' });
     expect(wrapper.state().filteredDomains).toEqual(mockDomains);
   });
-
-  // TODO: move to Filters.test.js
-  // it('change the search input will call the function this.props.changeFilteredBySearchValue with the correct argument', () => {
-  //   wrapper.find('input').simulate('change', { target: { value: 's' } });
-  //   expect(
-  //     wrapper.instance().props.changeFilteredBySearchValue
-  //   ).toHaveBeenCalledWith('s');
-
-  //   wrapper.find('input').simulate('change', { target: { value: '' } });
-  //   expect(
-  //     wrapper.instance().props.changeFilteredBySearchValue
-  //   ).toHaveBeenCalledWith('');
-  // });
 
   it('change in props.searchValue will set the state.filteredDomains that contains the value', () => {
     wrapper.setProps({ searchValue: 'g' });
@@ -259,16 +212,6 @@ describe('<HistoryDomains /> with local history', () => {
     ]);
   });
 
-  // TODO: move to Filters.test.js
-  // it('click the reset button will call the function this.props.resetFilter', () => {
-  //   wrapper
-  //     .find(Button)
-  //     .findWhere(comp => comp.prop('name') === 'reset-filter')
-  //     .props()
-  //     .clicked();
-  //   expect(wrapper.instance().props.resetFilter).toBeCalled();
-  // });
-
   it('clicked clear-history button will show modal then clickedOk will call this.props.removeHistory', () => {
     expect(wrapper.state().showModal).toBe(false);
     // button clear-history
@@ -277,7 +220,7 @@ describe('<HistoryDomains /> with local history', () => {
       .findWhere(comp => comp.prop('name') === 'clear-history')
       .at(0)
       .props()
-      .clicked();
+      .onClick();
     // check the state and the Modal props changed to be true
     expect(wrapper.state().showModal).toBe(true);
     expect(
@@ -304,7 +247,7 @@ describe('<HistoryDomains /> with local history', () => {
       .find(Button)
       .findWhere(comp => comp.prop('name') === 'clear-history')
       .props()
-      .clicked();
+      .onClick();
     // check the state and the Modal props changed to true
     expect(wrapper.state().showModal).toBe(true);
     expect(wrapper.find(Modal).props().show).toBe(true);

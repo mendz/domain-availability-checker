@@ -43,7 +43,7 @@ exports[`<DomainCheck /> matches the snapshot 1`] = `
         >
           <Button
             className="ButtonCopy"
-            clicked={[Function]}
+            onClick={[Function]}
           >
             <button
               className="Button ButtonCopy"
@@ -144,7 +144,7 @@ exports[`<DomainCheck /> matches the snapshot 1`] = `
         >
           <Button
             className="ButtonCopy"
-            clicked={[Function]}
+            onClick={[Function]}
           >
             <button
               className="Button ButtonCopy"
@@ -245,7 +245,7 @@ exports[`<DomainCheck /> matches the snapshot 1`] = `
         >
           <Button
             className="ButtonCopy"
-            clicked={[Function]}
+            onClick={[Function]}
           >
             <button
               className="Button ButtonCopy"

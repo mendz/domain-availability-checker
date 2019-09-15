@@ -43,7 +43,7 @@ const ButtonCopy = ({ children, copyText, disabled }) => {
       <Button
         disabled={disabled}
         className={classes.ButtonCopy}
-        clicked={() => copy(copyText)}
+        onClick={() => copy(copyText)}
       >
         <img src={copySvg} alt="Copy" />
         {buttonChildrenText}

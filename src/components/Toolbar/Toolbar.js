@@ -33,12 +33,12 @@ export class Toolbar extends Component {
     const { pathname } = this.props.location;
     let toolbar = null;
     if (pathname !== '/') {
-      toolbar = <Button clicked={this.goBack}>Back Home</Button>;
+      toolbar = <Button onClick={this.goBack}>Back Home</Button>;
     } else {
       toolbar = (
         <>
           <Button
-            clicked={this.goToHistory}
+            onClick={this.goToHistory}
             name="go-to-history"
             disabled={this.props.checking}
           >

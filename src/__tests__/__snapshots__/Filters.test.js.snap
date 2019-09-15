@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Filters /> matches the snapshot 1`] = `
+<div
+  className="Filters"
+>
+  <Button
+    name="reset-filter"
+    onClick={[Function]}
+  >
+    Rest Filter
+  </Button>
+  <input
+    className="SearchInput"
+    id="domains-filter"
+    name="domains-filter"
+    onChange={[Function]}
+    placeholder="Search Domains..."
+    type="search"
+    value=""
+  />
+  <label>
+    Filter by: 
+  </label>
+  <Button
+    active={false}
+    data-filter-type="all"
+    name="show-all"
+    onClick={[Function]}
+  >
+    All
+  </Button>
+  <Button
+    active={false}
+    data-filter-type="available"
+    name="show-available"
+    onClick={[Function]}
+  >
+    <SymbolsCheck
+      type="available"
+    />
+  </Button>
+  <Button
+    active={false}
+    data-filter-type="unavailable"
+    name="show-unavailable"
+    onClick={[Function]}
+  >
+    <SymbolsCheck
+      type="unavailable"
+    />
+  </Button>
+</div>
+`;
