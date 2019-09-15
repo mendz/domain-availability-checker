@@ -8,7 +8,7 @@ import {
   clearDecodedDomains,
 } from '../../store/actions/domainList';
 
-import { saveToHistory } from '../../store/actions/historyDomains';
+import { saveToHistory, loadHistory } from '../../store/actions/historyDomains';
 
 import DomainCheck from '../../components/DomainCheck/DomainCheck';
 import Button from '../../components/UI/Button/Button';
@@ -49,7 +49,6 @@ class DomainList extends Component {
 
     if (rules.isUrl) {
       const invalidDomains = value.filter(domain => !isFQDN(domain));
-      // .map(domain => domain);
 
       // if at least one domain is valid we can proceed and check this one,
       // if all the domain is not valid all the form will be not valid
@@ -95,7 +94,7 @@ class DomainList extends Component {
       this.state.domainsList,
       this.state.invalidDomains
     );
-    // FIXME: need to add to componentDidMount to check if there is an already local history OR add it to the reducer (?). At the moment it will "think" that the local history is only what the user last enter to the input
+
     this.props.saveToHistory(this.props.decodedDomainList);
   };
 
@@ -126,6 +125,7 @@ class DomainList extends Component {
     if (this.props.decodedDomainList.length > 0) {
       domainCheck = <DomainCheck listDomains={this.props.decodedDomainList} />;
     }
+
     return (
       <>
         <div className={classes.HistoryButton}>
@@ -173,11 +173,12 @@ class DomainList extends Component {
 const mapStateToProps = state => ({
   decodedDomainList: state.domainList.decodedDomainList,
   checking: state.domainList.checking,
+  haveHistoryDomains: state.historyDomains.historyDomains.length,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
-    { setDecodedDomains, clearDecodedDomains, saveToHistory },
+    { setDecodedDomains, clearDecodedDomains, saveToHistory, loadHistory },
     dispatch
   );
 
