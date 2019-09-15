@@ -48,10 +48,6 @@ class HistoryDomains extends Component {
     }
   }
 
-  goBack = () => {
-    this.props.history.push('/');
-  };
-
   resetStateHistory = () => {
     this.props.removeHistory();
     this.setState({
@@ -96,9 +92,6 @@ class HistoryDomains extends Component {
 
     return (
       <>
-        <div className={classes.BackButton}>
-          <Button clicked={this.goBack}>Back Home</Button>
-        </div>
         <Filters />
         <div className={classes.Controls}>
           <Button

@@ -1,0 +1,11 @@
+.Toolbar {
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+}
+
+/* .SubPage {
+  margin: 0.5rem 0 2rem 0.5rem;
+  text-align: left;
+} */
