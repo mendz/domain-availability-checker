@@ -43,10 +43,10 @@ const mockDomains = [
 ];
 
 const mockLoadHistory = jest.fn(() => {});
-const mockFilterBy = jest.fn(() => {});
 const mockRemoveHistory = jest.fn(() => {});
-const mockChangeFilteredBySearchValue = jest.fn(() => {});
 const resetFilter = jest.fn(() => {});
+const mockSetSearchValue = jest.fn(() => {});
+const mockSetFilterType = jest.fn(() => {});
 
 describe('<HistoryDomains /> with local history', () => {
   let wrapper;
@@ -57,12 +57,13 @@ describe('<HistoryDomains /> with local history', () => {
     wrapper = shallow(
       <HistoryDomains
         historyDomains={mockDomains}
-        filteredDomains={mockDomains}
         loadHistory={mockLoadHistory}
-        filterBy={mockFilterBy}
         removeHistory={mockRemoveHistory}
-        changeFilteredBySearchValue={mockChangeFilteredBySearchValue}
         resetFilter={resetFilter}
+        setSearchValue={mockSetSearchValue}
+        setFilterType={mockSetFilterType}
+        filterType="all"
+        searchValue=""
       />
     );
   });
@@ -71,55 +72,202 @@ describe('<HistoryDomains /> with local history', () => {
     expect(wrapper.find(DomainCheck)).toHaveLength(1);
   });
 
-  it('click filter by available - ✔ will call the function this.props.filterBy with the argument: "available"', () => {
-    wrapper
-      .find(Button)
-      .findWhere(comp => comp.prop('name') === 'show-available')
-      .props()
-      .clicked();
-    expect(wrapper.instance().props.filterBy).toHaveBeenCalledWith('available');
+  // TODO: move to Filters.test.js
+  // it('click filter by available - ✔ will call the function this.props.setFilterType with the argument: "available"', () => {
+  //   wrapper
+  //     .find(Button)
+  //     .findWhere(comp => comp.prop('name') === 'show-available')
+  //     .props()
+  //     .clicked();
+  //   expect(wrapper.instance().props.setFilterType).toHaveBeenCalledWith(
+  //     'available'
+  //   );
+  // });
+
+  it('should state.filteredDomains to be the same as props.historyDomains at the start without filter', () => {
+    expect(wrapper.state().filteredDomains).toEqual(mockDomains);
   });
 
-  it('click filter by unavailable - ✖ will call the function this.props.filterBy with the argument: "unavailable"', () => {
-    wrapper
-      .find(Button)
-      .findWhere(comp => comp.prop('name') === 'show-unavailable')
-      .props()
-      .clicked();
-    expect(wrapper.instance().props.filterBy).toHaveBeenCalledWith(
-      'unavailable'
-    );
+  it('change in props.filterType to "available" (✔) will set the state.filteredDomains to available domains', () => {
+    wrapper.setProps({ filterType: 'available' });
+    expect(wrapper.state().filteredDomains).toEqual([
+      {
+        name: 'mendy22323.com',
+        availability: true,
+        networkError: false,
+        invalid: false,
+      },
+      {
+        name: 'mendy2323232323.co.il',
+        availability: true,
+        networkError: false,
+        invalid: false,
+      },
+    ]);
   });
 
-  it('click filter by all will call the function this.props.filterBy with the argument: "all"', () => {
-    wrapper
-      .find(Button)
-      .findWhere(comp => comp.prop('name') === 'show-all')
-      .props()
-      .clicked();
-    expect(wrapper.instance().props.filterBy).toHaveBeenCalledWith('all');
+  // TODO: move to Filters.test.js
+  // it('click filter by unavailable - ✖ will call the function this.props.filterBy with the argument: "unavailable"', () => {
+  //   wrapper
+  //     .find(Button)
+  //     .findWhere(comp => comp.prop('name') === 'show-unavailable')
+  //     .props()
+  //     .clicked();
+  //   expect(wrapper.instance().props.filterBy).toHaveBeenCalledWith(
+  //     'unavailable'
+  //   );
+  // });
+
+  it('change in props.filterType to "unavailable" (✖) will set the state.filteredDomains to unavailable domains and failed checks domains', () => {
+    wrapper.setProps({ filterType: 'unavailable' });
+    expect(wrapper.state().filteredDomains).toEqual([
+      {
+        name: 'github.com',
+        availability: false,
+        networkError: false,
+        invalid: false,
+      },
+      {
+        name: 'stackoverflow.com',
+        availability: false,
+        networkError: false,
+        invalid: false,
+      },
+      {
+        name: 'www.w3schools.com',
+        availability: false,
+        networkError: false,
+        invalid: false,
+      },
+      {
+        name: 'mendy',
+        availability: false,
+        networkError: false,
+        invalid: true,
+      },
+    ]);
   });
 
-  it('change the search input will call the function this.props.changeFilteredBySearchValue with the correct argument', () => {
-    wrapper.find('input').simulate('change', { target: { value: 's' } });
-    expect(
-      wrapper.instance().props.changeFilteredBySearchValue
-    ).toHaveBeenCalledWith('s');
+  // TODO: move to Filters.test.js
+  // it('click filter by all will call the function this.props.filterBy with the argument: "all"', () => {
+  //   wrapper
+  //     .find(Button)
+  //     .findWhere(comp => comp.prop('name') === 'show-all')
+  //     .props()
+  //     .clicked();
+  //   expect(wrapper.instance().props.filterBy).toHaveBeenCalledWith('all');
+  // });
 
-    wrapper.find('input').simulate('change', { target: { value: '' } });
-    expect(
-      wrapper.instance().props.changeFilteredBySearchValue
-    ).toHaveBeenCalledWith('');
+  it('change in props.filterType to "all" will set the state.filteredDomains to all the domains', () => {
+    wrapper.setProps({ filterType: 'available' });
+    expect(wrapper.state().filteredDomains).toEqual([
+      {
+        name: 'mendy22323.com',
+        availability: true,
+        networkError: false,
+        invalid: false,
+      },
+      {
+        name: 'mendy2323232323.co.il',
+        availability: true,
+        networkError: false,
+        invalid: false,
+      },
+    ]);
+    wrapper.setProps({ filterType: 'all' });
+    expect(wrapper.state().filteredDomains).toEqual(mockDomains);
   });
 
-  it('click the reset button will call the function this.props.resetFilter', () => {
-    wrapper
-      .find(Button)
-      .findWhere(comp => comp.prop('name') === 'reset-filter')
-      .props()
-      .clicked();
-    expect(wrapper.instance().props.resetFilter).toBeCalled();
+  // TODO: move to Filters.test.js
+  // it('change the search input will call the function this.props.changeFilteredBySearchValue with the correct argument', () => {
+  //   wrapper.find('input').simulate('change', { target: { value: 's' } });
+  //   expect(
+  //     wrapper.instance().props.changeFilteredBySearchValue
+  //   ).toHaveBeenCalledWith('s');
+
+  //   wrapper.find('input').simulate('change', { target: { value: '' } });
+  //   expect(
+  //     wrapper.instance().props.changeFilteredBySearchValue
+  //   ).toHaveBeenCalledWith('');
+  // });
+
+  it('change in props.searchValue will set the state.filteredDomains that contains the value', () => {
+    wrapper.setProps({ searchValue: 'g' });
+    expect(wrapper.state().filteredDomains).toEqual([
+      {
+        name: 'github.com',
+        availability: false,
+        networkError: false,
+        invalid: false,
+      },
+    ]);
   });
+
+  it('should filter the domains using the props.searchValue with the props.filterType', () => {
+    // 1. filter the domains by the "unavailable" domains and includes the text "me"
+    wrapper.setProps({ searchValue: 'me', filterType: 'unavailable' });
+    // 3. the filterer domains should be only one
+    expect(wrapper.state().filteredDomains).toEqual([
+      {
+        name: 'mendy',
+        availability: false,
+        networkError: false,
+        invalid: true,
+      },
+    ]);
+    // 4. changing the props.searchValue will filter with the previous props.filterType
+    wrapper.setProps({ searchValue: 'mee' });
+    // the filterer domains should be empty
+    expect(wrapper.state().filteredDomains).toEqual([]);
+    // 5. changing the props.filterType to "available" will filter the domains by the search value and the filter type
+    wrapper.setProps({ searchValue: 'me', filterType: 'available' });
+    expect(wrapper.state().filteredDomains).toEqual([
+      {
+        name: 'mendy22323.com',
+        availability: true,
+        networkError: false,
+        invalid: false,
+      },
+      {
+        name: 'mendy2323232323.co.il',
+        availability: true,
+        networkError: false,
+        invalid: false,
+      },
+    ]);
+    //6. changing the props.filterType to "all" will filter the domains by the props.searchValue
+    wrapper.setProps({ searchValue: 'me', filterType: 'all' });
+    expect(wrapper.state().filteredDomains).toEqual([
+      {
+        name: 'mendy22323.com',
+        availability: true,
+        networkError: false,
+        invalid: false,
+      },
+      {
+        name: 'mendy2323232323.co.il',
+        availability: true,
+        networkError: false,
+        invalid: false,
+      },
+      {
+        name: 'mendy',
+        availability: false,
+        networkError: false,
+        invalid: true,
+      },
+    ]);
+  });
+
+  // TODO: move to Filters.test.js
+  // it('click the reset button will call the function this.props.resetFilter', () => {
+  //   wrapper
+  //     .find(Button)
+  //     .findWhere(comp => comp.prop('name') === 'reset-filter')
+  //     .props()
+  //     .clicked();
+  //   expect(wrapper.instance().props.resetFilter).toBeCalled();
+  // });
 
   it('clicked clear-history button will show modal then clickedOk will call this.props.removeHistory', () => {
     expect(wrapper.state().showModal).toBe(false);
@@ -179,13 +327,7 @@ describe('<HistoryDomains /> with no local history', () => {
   // before all the tests will run this code
   beforeAll(() => {
     wrapper = shallow(
-      <HistoryDomains
-        historyDomains={[]}
-        filteredDomains={[]}
-        loadHistory={mockLoadHistory}
-        filterBy={mockFilterBy}
-        removeHistory={mockRemoveHistory}
-      />
+      <HistoryDomains historyDomains={[]} loadHistory={mockLoadHistory} />
     );
   });
 
