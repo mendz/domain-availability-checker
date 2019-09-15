@@ -6,16 +6,14 @@ import infoSvg from '../../../assets/icons/information-outline.svg';
 
 import classes from './ButtonInfo.module.css';
 
-const ButtonInfo = ({ clicked }) => {
-   return (
-      <Button className={classes.ButtonInfo} clicked={clicked}>
-         <img src={infoSvg} alt="Info" />
-      </Button>
-   )
-};
+const ButtonInfo = ({ clicked }) => (
+  <Button className={classes.ButtonInfo} clicked={clicked}>
+    <img src={infoSvg} alt="Info" />
+  </Button>
+);
 
 ButtonInfo.propTypes = {
-   clicked: PropTypes.func.isRequired,
+  clicked: PropTypes.func.isRequired,
 };
 
-export default ButtonInfo
+export default ButtonInfo;
