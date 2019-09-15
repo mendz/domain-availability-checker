@@ -8,56 +8,56 @@ import Modal from '../../UI/Modal/Modal';
 import classes from './ButtonCopy.module.css';
 
 const ButtonCopy = ({ children, copyText, disabled }) => {
-   const [showModal, setShowModal] = useState(false);
-   const [clipboardText, setClipboardText] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [clipboardText, setClipboardText] = useState('');
 
-   let buttonChildrenText = null;
-   if (children) {
-      buttonChildrenText = <span className={classes.Text}>{children}</span>;
-   }
+  let buttonChildrenText = null;
+  if (children) {
+    buttonChildrenText = <span className={classes.Text}>{children}</span>;
+  }
 
-   const copy = textToCopy => {
-      if (textToCopy) {
-         navigator.clipboard
-            .writeText(textToCopy)
-            .then(() => {
-               // copy the string to the clipboard!
-               // console.log(`Copy: "${textToCopy}", to the clipboard!`);
-               setClipboardText(textToCopy);
-               setShowModal(true);
-            })
-            .catch(() => console.error(`Failed to copy - '${textToCopy}' to the clipboard!`));
-      }
-   }
+  const copy = textToCopy => {
+    if (textToCopy) {
+      navigator.clipboard
+        .writeText(textToCopy)
+        .then(() => {
+          // copy the string to the clipboard!
+          // console.log(`Copy: "${textToCopy}", to the clipboard!`);
+          setClipboardText(textToCopy);
+          setShowModal(true);
+        })
+        .catch(() =>
+          console.error(`Failed to copy - '${textToCopy}' to the clipboard!`)
+        );
+    }
+  };
 
-   const listCopiedItems = clipboardText
-      .split('\n')
-      .map(copiedText =>
-         <p
-            key={copiedText}
-            className={classes.CopiedText}>{copiedText}</p>
-      );
+  const listCopiedItems = clipboardText.split('\n').map(copiedText => (
+    <p key={copiedText} className={classes.CopiedText}>
+      {copiedText}
+    </p>
+  ));
 
-   return (
-      <>
-         <Button
-            disabled={disabled}
-            className={classes.ButtonCopy}
-            clicked={() => copy(copyText)}
-            >
-            <img src={copySvg} alt="Copy" />
-            {buttonChildrenText}
-         </Button>
-         <Modal show={showModal} closed={() => setShowModal(false)}>
-            <h3>Copied!</h3>
-            {listCopiedItems}
-         </Modal>
-      </>
-   )
-}
+  return (
+    <>
+      <Button
+        disabled={disabled}
+        className={classes.ButtonCopy}
+        clicked={() => copy(copyText)}
+      >
+        <img src={copySvg} alt="Copy" />
+        {buttonChildrenText}
+      </Button>
+      <Modal show={showModal} closed={() => setShowModal(false)}>
+        <h3>Copied!</h3>
+        {listCopiedItems}
+      </Modal>
+    </>
+  );
+};
 
 ButtonCopy.propTypes = {
-   copyText: PropTypes.string.isRequired
-}
+  copyText: PropTypes.string.isRequired,
+};
 
-export default ButtonCopy
+export default ButtonCopy;
