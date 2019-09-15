@@ -50,7 +50,7 @@ const Info = () => {
             className={classes.GithubMark}
           />
         </a>
-        <Button clicked={() => report()}>Report an issue</Button>
+        <Button onClick={() => report()}>Report an issue</Button>
         <Modal closed={toggle} show={on}>
           <ErrorMessage error={error} />
         </Modal>

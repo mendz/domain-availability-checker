@@ -12,8 +12,8 @@ const Confirmation = ({ clickedOK, clickedCancel, additionalText }) => (
       <p className={classes.AdditionalText}>{additionalText}</p>
     )}
     <div className={classes.Buttons}>
-      <Button clicked={clickedOK}>OK</Button>
-      <Button clicked={clickedCancel}>Cancel</Button>
+      <Button onClick={clickedOK}>OK</Button>
+      <Button onClick={clickedCancel}>Cancel</Button>
     </div>
   </div>
 );

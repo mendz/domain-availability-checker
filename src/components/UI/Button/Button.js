@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 
 import classes from './Button.module.css';
 
-// TODO: remove clicked to use props.onClick
-const Button = ({ clicked, bigger, active, className, ...props }) => {
+const Button = ({ bigger, active, className, ...props }) => {
   const classArr = [classes.Button, className];
 
   if (bigger) {
@@ -16,14 +15,14 @@ const Button = ({ clicked, bigger, active, className, ...props }) => {
   }
 
   return (
-    <button className={classArr.join(' ')} onClick={clicked} {...props}>
+    <button className={classArr.join(' ')} {...props}>
       {props.children}
     </button>
   );
 };
 
 Button.propTypes = {
-  clicked: PropTypes.func,
+  onClick: PropTypes.func,
   bigger: PropTypes.bool,
   className: PropTypes.string,
 };

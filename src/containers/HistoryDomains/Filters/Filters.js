@@ -36,7 +36,7 @@ const Filters = ({
 
   return (
     <div className={classes.Filters}>
-      <Button name="reset-filter" clicked={handleResetFilter}>
+      <Button name="reset-filter" onClick={handleResetFilter}>
         Rest Filter
       </Button>
       <input
@@ -50,7 +50,7 @@ const Filters = ({
       />
       <label>Filter by: </label>
       <Button
-        clicked={handleFilter}
+        onClick={handleFilter}
         name="show-all"
         data-filter-type="all"
         active={filterType === 'all' ? true : false}
@@ -58,7 +58,7 @@ const Filters = ({
         All
       </Button>
       <Button
-        clicked={handleFilter}
+        onClick={handleFilter}
         name="show-available"
         data-filter-type="available"
         active={filterType === 'available' ? true : false}
@@ -66,7 +66,7 @@ const Filters = ({
         <SymbolsCheck type="available" />
       </Button>
       <Button
-        clicked={handleFilter}
+        onClick={handleFilter}
         name="show-unavailable"
         data-filter-type="unavailable"
         active={filterType === 'unavailable' ? true : false}
@@ -89,3 +89,5 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Filters);
+
+export { Filters };

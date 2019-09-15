@@ -123,7 +123,7 @@ class DomainList extends Component {
               placeholder="List of domain names to check"
             />
             <div className={classes.Buttons}>
-              <Button bigger clicked={this.clearDomains} type="reset">
+              <Button bigger onClick={this.clearDomains} type="reset">
                 Clear
               </Button>
               <Button

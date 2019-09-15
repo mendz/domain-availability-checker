@@ -97,7 +97,7 @@ class HistoryDomains extends Component {
           <Button
             name="clear-history"
             disabled={this.props.historyDomains.length === 0}
-            clicked={this.clearHistory}
+            onClick={this.clearHistory}
           >
             Clear History
           </Button>

@@ -7,7 +7,7 @@ import infoSvg from '../../../assets/icons/information-outline.svg';
 import classes from './ButtonInfo.module.css';
 
 const ButtonInfo = ({ clicked }) => (
-  <Button className={classes.ButtonInfo} clicked={clicked}>
+  <Button className={classes.ButtonInfo} onClick={clicked}>
     <img src={infoSvg} alt="Info" />
   </Button>
 );
