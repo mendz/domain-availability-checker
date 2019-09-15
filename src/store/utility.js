@@ -35,6 +35,8 @@ export const saveToHistory = decodedDomainList => {
   }
 
   localStorage.setItem('historyDomains', currentHistory);
+  // return the current history in case that we loaded and old history
+  return JSON.parse(currentHistory);
 };
 
 export const loadHistory = () => {

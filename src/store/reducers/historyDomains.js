@@ -14,9 +14,10 @@ const initialState = {
 
 const onSaveHistory = (state, action) => {
   const { historyDomains } = action;
-  saveToHistory(historyDomains);
+  const currentHistory = saveToHistory(historyDomains);
+
   return updateObject(state, {
-    historyDomains,
+    historyDomains: currentHistory,
   });
 };
 
