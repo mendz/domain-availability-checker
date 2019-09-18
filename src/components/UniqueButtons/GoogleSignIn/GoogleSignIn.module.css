@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+.Wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.Wrapper span {
+  font-family: 'Roboto', sans-serif;
+}
+
+.GoogleLogin {
+  margin: 1rem 0;
+  border-color: transparent;
+  background: #fff;
+  color: #000;
+}
+
+.GoogleLogin:hover:not(:active) {
+  box-shadow: 2px 3px 3px 1px rgba(1, 1, 1, 0.5);
+}

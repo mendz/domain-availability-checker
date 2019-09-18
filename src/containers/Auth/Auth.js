@@ -5,6 +5,7 @@ import classes from './Auth.module.css';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import Footer from './AuthFooter/AuthFooter';
+import GoogleSignIn from '../../components/UniqueButtons/GoogleSignIn/GoogleSignIn';
 
 export const IS_LOGIN = 'IS_LOGIN';
 export const IS_SIGN_UP = 'IS_SIGN_UP';
@@ -197,6 +198,13 @@ class Auth extends Component {
 
     const header = this.state.title[this.state.formType];
     const buttonText = this.state.buttonText[this.state.formType];
+    let googleSignUp = null;
+
+    if (this.state.formType === IS_LOGIN) {
+      googleSignUp = (
+        <GoogleSignIn clicked={() => console.log('continue with google')} />
+      );
+    }
 
     return (
       <div className={classes.Container}>
@@ -205,6 +213,7 @@ class Auth extends Component {
           {form}
           <Button disabled={!this.state.formIsValid}>{buttonText}</Button>
         </form>
+        {googleSignUp}
         <Footer
           formType={this.state.formType}
           changeFormType={this.changeFormType}

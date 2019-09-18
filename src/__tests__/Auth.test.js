@@ -34,6 +34,8 @@ describe('<Input />', () => {
         .at(1)
         .props().label
     ).toEqual('Password');
+    expect(wrapper.find('Button').length).toEqual(1);
+    expect(wrapper.find('GoogleSignIn').length).toEqual(1);
     expect(wrapper.find('Button').contains('Login')).toBe(true);
     expect(wrapper.find('Footer').props().formType).toBe(IS_LOGIN);
   });
