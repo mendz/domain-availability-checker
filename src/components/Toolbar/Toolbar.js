@@ -5,7 +5,7 @@ import Button from '../UI/Button/Button';
 import ButtonInfo from '../UniqueButtons/ButtonInfo/ButtonInfo';
 import Modal from '../UI/Modal/Modal';
 import Info from '../Info/Info';
-import Auth from '../../containers/Auth/Auth';
+import AuthModal from '../UniqueButtons/AuthModal';
 
 import classes from './Toolbar.module.css';
 
@@ -13,7 +13,6 @@ import classes from './Toolbar.module.css';
 export class Toolbar extends Component {
   state = {
     showInfo: false,
-    showAuth: false,
   };
 
   showInfoModal = () => {
@@ -22,14 +21,6 @@ export class Toolbar extends Component {
 
   closeInfoModal = () => {
     this.setState({ showInfo: false });
-  };
-
-  showAuthModal = () => {
-    this.setState({ showAuth: true });
-  };
-
-  closeAuthModal = () => {
-    this.setState({ showAuth: false });
   };
 
   goToHistory = () => {
@@ -56,10 +47,7 @@ export class Toolbar extends Component {
             History
           </Button>
           <div className={classes.LeftButtons}>
-            <Button onClick={this.showAuthModal}>Log In / Sign Up</Button>
-            <Modal show={this.state.showAuth} closed={this.closeAuthModal}>
-              <Auth />
-            </Modal>
+            <AuthModal />
             <ButtonInfo clicked={this.showInfoModal} />
             <Modal show={this.state.showInfo} closed={this.closeInfoModal}>
               <Info />
