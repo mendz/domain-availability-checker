@@ -5,12 +5,15 @@ import Button from '../UI/Button/Button';
 import ButtonInfo from '../UniqueButtons/ButtonInfo/ButtonInfo';
 import Modal from '../UI/Modal/Modal';
 import Info from '../Info/Info';
+import Auth from '../../containers/Auth/Auth';
 
 import classes from './Toolbar.module.css';
 
+// TODO: add a test
 export class Toolbar extends Component {
   state = {
     showInfo: false,
+    showAuth: false,
   };
 
   showInfoModal = () => {
@@ -19,6 +22,14 @@ export class Toolbar extends Component {
 
   closeInfoModal = () => {
     this.setState({ showInfo: false });
+  };
+
+  showAuthModal = () => {
+    this.setState({ showAuth: true });
+  };
+
+  closeAuthModal = () => {
+    this.setState({ showAuth: false });
   };
 
   goToHistory = () => {
@@ -44,10 +55,16 @@ export class Toolbar extends Component {
           >
             History
           </Button>
-          <ButtonInfo clicked={this.showInfoModal} />
-          <Modal show={this.state.showInfo} closed={this.closeInfoModal}>
-            <Info />
-          </Modal>
+          <div className={classes.LeftButtons}>
+            <Button onClick={this.showAuthModal}>Log In / Sign Up</Button>
+            <Modal show={this.state.showAuth} closed={this.closeAuthModal}>
+              <Auth />
+            </Modal>
+            <ButtonInfo clicked={this.showInfoModal} />
+            <Modal show={this.state.showInfo} closed={this.closeInfoModal}>
+              <Info />
+            </Modal>
+          </div>
         </>
       );
     }

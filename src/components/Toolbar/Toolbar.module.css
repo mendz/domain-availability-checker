@@ -5,6 +5,9 @@
   padding: 0.5rem 1rem;
 }
 
+.LeftButtons > :first-child {
+  margin-right: 1.2rem;
+}
 /* .SubPage {
   margin: 0.5rem 0 2rem 0.5rem;
   text-align: left;
