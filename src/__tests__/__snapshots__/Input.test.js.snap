@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Input /> matches the snapshot 1`] = `
+<div
+  className="Container"
+>
+  <label
+    className="Label"
+    htmlFor="text"
+  >
+    label
+  </label>
+  <div
+    className="InputWrapper"
+  >
+    <input
+      className="Input"
+      id="text"
+      name="text"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onFocus={[Function]}
+      placeholder="placeholder"
+      type="text"
+      value=""
+    />
+  </div>
+</div>
+`;

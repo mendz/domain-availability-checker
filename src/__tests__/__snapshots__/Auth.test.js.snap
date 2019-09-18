@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Input /> should match the snapshot 1`] = `
+<div
+  className="Container"
+>
+  <h1>
+    Login
+  </h1>
+  <form
+    onSubmit={[Function]}
+  >
+    <Input
+      changed={[Function]}
+      elementConfig={
+        Object {
+          "placeholder": "Your Email Address",
+          "type": "email",
+        }
+      }
+      invalid={true}
+      key="email"
+      label="Email"
+      shouldValidate={
+        Object {
+          "isEmail": true,
+          "required": true,
+        }
+      }
+      touched={false}
+      value=""
+    />
+    <Input
+      changed={[Function]}
+      elementConfig={
+        Object {
+          "placeholder": "Your Password",
+          "type": "password",
+        }
+      }
+      errorMessage="Password need to be at least 6 characters"
+      invalid={true}
+      key="password"
+      label="Password"
+      shouldValidate={
+        Object {
+          "errorMessage": "Password need to be at least 6 characters",
+          "minLength": 6,
+          "required": true,
+        }
+      }
+      touched={false}
+      value=""
+    />
+    <Button
+      disabled={true}
+    >
+      Login
+    </Button>
+  </form>
+  <Footer
+    changeFormType={[Function]}
+    formType="IS_LOGIN"
+  />
+</div>
+`;

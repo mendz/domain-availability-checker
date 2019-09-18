@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AuthFooter /> should match the snapshot 1`] = `
+<Fragment>
+  <p>
+    Don't have an account?
+     
+    <span
+      className="Link"
+      onClick={[Function]}
+    >
+      Sign Up
+    </span>
+    .
+  </p>
+  <p>
+    or
+     
+    <span
+      className="Link"
+      onClick={[Function]}
+    >
+      Forgot your password
+    </span>
+    ?
+  </p>
+</Fragment>
+`;
