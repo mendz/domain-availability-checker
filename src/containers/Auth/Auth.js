@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
 import isEmail from 'validator/lib/isEmail';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import {
+  authGoogleSignIn,
+  authEmailPassword,
+  resetPassword,
+} from '../../store/actions/auth';
 
 import classes from './Auth.module.css';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import Footer from './AuthFooter/AuthFooter';
 import GoogleSignIn from '../../components/UniqueButtons/GoogleSignIn/GoogleSignIn';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 export const IS_LOGIN = 'IS_LOGIN';
 export const IS_SIGN_UP = 'IS_SIGN_UP';
@@ -100,7 +109,7 @@ class Auth extends Component {
       );
     });
 
-    this.setState({ controls: updatedControls });
+    this.setState({ controls: updatedControls, formIsValid: false });
   };
 
   changeFormType = type => {
@@ -164,6 +173,15 @@ class Auth extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    if (this.state.formType !== IS_FORGOT_PASSWORD) {
+      this.props.authEmailPassword(
+        this.state.controls.email.value,
+        this.state.controls.password.value,
+        this.state.formType === IS_SIGN_UP
+      );
+    } else {
+      this.props.resetPassword(this.state.controls.email.value);
+    }
   };
 
   render() {
@@ -193,6 +211,7 @@ class Auth extends Component {
         touched={formElement.config.touched}
         changed={event => this.inputChangedHandler(event, formElement.id)}
         value={formElement.config.value}
+        disabled={this.props.isLoading}
       />
     ));
 
@@ -202,16 +221,37 @@ class Auth extends Component {
 
     if (this.state.formType === IS_LOGIN) {
       googleSignUp = (
-        <GoogleSignIn clicked={() => console.log('continue with google')} />
+        <GoogleSignIn
+          clicked={() => this.props.authGoogleSignIn()}
+          disabled={this.props.isLoading}
+        />
       );
+    }
+
+    let error = null;
+    if (this.props.authError) {
+      error = (
+        <p className={classes.Error} style={{ fontSize: '1.2rem' }}>
+          Error: {this.props.authError}
+        </p>
+      );
+    }
+
+    let loading = null;
+    if (this.props.isLoading) {
+      loading = <Spinner center />;
     }
 
     return (
       <div className={classes.Container}>
         <h1>{header}</h1>
+        {loading}
+        {error}
         <form onSubmit={this.handleSubmit}>
           {form}
-          <Button disabled={!this.state.formIsValid}>{buttonText}</Button>
+          <Button disabled={!this.state.formIsValid || this.props.isLoading}>
+            {buttonText}
+          </Button>
         </form>
         {googleSignUp}
         <Footer
@@ -223,4 +263,18 @@ class Auth extends Component {
   }
 }
 
-export default Auth;
+const mapStateToProps = state => ({
+  authError: state.auth.error,
+  isLoading: state.auth.loading,
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    { authGoogleSignIn, authEmailPassword, resetPassword },
+    dispatch
+  );
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Auth);

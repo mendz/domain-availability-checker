@@ -7,8 +7,8 @@ import googleSignInSVG from '../../../assets/icons/btn_google_light_normal_ios.s
 
 import classes from './GoogleSignIn.module.css';
 
-const GoogleSignIn = ({ clicked }) => (
-  <Button className={classes.GoogleLogin} onClick={clicked}>
+const GoogleSignIn = ({ clicked, disabled }) => (
+  <Button className={classes.GoogleLogin} onClick={clicked} disabled={disabled}>
     <div className={classes.Wrapper}>
       <img src={googleSignInSVG} alt="google sign in logo" />
       <span>Continue with Google</span>
@@ -18,6 +18,7 @@ const GoogleSignIn = ({ clicked }) => (
 
 GoogleSignIn.propTypes = {
   clicked: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
 };
 
 export default GoogleSignIn;

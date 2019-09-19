@@ -2,32 +2,56 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { showAuthModal, closeAuthModal } from '../../store/actions/auth.js';
+import {
+  showAuthModal,
+  closeAuthModal,
+  authLogOut,
+} from '../../store/actions/auth.js';
 
-import Button from '../UI/Button/Button.js';
-import Modal from '../UI/Modal/Modal.js';
-import Auth from '../../containers/Auth/Auth.js';
+import Button from '../UI/Button/Button';
+import Modal from '../UI/Modal/Modal';
+import Auth from '../../containers/Auth/Auth';
 
-const AuthModal = ({ authModal, isLogin, showAuthModal, closeAuthModal }) => {
-  if (isLogin) return null;
+const AuthModal = ({
+  authModal,
+  isLoggedIn,
+  showAuthModal,
+  closeAuthModal,
+  authLogOut,
+}) => {
+  const style = {
+    minWidth: '165px',
+  };
 
-  return (
+  let content = (
     <>
-      <Button onClick={showAuthModal}>Log In / Sign Up</Button>
+      <Button onClick={showAuthModal} style={style}>
+        Log In / Sign Up
+      </Button>
       <Modal show={authModal} closed={closeAuthModal}>
         <Auth />
       </Modal>
     </>
   );
+
+  if (isLoggedIn) {
+    content = (
+      <Button onClick={authLogOut} style={style}>
+        Log Out
+      </Button>
+    );
+  }
+
+  return content;
 };
 
 const mapStateToProps = state => ({
   authModal: state.auth.authModal,
-  isLogin: state.auth.isLogin,
+  isLoggedIn: state.auth.userId ? true : false,
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ showAuthModal, closeAuthModal }, dispatch);
+  bindActionCreators({ showAuthModal, closeAuthModal, authLogOut }, dispatch);
 
 export default connect(
   mapStateToProps,

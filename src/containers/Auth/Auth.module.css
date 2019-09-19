@@ -26,5 +26,5 @@
 .Error {
   color: var(--red);
   font-weight: bold;
-  font-weight: 1.2rem;
+  word-break: break-word;
 }

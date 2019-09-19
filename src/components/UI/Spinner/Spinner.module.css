@@ -1,5 +1,5 @@
 .Spinner {
-  content: "";
+  content: '';
   box-sizing: border-box;
   width: 20px;
   height: 20px;
@@ -16,4 +16,8 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.Center {
+  margin: auto;
 }

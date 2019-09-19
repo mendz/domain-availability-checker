@@ -45,13 +45,21 @@ const Footer = ({ formType, changeFormType }) => {
 
   if (formType === IS_FORGOT_PASSWORD) {
     footer = (
-      <p>
-        Already have an account?{' '}
-        <span className={classes.Link} onClick={() => changeFormType(IS_LOGIN)}>
-          Log In
-        </span>
-        .
-      </p>
+      <>
+        <p>
+          After submit, please check your email for the rest password email.
+        </p>
+        <p>
+          Already have an account?{' '}
+          <span
+            className={classes.Link}
+            onClick={() => changeFormType(IS_LOGIN)}
+          >
+            Log In
+          </span>
+          .
+        </p>
+      </>
     );
   }
   return footer;

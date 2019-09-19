@@ -30,8 +30,17 @@
   border: 0;
 }
 
+.ShowPasswordButton:disabled {
+  cursor: not-allowed;
+}
+
 .Input:focus {
   box-shadow: 1px 2px 3px 4px rgba(1, 1, 1, 0.25);
+}
+
+.Input:disabled {
+  cursor: not-allowed;
+  background: var(--gray);
 }
 
 .Label {

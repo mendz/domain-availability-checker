@@ -19,3 +19,8 @@
 .GoogleLogin:hover:not(:active) {
   box-shadow: 2px 3px 3px 1px rgba(1, 1, 1, 0.5);
 }
+
+.GoogleLogin:disabled {
+  background: var(--gray);
+  color: #000;
+}

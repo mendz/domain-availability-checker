@@ -14,6 +14,7 @@ const Input = ({
   touched,
   value,
   errorMessage,
+  disabled,
 }) => {
   const [isFocus, setIsFocus] = useState(false); // to show the error only when the input us un-focus
   const [showPassword, setShowPassword] = useState(false);
@@ -37,6 +38,7 @@ const Input = ({
       <button
         className={classes.ShowPasswordButton}
         onClick={() => setShowPassword(!showPassword)}
+        disabled={disabled}
       >
         {!showPassword ? (
           <OpenEye height="1.2rem" width="1.2rem" />
@@ -63,6 +65,7 @@ const Input = ({
           value={value}
           onBlur={() => setIsFocus(false)}
           onFocus={() => setIsFocus(true)}
+          disabled={disabled}
         />
         {showPassButton}
       </div>
@@ -82,6 +85,7 @@ Input.propTypes = {
   touched: PropTypes.bool.isRequired,
   value: PropTypes.string.isRequired,
   errorMessage: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 export default Input;
