@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AuthModal /> matches the snapshot 1`] = `
+<Fragment>
+  <Button
+    style={
+      Object {
+        "minWidth": "165px",
+      }
+    }
+  >
+    Log In / Sign Up
+  </Button>
+  <Modal
+    closed={[MockFunction]}
+    show={true}
+  >
+    <Connect(Auth) />
+  </Modal>
+</Fragment>
+`;

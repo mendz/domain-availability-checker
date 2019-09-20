@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Button from '../UI/Button/Button';
 import ButtonInfo from '../UniqueButtons/ButtonInfo/ButtonInfo';
@@ -9,8 +10,7 @@ import AuthModal from '../UniqueButtons/AuthModal';
 
 import classes from './Toolbar.module.css';
 
-// TODO: add a test
-export class Toolbar extends Component {
+class Toolbar extends Component {
   state = {
     showInfo: false,
   };
@@ -42,13 +42,16 @@ export class Toolbar extends Component {
           <Button
             onClick={this.goToHistory}
             name="go-to-history"
-            disabled={this.props.checking}
+            disabled={this.props.isChecking}
           >
             History
           </Button>
           <div className={classes.LeftButtons}>
-            <AuthModal />
-            <ButtonInfo clicked={this.showInfoModal} />
+            <AuthModal disabled={this.props.isChecking} />
+            <ButtonInfo
+              clicked={this.showInfoModal}
+              disabled={this.props.isChecking}
+            />
             <Modal show={this.state.showInfo} closed={this.closeInfoModal}>
               <Info />
             </Modal>
@@ -61,4 +64,10 @@ export class Toolbar extends Component {
   }
 }
 
-export default withRouter(Toolbar);
+const mapStateToProps = state => ({
+  isChecking: state.domainList.checking,
+});
+
+export default connect(mapStateToProps)(withRouter(Toolbar));
+
+export { Toolbar };

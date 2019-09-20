@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Toolbar /> when pathname is "/" matches the snapshot 1`] = `
+<div
+  className="Toolbar"
+>
+  <Button
+    disabled={false}
+    name="go-to-history"
+    onClick={[Function]}
+  >
+    History
+  </Button>
+  <div
+    className="LeftButtons"
+  >
+    <Connect(AuthModal)
+      disabled={false}
+    />
+    <ButtonInfo
+      clicked={[Function]}
+      disabled={false}
+    />
+    <Modal
+      closed={[Function]}
+      show={false}
+    >
+      <Info />
+    </Modal>
+  </div>
+</div>
+`;
+
+exports[`<Toolbar /> when pathname is not "/" matches the snapshot 1`] = `
+<div
+  className="Toolbar"
+>
+  <Button
+    onClick={[Function]}
+  >
+    Back Home
+  </Button>
+</div>
+`;

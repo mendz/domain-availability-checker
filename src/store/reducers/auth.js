@@ -24,7 +24,7 @@ const normalizeError = error => {
   };
 
   if (errorTypes[error.message]) {
-    return updateObject(error, { message: errorTypes[error.message] });
+    return errorTypes[error.message];
   }
   return error.message;
 };
@@ -50,6 +50,7 @@ const onAuthSuccess = (state, action) => {
     userId,
     token,
     authModal: false,
+    error: null,
   });
 };
 
@@ -62,7 +63,6 @@ const onLogOut = (state, action) =>
 const onRestPassword = (state, action) =>
   updateObject(state, { authModal: false, loading: false });
 
-// TODO: add a test
 const authReducer = (state = initialState, action) => {
   const { type } = action;
   switch (type) {
