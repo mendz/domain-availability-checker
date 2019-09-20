@@ -106,4 +106,13 @@ describe('<Input />', () => {
     showPasswordButton.simulate('click');
     expect(wrapper.containsMatchingElement(<CloseEye />)).toBe(true);
   });
+
+  it('should disabled the input and the ShowPasswordButton if the props.disabled="true"', () => {
+    wrapper.setProps({ disabled: true });
+    expect(wrapper.find('input').props().disabled).toBeTruthy();
+    wrapper.setProps({ elementConfig: { type: 'password' } });
+    expect(
+      wrapper.find('button.ShowPasswordButton').props().disabled
+    ).toBeTruthy();
+  });
 });

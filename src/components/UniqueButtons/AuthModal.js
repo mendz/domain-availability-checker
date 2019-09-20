@@ -12,6 +12,7 @@ import Button from '../UI/Button/Button';
 import Modal from '../UI/Modal/Modal';
 import Auth from '../../containers/Auth/Auth';
 
+// TODO: add a test
 const AuthModal = ({
   authModal,
   isLoggedIn,

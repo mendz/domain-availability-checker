@@ -278,3 +278,5 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Auth);
+
+export { Auth };

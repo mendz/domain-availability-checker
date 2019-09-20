@@ -1,6 +1,47 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<App/> matches the snapshot 1`] = `
+exports[`<App/> when props.isLoggedIn and props.isAuthLoading are false matches the snapshot 1`] = `
+<div
+  className="App"
+>
+  <BrowserRouter>
+    <Layout>
+      <Switch>
+        <Route
+          component={
+            Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(HistoryDomains)",
+              "type": [Function],
+            }
+          }
+          path="/history"
+        />
+        <Route
+          component={
+            Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(_temp)",
+              "type": [Function],
+            }
+          }
+          exact={true}
+          path="/"
+        />
+        <Redirect
+          to="/"
+        />
+      </Switch>
+    </Layout>
+  </BrowserRouter>
+</div>
+`;
+
+exports[`<App/> when props.isLoggedIn and props.isAuthLoading are not both false matches the snapshot 1`] = `
 <div
   className="App"
 >

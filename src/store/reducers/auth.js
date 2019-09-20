@@ -62,6 +62,7 @@ const onLogOut = (state, action) =>
 const onRestPassword = (state, action) =>
   updateObject(state, { authModal: false, loading: false });
 
+// TODO: add a test
 const authReducer = (state = initialState, action) => {
   const { type } = action;
   switch (type) {

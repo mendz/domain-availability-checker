@@ -2,7 +2,8 @@ import React from 'react';
 import toJSON from 'enzyme-to-json';
 import { shallow } from 'enzyme';
 
-import Auth, {
+import {
+  Auth,
   IS_LOGIN,
   IS_SIGN_UP,
   IS_FORGOT_PASSWORD,
@@ -12,7 +13,13 @@ describe('<Input />', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<Auth />);
+    wrapper = shallow(
+      <Auth
+        authGoogleSignIn={jest.fn(() => {})}
+        authEmailPassword={jest.fn(() => {})}
+        resetPassword={jest.fn(() => {})}
+      />
+    );
   });
 
   it('should match the snapshot', () => {
@@ -116,5 +123,79 @@ describe('<Input />', () => {
     // the form should be valid now
     expect(wrapper.find('Button').props().disabled).toBeFalsy(); // now the form is valid and the button should be enable
     expect(wrapper.state().formIsValid).toBe(true);
+  });
+
+  it('should disable the input and the buttons in the props.isLoading', () => {
+    wrapper.setProps({ isLoading: true });
+    expect(
+      wrapper
+        .find('Input')
+        .at(0)
+        .props().disabled
+    ).toBeTruthy();
+    expect(
+      wrapper
+        .find('Input')
+        .at(1)
+        .props().disabled
+    ).toBeTruthy();
+    expect(wrapper.find('Button').props().disabled).toBeTruthy();
+    expect(wrapper.find('GoogleSignIn').props().disabled).toBeTruthy();
+  });
+
+  it('should display an error when props.authError contains an error', () => {
+    wrapper.setProps({ authError: 'some error' });
+    expect(wrapper.text()).toContain('Error: some error');
+    wrapper.setProps({ authError: null });
+    expect(wrapper.text()).not.toContain('Error');
+  });
+
+  it('should display a Spinner when props.isLoading is true', () => {
+    wrapper.setProps({ isLoading: true });
+    expect(wrapper.find('Spinner').length).toBe(1);
+    wrapper.setProps({ isLoading: false });
+    expect(wrapper.find('Spinner').length).toBe(0);
+  });
+
+  it('should call props.authGoogleSignIn when the button GoogleSignIn clicked', () => {
+    wrapper
+      .find('GoogleSignIn')
+      .props()
+      .clicked();
+    expect(wrapper.instance().props.authGoogleSignIn).toBeCalledTimes(1);
+  });
+
+  it('should call props.authEmailPassword when the submit button clicked', () => {
+    // set the Email input
+    wrapper
+      .findWhere(
+        comp => comp.text() === '<Input />' && comp.props().label === 'Email'
+      )
+      .props()
+      .changed({ target: { value: 'mendy@gmail.com' } });
+    // set the Password input
+    wrapper
+      .findWhere(
+        comp => comp.text() === '<Input />' && comp.props().label === 'Password'
+      )
+      .props()
+      .changed({ target: { value: '123456' } });
+    wrapper.setProps({ isLoading: false });
+    wrapper.find('form').simulate('submit', { preventDefault: () => {} });
+    expect(wrapper.instance().props.authEmailPassword).toBeCalledTimes(1);
+  });
+
+  it('should call props.authGoogleSignIn when the button GoogleSignIn clicked', () => {
+    wrapper.setState({ formType: IS_FORGOT_PASSWORD });
+    wrapper.setProps({ isLoading: false });
+    // set the Email input
+    wrapper
+      .findWhere(
+        comp => comp.text() === '<Input />' && comp.props().label === 'Email'
+      )
+      .props()
+      .changed({ target: { value: 'mendy@gmail.com' } });
+    wrapper.find('form').simulate('submit', { preventDefault: () => {} });
+    expect(wrapper.instance().props.resetPassword).toBeCalledTimes(1);
   });
 });
