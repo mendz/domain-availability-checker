@@ -53,6 +53,12 @@ export const authEmailPassword = (
       authData = await firebaseApp
         .auth()
         .createUserWithEmailAndPassword(email, password);
+      await firebaseApp
+        .database()
+        .ref(`users/${authData.user.uid}`)
+        .set({
+          email,
+        });
     } else {
       authData = await firebaseApp
         .auth()

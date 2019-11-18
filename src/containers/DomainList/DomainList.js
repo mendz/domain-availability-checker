@@ -8,7 +8,8 @@ import {
   clearDecodedDomains,
 } from '../../store/actions/domainList';
 
-import { saveToHistory, loadHistory } from '../../store/actions/historyDomains';
+// import { saveToHistory, loadHistory } from '../../store/actions/historyDomains';
+import { saveToHistoryDB } from '../../store/actions/historyDomains';
 
 import DomainCheck from '../../components/DomainCheck/DomainCheck';
 import Button from '../../components/UI/Button/Button';
@@ -92,7 +93,7 @@ class DomainList extends Component {
       this.state.invalidDomains
     );
 
-    this.props.saveToHistory(this.props.decodedDomainList);
+    this.props.saveToHistoryDB(this.props.decodedDomainList, this.props.userId);
   };
 
   clearDomains = () => {
@@ -146,11 +147,16 @@ const mapStateToProps = state => ({
   decodedDomainList: state.domainList.decodedDomainList,
   checking: state.domainList.checking,
   haveHistoryDomains: state.historyDomains.historyDomains.length,
+  userId: state.auth.userId,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
-    { setDecodedDomains, clearDecodedDomains, saveToHistory, loadHistory },
+    {
+      setDecodedDomains,
+      clearDecodedDomains,
+      saveToHistoryDB,
+    },
     dispatch
   );
 

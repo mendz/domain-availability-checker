@@ -16,7 +16,7 @@ export const checkAvailable = async (domainName, axios) => {
   return response;
 };
 
-export const saveToHistory = decodedDomainList => {
+export const saveToLocalHistory = decodedDomainList => {
   const oldHistoryString = localStorage.getItem('historyDomains');
   let currentHistory = '';
 
@@ -39,7 +39,7 @@ export const saveToHistory = decodedDomainList => {
   return JSON.parse(currentHistory);
 };
 
-export const loadHistory = () => {
+export const loadLocalHistory = () => {
   const historyString = localStorage.getItem('historyDomains');
 
   if (historyString) {
@@ -49,6 +49,6 @@ export const loadHistory = () => {
   return [];
 };
 
-export const removeHistory = () => {
+export const removeLocalHistory = () => {
   localStorage.removeItem('historyDomains');
 };

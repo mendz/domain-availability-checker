@@ -1,37 +1,37 @@
 import * as actionTypes from '../actions/actionTypes';
 import {
   updateObject,
-  loadHistory,
-  saveToHistory,
-  removeHistory,
+  saveToLocalHistory,
+  removeLocalHistory,
 } from '../utility';
 
 const initialState = {
   historyDomains: [],
   searchValue: '',
   filterType: 'all',
+  loading: false,
 };
 
 const onSaveHistory = (state, action) => {
   const { historyDomains } = action;
-  const currentHistory = saveToHistory(historyDomains);
+  // const currentHistory = saveToLocalHistory(historyDomains);
 
   return updateObject(state, {
-    historyDomains: currentHistory,
+    historyDomains: historyDomains,
   });
 };
 
 const onLoadHistory = (state, action) => {
-  const history = loadHistory();
+  const { historyDomains } = action;
   return updateObject(state, {
-    historyDomains: history,
+    historyDomains: historyDomains,
     filterType: 'all',
     searchValue: '',
   });
 };
 
 const onRemoveHistory = (state, action) => {
-  removeHistory();
+  removeLocalHistory();
   return updateObject(state, {
     historyDomains: [],
     filterType: 'all',
@@ -50,6 +50,9 @@ const onSetSearchValue = (state, action) =>
 
 const onSetFilterType = (state, action) =>
   updateObject(state, { filterType: action.filterType });
+
+const onStartLoading = (state, action) =>
+  updateObject(state, { loading: true });
 
 const historyDomainsReducer = (state = initialState, action) => {
   const { type } = action;
@@ -71,6 +74,9 @@ const historyDomainsReducer = (state = initialState, action) => {
 
     case actionTypes.SET_FILTER_TYPE:
       return onSetFilterType(state, action);
+
+    case actionTypes.START_LOAD_HISTORY_DOMAINS:
+      return onStartLoading(state, action);
 
     default:
       return state;

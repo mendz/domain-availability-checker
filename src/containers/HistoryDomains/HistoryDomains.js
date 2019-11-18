@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { loadHistory, removeHistory } from '../../store/actions/historyDomains';
+// import { loadHistory, removeHistory } from '../../store/actions/historyDomains';
+import {
+  loadHistoryFromDB,
+  removeHistory,
+} from '../../store/actions/historyDomains';
 
 import DomainCheck from '../../components/DomainCheck/DomainCheck';
 import Filters from './Filters/Filters';
@@ -27,7 +31,7 @@ class HistoryDomains extends Component {
   componentDidMount() {
     // if there is no history domains try to load them
     if (this.props.historyDomains.length === 0) {
-      this.props.loadHistory();
+      this.props.loadHistoryFromDB(this.props.userId);
     } else {
       // if there is history domains, filter them to there initial value
       this.setFilteredDomains();
@@ -127,12 +131,13 @@ const mapStateToProps = state => ({
   historyDomains: state.historyDomains.historyDomains,
   filterType: state.historyDomains.filterType,
   searchValue: state.historyDomains.searchValue,
+  userId: state.auth.userId,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      loadHistory,
+      loadHistoryFromDB,
       removeHistory,
     },
     dispatch
